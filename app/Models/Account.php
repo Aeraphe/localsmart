@@ -32,4 +32,14 @@ class Account extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Change the account status
+     * @return void
+     */
+    public function changeAccountStatus($status)
+    {
+        $this->plan_status = $status;
+        $this->save();
+
+    }
 }
