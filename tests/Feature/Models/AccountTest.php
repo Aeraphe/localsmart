@@ -49,7 +49,7 @@ class AccountTest extends TestCase
 
         //arrange
         $user = User::factory()->create();
-        $data = $data = $this->getAccountPlanData($user->id);
+        $data = $this->getAccountPlanData($user->id);
         $account = Account::create($data);
 
         //act
