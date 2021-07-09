@@ -53,12 +53,50 @@ class User extends Authenticatable
     }
 
     /**
-     * Create a relationship that user has many Stores
+     * User create a new Store
      *
-     * @return App/Stores
+     * @param array $data Contain data for create the store
+     * 
+     *    $data[
+     *      'name'    =>    (string) Store name 
+     *      'address' =>    (string) Store address
+     *      'phone'   =>    (string) Store phone number 
+     *     ]
+     * 
+     * @return App\Sotre | null
      */
-    public function sotres()
+    public function createStore(array $data)
     {
-        return $this->hasMany(Store::class);
+
+        $data['user_id'] = $this->id;
+
+        if ($this->canCreateStores()) {
+            return Store::create($data);
+        } else {
+            return null;
+        }
+
     }
+
+    /**
+     * Check is user can create sotre
+     * 
+     * @return boolean
+     */
+    public function canCreateStores()
+    {
+        $account = $this->account;
+        $store = $this->store;
+        if ($account->plan_status) {
+            if ($store == null) {
+                return true;
+            } elseif ($store->count() <= $account->store_qt) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+
 }
