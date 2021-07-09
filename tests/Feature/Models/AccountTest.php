@@ -31,6 +31,33 @@ class AccountTest extends TestCase
 
         //assert
         $this->assertInstanceOf(Account::class, $account);
-        $this->assertDatabaseHas('accounts',$data);
+        $this->assertDatabaseHas('accounts', $data);
+        
+    }
+
+    /**
+     * @test
+     */
+    public function delete_user_app_account()
+    {
+
+        //arrange
+        $user = User::factory()->create();
+        $data = [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $user->id,
+        ];
+        $account = Account::create($data);
+       
+
+        //act
+        $account->delete();
+
+        //assert
+        $this->assertInstanceOf(Account::class, $account);
+        $this->assertDatabaseMissing('accounts', $data);
+
     }
 }
