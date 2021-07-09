@@ -79,4 +79,21 @@ class AccountTest extends TestCase
         $this->assertInstanceOf(User::class, $user);
 
     }
+
+    /**
+     * @test
+     */
+    public function should_change_account_status()
+    {
+        //arrange
+        $userId = User::factory()->create()->id;
+        $data = $this->getAccountPlanData($userId);
+        $sut = Account::create($data);
+
+        //act
+        $sut->changeAccountStatus(false);
+
+        //assert
+        $this->assertFalse($sut->plan_status);
+    }
 }
