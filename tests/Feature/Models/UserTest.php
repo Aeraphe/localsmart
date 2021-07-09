@@ -3,8 +3,8 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Account;
-use App\Models\User;
 use App\Models\Store;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -93,13 +93,14 @@ class UserTest extends TestCase
     /**
      * @test
      */
-    public function create_new_store()
+    public function can_create_the_first_store()
     {
 
         //arrange
         $sut = User::factory()->create();
-        
-        $accountData =  [
+        $sut = User::factory()->create();
+
+        $accountData = [
             'plan_name' => 'free',
             'plan_status' => true,
             'store_qt' => 1,
@@ -107,7 +108,33 @@ class UserTest extends TestCase
         ];
 
         Account::create($accountData);
-        
+
+        //act
+        $result = $sut->canCreateStores();
+
+        //assert
+        $this->assertTrue($result);
+
+    }
+
+    /**
+     * @test
+     */
+    public function create_new_store()
+    {
+
+        //arrange
+        $sut = User::factory()->create();
+
+        $accountData = [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $sut->id,
+        ];
+
+        Account::create($accountData);
+
         $storeData = [
             'name' => 'LocalSmart',
             'address' => $this->faker->address(),
@@ -119,7 +146,7 @@ class UserTest extends TestCase
 
         //assert
         $this->assertInstanceOf(Store::class, $store);
-        $this->assertDatabaseHas('stores',$storeData);
+        $this->assertDatabaseHas('stores', $storeData);
     }
 
 }
