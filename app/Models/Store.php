@@ -20,4 +20,14 @@ class Store extends Model
         'phone',
         'user_id',
     ];
+
+    /**
+     * Create a relationship to User - One To Many
+     * Get te user that owns the store
+     * @return App\User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

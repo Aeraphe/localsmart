@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     /**
      * Create a relationship with User and Account (Composition)
-     * 
+     *
      * @return App\Account
      */
     public function account()
@@ -52,4 +52,13 @@ class User extends Authenticatable
         return $this->hasOne(Account::class);
     }
 
+    /**
+     * Create a relationship that user has many Stores
+     *
+     * @return App/Stores
+     */
+    public function sotres()
+    {
+        return $this->hasMany(Store::class);
+    }
 }
