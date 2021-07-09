@@ -4,13 +4,15 @@ namespace Tests\Feature\Models;
 
 use App\Models\Account;
 use App\Models\User;
+use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
 
-    use RefreshDatabase;
+    use RefreshDatabase, WithFaker;
 
     /**
      * Fixture User Data For create User module
@@ -86,6 +88,38 @@ class UserTest extends TestCase
         //assert
         $this->assertInstanceOf(Account::class, $account);
 
+    }
+
+    /**
+     * @test
+     */
+    public function create_new_store()
+    {
+
+        //arrange
+        $sut = User::factory()->create();
+        
+        $accountData =  [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $sut->id,
+        ];
+
+        Account::create($accountData);
+        
+        $storeData = [
+            'name' => 'LocalSmart',
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
+        ];
+
+        //act
+        $store = $sut->createStore($storeData);
+
+        //assert
+        $this->assertInstanceOf(Store::class, $store);
+        $this->assertDatabaseHas('stores',$storeData);
     }
 
 }
