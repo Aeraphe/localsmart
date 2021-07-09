@@ -12,6 +12,19 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * Fixture User Data For create User module
+     */
+    private function getUserData()
+    {
+        return [
+            'name' => 'Maria Dalva de Castro',
+            'email_verified_at' => '2009-12-01 00:00:00',
+            'password' => 'password',
+            'remember_token' => '123456789',
+        ];
+    }
+
+    /**
      * Teste create a user
      * @test
      *
@@ -20,14 +33,14 @@ class UserTest extends TestCase
     public function create_new_user()
     {
         //arrange
-        $userName = "Maria Dalva de Castro";
+        $userData = $this->getUserData();
 
         //act
-        $user = User::factory()->create(['name' => $userName]);
+        $user = User::factory()->create($userData);
 
         //assert
         $this->assertInstanceOf(User::class, $user, "create a user model");
-        $this->assertDatabaseHas('users', ['name' => $userName]);
+        $this->assertDatabaseHas('users', $userData);
 
     }
 
@@ -38,12 +51,15 @@ class UserTest extends TestCase
     {
 
         //arrange
-        $userName = 'Alberto Eduardo de Oliveira' . rand();
-        $user = User::factory()->create(['name' => $userName]);
+        $userData = $this->getUserData();
+        $userId = User::factory()->create($userData)->id;
+        $user = User::find($userId);
+
         //act
         $user->delete();
+
         //assert
-        $this->assertDatabaseMissing('users', ['name' => $userName]);
+        $this->assertDatabaseMissing('users', $userData);
 
     }
 
