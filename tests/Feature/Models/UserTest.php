@@ -98,7 +98,7 @@ class UserTest extends TestCase
 
         //arrange
         $sut = User::factory()->create();
-        $sut = User::factory()->create();
+   
 
         $accountData = [
             'plan_name' => 'free',
