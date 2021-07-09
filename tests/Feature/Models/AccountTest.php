@@ -10,6 +10,17 @@ use Tests\TestCase;
 class AccountTest extends TestCase
 {
     use RefreshDatabase;
+
+    private function getAccountPlanData($userId)
+    {
+        return [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $userId,
+        ];
+    }
+
     /**
      * Create Account
      *@test
@@ -19,12 +30,7 @@ class AccountTest extends TestCase
     {
         //arrange
         $user = User::factory()->create();
-        $data = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $user->id,
-        ];
+        $data = $this->getAccountPlanData($user->id);
 
         //act
         $account = Account::create($data);
@@ -32,7 +38,7 @@ class AccountTest extends TestCase
         //assert
         $this->assertInstanceOf(Account::class, $account);
         $this->assertDatabaseHas('accounts', $data);
-        
+
     }
 
     /**
@@ -43,14 +49,8 @@ class AccountTest extends TestCase
 
         //arrange
         $user = User::factory()->create();
-        $data = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $user->id,
-        ];
+        $data = $data = $this->getAccountPlanData($user->id);
         $account = Account::create($data);
-       
 
         //act
         $account->delete();
@@ -60,4 +60,5 @@ class AccountTest extends TestCase
         $this->assertDatabaseMissing('accounts', $data);
 
     }
+
 }
