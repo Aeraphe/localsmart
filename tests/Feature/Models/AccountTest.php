@@ -61,4 +61,22 @@ class AccountTest extends TestCase
 
     }
 
+    /**
+     * @test
+     */
+    public function should_account_belongs_to_user()
+    {
+        //arrange
+        $userId = User::factory()->create(['name' => 'carlos'])->id;
+        $data = $this->getAccountPlanData($userId);
+        $sut = Account::create($data);
+
+        //act
+        $user = $sut->user;
+
+        //assert
+        $this->assertEquals('carlos', $user->name);
+        $this->assertInstanceOf(User::class, $user);
+
+    }
 }
