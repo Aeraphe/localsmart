@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Models;
 
+use App\Models\Account;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -60,6 +61,30 @@ class UserTest extends TestCase
 
         //assert
         $this->assertDatabaseMissing('users', $userData);
+
+    }
+
+    /**
+     * @test
+     */
+    public function should_user_has_account()
+    {
+
+        //arrange
+        $userData = $this->getUserData();
+        $sut = User::factory()->create($userData);
+        Account::create([
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $sut->id,
+        ]);
+
+        //act
+        $account = $sut->account;
+
+        //assert
+        $this->assertInstanceOf(Account::class, $account);
 
     }
 
