@@ -110,7 +110,6 @@ class UserTest extends TestCase
 
         //act
         $result = $sut->canCreateStores();
-      
 
         //assert
         $this->assertTrue($result);
@@ -139,9 +138,9 @@ class UserTest extends TestCase
             'phone' => $this->faker->phoneNumber(),
             'user_id' => $sut->id,
         ];
-   
+
         Store::create($storeData);
-       
+
         //act
         $result = $sut->canCreateStores();
 
@@ -175,10 +174,40 @@ class UserTest extends TestCase
 
         //act
         $store = $sut->createStore($storeData);
-      
+
         //assert
         $this->assertInstanceOf(Store::class, $store);
         $this->assertDatabaseHas('stores', $storeData);
     }
+    /**
+     * @test
+     */
+    public function should_create_more_than_one_store()
+    {
+        //arrange
+        $sut = User::factory()->create();
 
+        $accountData = [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 2,
+            'user_id' => $sut->id,
+        ];
+
+        Account::create($accountData);
+        $storeData = [
+            'name' => 'LocalSmart',
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
+            'user_id' => $sut->id,
+        ];
+
+        Store::create($storeData);
+
+        //act
+        $result = $sut->canCreateStores();
+
+        //assert
+        $this->assertTrue($result);
+    }
 }
