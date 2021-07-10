@@ -27,4 +27,16 @@ class Customer extends Model
         'obs',
 
     ];
+
+    /**
+     * Get account that customer is localted
+     *
+     *@return Collection
+     */
+    public function account()
+    {
+
+        return $this->belongsTo(Account::class);
+    }
+
 }
