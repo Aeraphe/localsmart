@@ -4,6 +4,7 @@ namespace Tests\Feature\Models;
 
 use App\Models\Account;
 use App\Models\Customer;
+use App\Models\Equipament;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -60,11 +61,29 @@ class CustomerTest extends TestCase
             'obs' => $this->faker->text,
         ];
         $sut = Customer::create($customerData);
-        
+
         //act
         $result = $sut->account;
 
         //assert
         $this->assertInstanceOf(Account::class, $result);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function can_get_cutomer_equipaments()
+    {
+        //arrange
+        $sut = Customer::factory()->create();
+        $equipaments = Equipament::factory()->count(2)->create(['customer_id' => $sut->id]);
+
+        //act
+        $result = $sut->equipaments;
+
+        //assert
+        $this->assertTrue($result->contains($equipaments[0]));
     }
 }
