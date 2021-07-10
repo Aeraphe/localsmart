@@ -12,7 +12,7 @@ class EquipamentTest extends TestCase
      *
      * @return void
      */
-    public function should_create_equipoament()
+    public function should_create_equipament()
     {
 
         //arrange and act
