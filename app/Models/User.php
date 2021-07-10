@@ -80,17 +80,20 @@ class User extends Authenticatable
 
     /**
      * Check is user can create sotre
-     * 
+     *
      * @return boolean
      */
     public function canCreateStores()
     {
         $account = $this->account;
-        $store = $this->store;
+        $stores = $this->stores;
+
         if ($account->plan_status) {
-            if ($store == null) {
+            if ($stores == []) {
+
                 return true;
-            } elseif ($store->count() <= $account->store_qt) {
+
+            } elseif ($stores->count() < $account->store_qt) {
                 return true;
             } else {
                 return false;
