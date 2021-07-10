@@ -21,4 +21,15 @@ class Equipament extends Model
         'company',
         'description',
     ];
+
+    /**
+     * Get equipament customer owner
+     *
+     * @return Customer
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
 }
