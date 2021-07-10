@@ -39,4 +39,14 @@ class Customer extends Model
         return $this->belongsTo(Account::class);
     }
 
+    /**
+     * Get Customer equipaments
+     *
+     * @return Collection<Equipaments>
+     */
+    public function equipaments()
+    {
+        return $this->hasMany(Equipament::class);
+    }
+
 }
