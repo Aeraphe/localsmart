@@ -42,4 +42,14 @@ class Account extends Model
         $this->save();
 
     }
+
+    /**
+     * Get account customers
+     *
+     * @return Collection
+     */
+    public function customers()
+    {
+        return $this->hasMany(Customer::class);
+    }
 }
