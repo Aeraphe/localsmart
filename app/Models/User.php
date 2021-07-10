@@ -53,16 +53,25 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user stores (relationship)
+     * @return Store
+     */
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
+    }
+
+    /**
      * User create a new Store
      *
      * @param array $data Contain data for create the store
-     * 
+     *
      *    $data[
-     *      'name'    =>    (string) Store name 
+     *      'name'    =>    (string) Store name
      *      'address' =>    (string) Store address
-     *      'phone'   =>    (string) Store phone number 
+     *      'phone'   =>    (string) Store phone number
      *     ]
-     * 
+     *
      * @return App\Sotre | null
      */
     public function createStore(array $data)
