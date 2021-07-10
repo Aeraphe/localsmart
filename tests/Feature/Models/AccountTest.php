@@ -3,6 +3,7 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Account;
+use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -95,5 +96,22 @@ class AccountTest extends TestCase
 
         //assert
         $this->assertFalse($sut->plan_status);
+    }
+
+    /**
+     * @test
+     */
+    public function should_get_customers_from_account()
+    {
+
+        //arrange
+        $sut = Account::factory()->create();
+        $customer = Customer::factory()->create(['account_id' => $sut->id]);
+
+        //atc
+        $result = $sut->customers;
+
+        //assert
+        $this->assertTrue($result->contains($customer));
     }
 }
