@@ -98,7 +98,6 @@ class UserTest extends TestCase
 
         //arrange
         $sut = User::factory()->create();
-   
 
         $accountData = [
             'plan_name' => 'free',
@@ -111,10 +110,43 @@ class UserTest extends TestCase
 
         //act
         $result = $sut->canCreateStores();
+      
 
         //assert
         $this->assertTrue($result);
 
+    }
+
+    /**
+     * @test
+     */
+    public function should_fail_in_create_new_store_if_user_stores_exceed_account_limit()
+    {
+        //arrange
+        $sut = User::factory()->create();
+
+        $accountData = [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $sut->id,
+        ];
+
+        Account::create($accountData);
+        $storeData = [
+            'name' => 'LocalSmart',
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
+            'user_id' => $sut->id,
+        ];
+   
+        Store::create($storeData);
+       
+        //act
+        $result = $sut->canCreateStores();
+
+        //assert
+        $this->assertFalse($result);
     }
 
     /**
@@ -143,7 +175,7 @@ class UserTest extends TestCase
 
         //act
         $store = $sut->createStore($storeData);
-
+      
         //assert
         $this->assertInstanceOf(Store::class, $store);
         $this->assertDatabaseHas('stores', $storeData);
