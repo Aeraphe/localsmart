@@ -36,8 +36,35 @@ class CustomerTest extends TestCase
         $sut = Customer::create($customerData);
 
         //assert
-        $this->assertInstanceOf(Customer::class,$sut);
-        $this->assertDatabaseHas('customers',$customerData);
+        $this->assertInstanceOf(Customer::class, $sut);
+        $this->assertDatabaseHas('customers', $customerData);
 
+    }
+
+    /**
+     * Test relationship Customer to Account
+     * @test
+     */
+    public function should_get_account_that_customer_belongs()
+    {
+        //arrange
+        $account = Account::factory()->create();
+        $customerData = [
+            'name' => $this->faker->name,
+            'address' => $this->faker->address,
+            'cpf' => $this->faker->randomLetter,
+            'account_id' => $account->id,
+            'phone' => $this->faker->phoneNumber,
+            'city' => $this->faker->city,
+            'state' => $this->faker->country,
+            'obs' => $this->faker->text,
+        ];
+        $sut = Customer::create($customerData);
+        
+        //act
+        $result = $sut->account;
+
+        //assert
+        $this->assertInstanceOf(Account::class, $result);
     }
 }
