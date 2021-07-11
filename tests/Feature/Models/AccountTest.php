@@ -12,13 +12,12 @@ class AccountTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function getAccountPlanData($userId)
+    private function getAccountPlanData()
     {
         return [
             'plan_name' => 'free',
             'plan_status' => true,
             'store_qt' => 1,
-            'user_id' => $userId,
             'slug' => 'localsmart',
         ];
     }
@@ -31,11 +30,10 @@ class AccountTest extends TestCase
     public function create_user_app_account()
     {
         //arrange
-        $user = User::factory()->create();
-        $data = $this->getAccountPlanData($user->id);
+        $data = $this->getAccountPlanData();
 
         //act
-        $account = Account::create($data);
+        $account = Account::factory()->create($data);
 
         //assert
         $this->assertInstanceOf(Account::class, $account);
@@ -50,9 +48,8 @@ class AccountTest extends TestCase
     {
 
         //arrange
-        $user = User::factory()->create();
-        $data = $this->getAccountPlanData($user->id);
-        $account = Account::create($data);
+        $data = $this->getAccountPlanData();
+        $account = Account::factory()->create($data);
 
         //act
         $account->delete();
@@ -70,8 +67,9 @@ class AccountTest extends TestCase
     {
         //arrange
         $userId = User::factory()->create(['name' => 'carlos'])->id;
-        $data = $this->getAccountPlanData($userId);
-        $sut = Account::create($data);
+        $data = $this->getAccountPlanData();
+        $data['user_id'] = $userId;
+        $sut = Account::factory()->create($data);
 
         //act
         $user = $sut->user;
@@ -83,14 +81,13 @@ class AccountTest extends TestCase
     }
 
     /**
+     * Change Account Status to false
      * @test
      */
     public function should_change_account_status()
     {
         //arrange
-        $userId = User::factory()->create()->id;
-        $data = $this->getAccountPlanData($userId);
-        $sut = Account::create($data);
+        $sut = Account::factory()->create(['plan_status' => true]);
 
         //act
         $sut->changeAccountStatus(false);
