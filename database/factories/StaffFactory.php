@@ -24,10 +24,10 @@ class StaffFactory extends Factory
     {
         return [
             'account_id' => Account::factory(),
-            'name' => 'Ricardo',
-            'phone' => $this->faker->name,
+            'name' => $this->faker->name,
+            'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
-            'user' => 'ricardo',
+            'user' => $this->faker->slug,
             'password' => hash('sha256', 'password'),
         ];
     }
