@@ -31,15 +31,11 @@ class AccountTest extends TestCase
     public function create_user_app_account()
     {
         //arrange
-        $data = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'slug' => 'localsmart',
-        ];
+        $user = User::factory()->create();
+        $data = $this->getAccountPlanData($user->id);
 
         //act
-        $account = Account::factory()->create();
+        $account = Account::create($data);
 
         //assert
         $this->assertInstanceOf(Account::class, $account);
