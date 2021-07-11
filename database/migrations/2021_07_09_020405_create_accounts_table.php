@@ -20,6 +20,7 @@ class CreateAccountsTable extends Migration
             $table->string('plan_name');
             $table->integer('store_qt');
             $table->boolean('plan_status');
+            $table->string('slug')->unique();
             $table->timestamps();
 
         });

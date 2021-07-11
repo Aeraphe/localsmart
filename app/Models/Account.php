@@ -20,6 +20,7 @@ class Account extends Model
         'plan_status',
         'store_qt',
         'user_id',
+        'slug',
     ];
 
     /**

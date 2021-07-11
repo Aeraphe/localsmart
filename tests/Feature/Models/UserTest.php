@@ -26,6 +26,19 @@ class UserTest extends TestCase
             'remember_token' => '123456789',
         ];
     }
+    /**
+     * Fixture for Account Model
+     */
+    private function getAccountData($userId)
+    {
+        return [
+            'plan_name' => 'free',
+            'plan_status' => true,
+            'store_qt' => 1,
+            'user_id' => $userId,
+            'slug' => 'localsmart',
+        ];
+    }
 
     /**
      * Teste create a user
@@ -75,12 +88,7 @@ class UserTest extends TestCase
         //arrange
         $userData = $this->getUserData();
         $sut = User::factory()->create($userData);
-        Account::create([
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $sut->id,
-        ]);
+        Account::create($this->getAccountData($sut->id));
 
         //act
         $account = $sut->account;
@@ -98,15 +106,7 @@ class UserTest extends TestCase
 
         //arrange
         $sut = User::factory()->create();
-
-        $accountData = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $sut->id,
-        ];
-
-        Account::create($accountData);
+        Account::create($this->getAccountData($sut->id));
 
         //act
         $result = $sut->canCreateStores();
@@ -123,15 +123,8 @@ class UserTest extends TestCase
     {
         //arrange
         $sut = User::factory()->create();
+        Account::create($this->getAccountData($sut->id));
 
-        $accountData = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $sut->id,
-        ];
-
-        Account::create($accountData);
         $storeData = [
             'name' => 'LocalSmart',
             'address' => $this->faker->address(),
@@ -156,15 +149,7 @@ class UserTest extends TestCase
 
         //arrange
         $sut = User::factory()->create();
-
-        $accountData = [
-            'plan_name' => 'free',
-            'plan_status' => true,
-            'store_qt' => 1,
-            'user_id' => $sut->id,
-        ];
-
-        Account::create($accountData);
+        Account::create($this->getAccountData($sut->id));
 
         $storeData = [
             'name' => 'LocalSmart',
@@ -192,6 +177,7 @@ class UserTest extends TestCase
             'plan_status' => true,
             'store_qt' => 2,
             'user_id' => $sut->id,
+            'slug' => 'localsmart',
         ];
 
         Account::create($accountData);

@@ -27,6 +27,7 @@ class AccountFactory extends Factory
             'plan_status' => true,
             'store_qt' => 1,
             'user_id' => User::factory(),
+            'slug' => 'localsmart',
         ];
     }
 }

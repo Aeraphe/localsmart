@@ -19,6 +19,7 @@ class AccountTest extends TestCase
             'plan_status' => true,
             'store_qt' => 1,
             'user_id' => $userId,
+            'slug' => 'localsmart',
         ];
     }
 
