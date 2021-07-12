@@ -132,7 +132,7 @@ class AccountTest extends TestCase
     /**
      * @test
      */
-    public function should_check_can_create_store_fail_on_exceed_account_plan_quantity()
+    public function can_create_store_fail_on_exceed_account_plan_quantity()
     {
         //arrange
         $accountStoreQt = ['store_qt' => 1];
