@@ -147,6 +147,23 @@ class AccountTest extends TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @test
+     *
+     */
+    public function can_create_store_if_no_exceed_account_plan_quantity()
+    {
+        //arrange
+        $accountStoreQt = ['store_qt' => 2];
+        $sut = Account::factory()
+            ->has(Store::factory()->count(1))
+            ->create($accountStoreQt);
 
+        //act
+        $result = $sut->canCreateStore();
+
+        //assert
+        $this->assertTrue($result);
+    }
 
 }
