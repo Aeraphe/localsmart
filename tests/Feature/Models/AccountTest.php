@@ -112,4 +112,19 @@ class AccountTest extends TestCase
         //assert
         $this->assertTrue($result->contains($customer));
     }
+
+    /**
+     * @test
+     */
+    public function check_if_can_create_the_firts_store()
+    {
+        //arrange
+        $sut = Account::factory()->create();
+
+        //act
+        $result = $sut->canCreateStore();
+
+        //assert
+        $this->assertTrue($result);
+    }
 }
