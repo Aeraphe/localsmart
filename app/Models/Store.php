@@ -16,6 +16,7 @@ class Store extends Model
      */
     protected $fillable = [
         'name',
+        'sulg',
         'address',
         'phone',
         'account_id',
@@ -24,7 +25,7 @@ class Store extends Model
     /**
      * Create a relationship to Account - One To Many
      * Get te Account that owns the store
-     * 
+     *
      * @return App\Models\Account
      */
     public function account()

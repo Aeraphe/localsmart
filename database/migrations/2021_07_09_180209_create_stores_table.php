@@ -20,6 +20,7 @@ class CreateStoresTable extends Migration
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('address');
             $table->string('phone');
+            $table->string('slug');
             $table->timestamps();
         });
     }
