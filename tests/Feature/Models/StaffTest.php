@@ -24,7 +24,7 @@ class StaffTest extends TestCase
             'name' => 'Ricardo',
             'phone' => $this->faker->name,
             'address' => $this->faker->address,
-            'user' => 'ricardo',
+            'login_name' => 'ricardo',
             'password' => hash('sha256', 'password'),
         ];
 

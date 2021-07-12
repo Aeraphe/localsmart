@@ -27,7 +27,7 @@ class StaffFactory extends Factory
             'name' => $this->faker->name,
             'phone' => $this->faker->phoneNumber,
             'address' => $this->faker->address,
-            'user' => $this->faker->slug,
+            'login_name' => $this->faker->slug,
             'password' => hash('sha256', 'password'),
         ];
     }

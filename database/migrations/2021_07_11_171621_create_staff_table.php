@@ -20,7 +20,7 @@ class CreateStaffTable extends Migration
             $table->string('name');
             $table->string('phone');
             $table->string('address');
-            $table->string('user');
+            $table->string('login_name');
             $table->string('password');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
