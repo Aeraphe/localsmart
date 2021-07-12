@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::post('/admin/login',[LoginController::class,'authenticateAdmin']);
+
+Route::post('/login/{account?}/{store?}',[LoginController::class,'authenticateStaff']);
