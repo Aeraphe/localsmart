@@ -22,12 +22,13 @@ class Store extends Model
     ];
 
     /**
-     * Create a relationship to User - One To Many
-     * Get te user that owns the store
-     * @return App\User
+     * Create a relationship to Account - One To Many
+     * Get te Account that owns the store
+     * 
+     * @return App\Models\Account
      */
-    public function user()
+    public function account()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Account::class);
     }
 }
