@@ -25,9 +25,11 @@ class StoreFactory extends Factory
 
         return [
             'name' => $this->faker->company(),
+            'slug' => $this->faker->slug(),
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
             'account_id' => Account::factory(),
+
         ];
     }
 }
