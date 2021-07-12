@@ -4,6 +4,7 @@ namespace Tests\Feature\Models;
 
 use App\Models\Account;
 use App\Models\Customer;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -127,4 +128,25 @@ class AccountTest extends TestCase
         //assert
         $this->assertTrue($result);
     }
+
+    /**
+     * @test
+     */
+    public function should_check_can_create_store_fail_on_exceed_account_plan_quantity()
+    {
+        //arrange
+        $accountStoreQt = ['store_qt' => 1];
+        $sut = Account::factory()
+            ->has(Store::factory()->count(1))
+            ->create($accountStoreQt);
+
+        //act
+        $result = $sut->canCreateStore();
+
+        //assert
+        $this->assertFalse($result);
+    }
+
+
+
 }
