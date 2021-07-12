@@ -53,4 +53,14 @@ class Account extends Model
     {
         return $this->hasMany(Customer::class);
     }
+
+    /**
+     * Get account stores
+     *
+     * @return Collection<App\Models\Store>
+     */
+    public function stores()
+    {
+        return $this->hasMany(Store::class);
+    } 
 }
