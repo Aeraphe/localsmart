@@ -54,54 +54,6 @@ class User extends Authenticatable
 
 
 
-    /**
-     * User create a new Store
-     *
-     * @param array $data Contain data for create the store
-     *
-     *    $data[
-     *      'name'    =>    (string) Store name
-     *      'address' =>    (string) Store address
-     *      'phone'   =>    (string) Store phone number
-     *     ]
-     *
-     * @return App\Sotre | null
-     */
-    public function createStore(array $data)
-    {
 
-        $data['user_id'] = $this->id;
-
-        if ($this->canCreateStores()) {
-            return Store::create($data);
-        } else {
-            return null;
-        }
-
-    }
-
-    /**
-     * Check is user can create sotre
-     *
-     * @return boolean
-     */
-    public function canCreateStores()
-    {
-        $account = $this->account;
-        $stores = $this->stores;
-
-        if ($account->plan_status) {
-            if ($stores == []) {
-
-                return true;
-
-            } elseif ($stores->count() < $account->store_qt) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        return false;
-    }
 
 }
