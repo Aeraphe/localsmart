@@ -41,4 +41,14 @@ class Staff extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Return the stores that staff can access
+     *
+     * @return Coleciton<App\Models\Store>
+     */
+    public function stores()
+    {
+        return $this->belongsToMany(Store::class);
+    }
+
 }
