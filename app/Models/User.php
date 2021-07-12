@@ -52,14 +52,7 @@ class User extends Authenticatable
         return $this->hasOne(Account::class);
     }
 
-    /**
-     * Get user stores (relationship)
-     * @return Store
-     */
-    public function stores()
-    {
-        return $this->hasMany(Store::class);
-    }
+
 
     /**
      * User create a new Store
