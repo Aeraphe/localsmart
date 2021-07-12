@@ -62,5 +62,30 @@ class Account extends Model
     public function stores()
     {
         return $this->hasMany(Store::class);
-    } 
+    }
+
+  /**
+     * Check is user can create sotre
+     *
+     * @return boolean
+     */
+    public function canCreateStore()
+    {
+       
+        $stores = $this->stores;
+
+        if ($this->plan_status) {
+            if ($stores == []) {
+
+                return true;
+
+            } elseif ($stores->count() < $this->store_qt) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+    }
+    
 }
