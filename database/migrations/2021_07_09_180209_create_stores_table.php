@@ -21,6 +21,7 @@ class CreateStoresTable extends Migration
             $table->string('address');
             $table->string('phone');
             $table->string('slug');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }

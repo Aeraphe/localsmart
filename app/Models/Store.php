@@ -20,6 +20,7 @@ class Store extends Model
         'address',
         'phone',
         'account_id',
+        'status',
     ];
 
     /**
