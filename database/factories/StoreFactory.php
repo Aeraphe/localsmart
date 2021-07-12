@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use App\Models\Store;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class StoreFactory extends Factory
@@ -27,7 +27,7 @@ class StoreFactory extends Factory
             'name' => $this->faker->company(),
             'address' => $this->faker->address(),
             'phone' => $this->faker->phoneNumber(),
-            'user_id' => User::factory(),
+            'account_id' => Account::factory(),
         ];
     }
 }
