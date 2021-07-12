@@ -32,4 +32,14 @@ class Store extends Model
     {
         return $this->belongsTo(Account::class);
     }
+
+    /**
+     * Get staff that are loaded in store
+     *
+     * @return Colection<App\Models\Staff>
+     */
+    public function staff()
+    {
+        return $this->belongsToMany(Staff::class);
+    }
 }
