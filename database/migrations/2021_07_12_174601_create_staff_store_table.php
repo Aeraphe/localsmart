@@ -16,7 +16,6 @@ class CreateStaffStoreTable extends Migration
         Schema::create('staff_store', function (Blueprint $table) {
             $table->foreignId('staff_id')->constrained();
             $table->foreignId('store_id')->constrained();
-            $table->boolean('status')->default(true);
             $table->timestamps();
         });
     }
