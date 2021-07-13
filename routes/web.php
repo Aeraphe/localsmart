@@ -21,4 +21,4 @@ Route::get('/', function () {
 
 Route::post('/admin/login',[LoginController::class,'authenticateAdmin']);
 
-Route::post('/login/{account?}/{store?}',[LoginController::class,'authenticateStaff']);
+Route::post('/login/{account}/{store}',[LoginController::class,'authenticateEmploye']);
