@@ -166,4 +166,22 @@ class AccountTest extends TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @test
+     *
+     */
+    public function should_fail_on_check_if_account_can_create_store_when_plan_status_is_disable()
+    {
+        //arrange
+        $accountStoreQt = ['plan_status' => false];
+        $sut = Account::factory()->create($accountStoreQt);
+
+        //act
+        $result = $sut->canCreateStore();
+
+        //assert
+        $this->assertFalse($result);
+
+    }
+
 }
