@@ -1,0 +1,13 @@
+{
+    "name": "Gadget",
+    "alias": "gadget",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Gadget\\Providers\\GadgetServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
