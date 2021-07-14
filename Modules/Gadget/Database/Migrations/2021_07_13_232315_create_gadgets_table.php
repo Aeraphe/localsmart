@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGagetsTable extends Migration
+class CreateGadgetsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateGagetsTable extends Migration
      */
     public function up()
     {
-        Schema::create('gagets', function (Blueprint $table) {
+        Schema::create('gadgets', function (Blueprint $table) {
             $table->id();
 
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateGagetsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('gagets');
+        Schema::dropIfExists('gadgets');
     }
 }
