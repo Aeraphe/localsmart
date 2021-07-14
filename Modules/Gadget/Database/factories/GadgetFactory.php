@@ -3,7 +3,7 @@ namespace Modules\Gadget\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class GagetFactory extends Factory
+class GadgetFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.

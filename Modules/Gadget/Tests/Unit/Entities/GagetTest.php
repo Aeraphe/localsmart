@@ -2,19 +2,31 @@
 
 namespace Modules\Gadget\Tests\Unit\Entities;
 
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Modules\Gadget\Entities\GadgetType;
+use Modules\Gadget\Entities\Manufacturer;
+use Tests\TestCase;
 
 class GagetTest extends TestCase
 {
+
+    use WithFaker, RefreshDatabase;
+
     /**
-     * A basic unit test example.
+     * @test
      *
      * @return void
      */
-    public function testExample()
+    public function can_create_gadget()
     {
-        $this->assertTrue(true);
+        //arrange
+        $data =  ['name' => 'IPhone 11'];
+
+        //act
+        $result = Gadget::factory()->create()
+
+
+
     }
 }
