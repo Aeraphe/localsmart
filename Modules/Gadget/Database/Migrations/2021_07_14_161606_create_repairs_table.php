@@ -15,6 +15,7 @@ class CreateRepairsTable extends Migration
     {
         Schema::create('repairs', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('gadget_id')->unsigned();
             $table->string('name');
             $table->string('operation');
             $table->string('description');
