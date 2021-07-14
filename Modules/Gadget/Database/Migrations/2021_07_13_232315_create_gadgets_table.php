@@ -15,7 +15,9 @@ class CreateGadgetsTable extends Migration
     {
         Schema::create('gadgets', function (Blueprint $table) {
             $table->id();
-
+            $table->string('name');
+            $table->foreignId('manufacturer_id');
+            $table->foreignId('gadget_type_id');
             $table->timestamps();
         });
     }
