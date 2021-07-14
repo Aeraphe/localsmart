@@ -4,8 +4,7 @@ namespace Modules\Gadget\Tests\Unit\Entities;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Modules\Gadget\Entities\GadgetType;
-use Modules\Gadget\Entities\Manufacturer;
+use Modules\Gadget\Entities\Gadget;
 use Tests\TestCase;
 
 class GagetTest extends TestCase
@@ -21,12 +20,14 @@ class GagetTest extends TestCase
     public function can_create_gadget()
     {
         //arrange
-        $data =  ['name' => 'IPhone 11'];
+        $data = ['name' => 'iPhone 11'];
 
         //act
-        $result = Gadget::factory()->create()
+        $result = Gadget::factory()->create($data);
 
-
+        //assert
+        $this->assertInstanceOf(Gadget::class, $result);
+        $this->assertDatabaseHas('gadgets', $data);
 
     }
 }
