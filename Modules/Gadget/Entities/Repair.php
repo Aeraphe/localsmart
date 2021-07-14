@@ -14,6 +14,7 @@ class Repair extends Model
         'description',
         'dificult',
         'operation',
+        'gadget_id',
     ];
 
     protected static function newFactory()
