@@ -2,6 +2,7 @@
 namespace Modules\Gadget\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Gadget\Entities\Gadget;
 
 class RepairFactory extends Factory
 {
@@ -21,6 +22,7 @@ class RepairFactory extends Factory
     {
         return  [
             'name' => $this->faker->name,
+            'gadget_id' => Gadget::factory(),
             'operation' => 'solda',
             'description' => 'Retirar o display com cuidado para não quebrar',
             'dificult' => 3,
