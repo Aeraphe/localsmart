@@ -2,6 +2,8 @@
 namespace Modules\Gadget\Database\factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Gadget\Entities\GadgetType;
+use Modules\Gadget\Entities\Manufacturer;
 
 class GadgetFactory extends Factory
 {
@@ -20,7 +22,9 @@ class GadgetFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name,
+            'gadget_type_id' => GadgetType::factory(),
+            'manufacturer_id' => Manufacturer::factory(),
         ];
     }
 }
