@@ -10,7 +10,7 @@ class GagetFactory extends Factory
      *
      * @var string
      */
-    protected $model = \Modules\Gadget\Entities\Gaget::class;
+    protected $model = \Modules\Gadget\Entities\Gadget::class;
 
     /**
      * Define the model's default state.
