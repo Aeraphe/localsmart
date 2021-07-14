@@ -2,8 +2,8 @@
 
 namespace Modules\Gadget\Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Seeder;
 
 class GadgetDatabaseSeeder extends Seeder
 {
@@ -16,6 +16,7 @@ class GadgetDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-         $this->call(ManufacturerTableSeeder::class);
+        $this->call(ManufacturerTableSeeder::class);
+        $this->call(GadgetTypeTableSeeder::class);
     }
 }
