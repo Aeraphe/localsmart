@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Modules\Gadget\Entities\Manufacturer as EntitiesManufacturer;
 use Tests\TestCase;
 
-class Manufacturer extends TestCase
+class ManufacturerTest extends TestCase
 {
 
     use WithFaker, RefreshDatabase;
