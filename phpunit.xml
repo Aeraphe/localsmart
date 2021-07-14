@@ -7,11 +7,11 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
-        <testsuite name="UnitEquipament">
-            <directory suffix="Test.php">./Modules/Equipament/Tests/Unit</directory>
+        <testsuite name="UnitGadget">
+            <directory suffix="Test.php">./Modules/Gadget/Tests/Unit</directory>
         </testsuite>
-        <testsuite name="FeatureEquipament">
-            <directory suffix="Test.php">./Modules/Equipament/Tests/Feature</directory>
+        <testsuite name="FeatureGadget">
+            <directory suffix="Test.php">./Modules/Gadget/Tests/Feature</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
