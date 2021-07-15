@@ -29,8 +29,8 @@ class LoginController extends Controller
 
             if (Hash::check($credentials['password'], $user->password)) {
 
-                $request->session()->regenerate();
-                return response()->json($user, 200);
+                $token = $user->createToken('maria dalva de castro oliveira')->accessToken;
+                return response()->json(['data' => ['name' => $user->name, 'access_token' => $token]], 200);
             }
 
             return back()->withErrors([
@@ -38,7 +38,7 @@ class LoginController extends Controller
             ]);
 
         } catch (\Exception$e) {
-            return response()->json(['error' => 'user not found!'], 404);
+            return response()->json(['error' => 'user not found!', 'message' => $e->getMessage()], 404);
         }
 
     }
@@ -64,10 +64,13 @@ class LoginController extends Controller
             $store = $stores->firstWhere('slug', $storeSlug);
 
             if (Hash::check($credentials['password'], $employe->password) && $store->status) {
-                $request->session()->regenerate();
+
+                $token = $employe->createToken('maria dalva de castro oliveira')->accessToken;
                 return response()->json(['data' => [
                     'name' => $employe->name,
                     'store' => $store->name,
+                    'access_token' => $token,
+
                 ]], 200);
             }
 
@@ -76,7 +79,7 @@ class LoginController extends Controller
             ]);
 
         } catch (\Exception$e) {
-            return response()->json(['error' => 'user not found!'], 404);
+            return response()->json(['error' => 'user not found!', 'message' => $e->getMessage()], 404);
         }
 
     }
