@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\Account;
+
 use App\Models\Staff;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -14,6 +15,13 @@ class LoginControllerTest extends TestCase
 {
 
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Artisan::call('passport:install'); 
+    }
+
     /**
      * @test
      *
@@ -27,7 +35,7 @@ class LoginControllerTest extends TestCase
         User::factory()->create($data);
 
         //act
-        $response = $this->post('/admin/login',
+        $response = $this->post('/api/v1/admin/login',
             ['email' => 'alberto.aeraph@gmail.com', 'password' => $password]);
 
         //assert
@@ -59,7 +67,7 @@ class LoginControllerTest extends TestCase
         //Set the employe to the store
         $employ->stores()->attach($store->id);
 
-        $route = '/login/' . $account->slug . '/' . $store->slug;
+        $route = '/api/v1/login/' . $account->slug . '/' . $store->slug;
 
         $responseStructure = [
             'data' => [
@@ -76,4 +84,6 @@ class LoginControllerTest extends TestCase
         $response->assertJsonStructure($responseStructure);
 
     }
+
+    
 }
