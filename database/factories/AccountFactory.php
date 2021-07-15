@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Account;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use phpseclib3\Crypt\Random;
 
 class AccountFactory extends Factory
 {
@@ -27,7 +28,7 @@ class AccountFactory extends Factory
             'plan_status' => true,
             'store_qt' => 1,
             'user_id' => User::factory(),
-            'slug' => 'localsmart',
+            'slug' => $this->faker->slug,
         ];
     }
 }
