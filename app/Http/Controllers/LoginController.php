@@ -41,7 +41,7 @@ class LoginController extends Controller
      * @param EmployeAuthRequest $request
      * @return Response
      */
-    public function authenticateEmploye(EmployeAuthRequest $request)
+    public function authenticateEmployeApi(EmployeAuthRequest $request)
     {
         try {
 
