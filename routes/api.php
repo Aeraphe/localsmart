@@ -25,5 +25,5 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', [LoginController::class, 'authenticateAccountUserApi'])->name('api-auth-admin');
     });
 
-    Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmploye']);
+    Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmployeApi'])->name('api-auth-employe');
 });
