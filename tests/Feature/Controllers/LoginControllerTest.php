@@ -7,6 +7,7 @@ use App\Models\Store;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
@@ -52,14 +53,14 @@ class LoginControllerTest extends TestCase
         //arrange
         $password = '123';
         $data = ['email' => 'alberto.aeraph@gmail.com', 'password' => Hash::make($password)];
-        User::factory()->create($data);
-
-        //act
+        $user = User::factory()->create($data);
+    
         $response = $this->post('/api/v1/account/login',
             ['email' => 'alberto.aeraph@gmail.com', 'password' => '']);
 
         //assert
         $response->assertStatus(302);
+      
 
     }
 
@@ -73,7 +74,7 @@ class LoginControllerTest extends TestCase
         //arrange
         $password = '123';
         $data = ['email' => 'alberto.aeraph@gmail.com', 'password' => Hash::make($password)];
-        User::factory()->create($data);
+        $user = User::factory()->create($data);
 
         //act
         $response = $this->post('/account/login',
@@ -81,6 +82,8 @@ class LoginControllerTest extends TestCase
 
         //assert
         $response->assertStatus(200);
+        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($user,'web');
 
     }
 
@@ -102,6 +105,7 @@ class LoginControllerTest extends TestCase
 
         //assert
         $response->assertStatus(302);
+        
 
     }
 
@@ -144,6 +148,7 @@ class LoginControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJsonStructure($responseStructure);
+      
 
     }
 
@@ -227,6 +232,8 @@ class LoginControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJsonStructure($responseStructure);
+        $this->assertAuthenticated();
+        $this->assertAuthenticatedAs($employ,'web');
 
     }
 
