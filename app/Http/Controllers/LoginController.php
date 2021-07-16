@@ -2,35 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminAuthRequest;
 use App\Models\Account;
 use App\Models\Staff;
-use App\Models\User;
+use App\Services\AuthenticateService as AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+
     /**
      * Handle an authentication attempt
      */
-    public function authenticateAdmin(Request $request)
+    public function authenticateAccountUserApi(AdminAuthRequest $request)
     {
 
         try {
 
-            $credentials = $request->validate(
-                [
-                    'email' => ['required', 'email'],
-                    'password' => ['required'],
-                ]
-            );
+            $credentials = $request->validated();
+            $authenticateUser = AuthService::athenticateAccountUser($credentials);
 
-            $user = User::where('email', $credentials['email'])->firstOrFail();
-
-            if (Hash::check($credentials['password'], $user->password)) {
-
-                $token = $user->createToken('maria dalva de castro oliveira')->accessToken;
-                return response()->json(['data' => ['name' => $user->name, 'access_token' => $token]], 200);
+            if ($authenticateUser) {
+                $token = $authenticateUser->createToken('maria dalva de castro oliveira')->accessToken;
+                return response()->json(['data' => ['name' => $authenticateUser->name, 'access_token' => $token]], 200);
             }
 
             return back()->withErrors([
