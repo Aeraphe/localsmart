@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminAuthRequest;
 use App\Http\Requests\EmployeAuthRequest;
 use App\Services\AuthenticateService as AuthService;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -47,6 +48,7 @@ class LoginController extends Controller
             $authenticateUser = AuthService::athenticateAccountUser($credentials);
 
             if ($authenticateUser) {
+                Auth::login($authenticateUser);
                 $request->session()->regenerate();
                 return response()->json(['data' => ['name' => $authenticateUser->name]], 200);
             }
@@ -114,6 +116,7 @@ class LoginController extends Controller
             $employe = AuthService::authenticateEmployeUser($credentials, $accountSlug, $storeSlug);
 
             if ($employe) {
+                Auth::login($employe);
                 $request->session()->regenerate();
                 return response()->json(['data' => [
                     'name' => $employe->name,
