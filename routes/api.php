@@ -21,8 +21,8 @@ Route::middleware('auth:api')->prefix('v1')->group(function () {
 
 Route::prefix('v1')->group(function () {
 
-    Route::prefix('admin')->group(function () {
-        Route::post('/login', [LoginController::class, 'authenticateAdmin']);
+    Route::prefix('account')->group(function () {
+        Route::post('/login', [LoginController::class, 'authenticateAccountUserApi'])->name('api-auth-admin');
     });
 
     Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmploye']);
