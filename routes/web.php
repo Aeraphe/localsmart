@@ -22,3 +22,4 @@ Route::prefix('account')->group(function () {
     Route::post('/login', [LoginController::class, 'authenticateAccountUserWeb'])->name('auth-admin');
 });
 
+Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmployeWeb'])->name('auth-employe');
