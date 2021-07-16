@@ -97,4 +97,39 @@ class LoginController extends Controller
 
     }
 
+    /**
+     * Authenticate Store employes
+     *
+     * @param EmployeAuthRequest $request
+     * @return Response
+     */
+    public function authenticateEmployeWeb(EmployeAuthRequest $request)
+    {
+        try {
+
+            $credentials = $request->validated();
+            $accountSlug = $request->route('account');
+            $storeSlug = $request->route('store');
+
+            $employe = AuthService::authenticateEmployeUser($credentials, $accountSlug, $storeSlug);
+
+            if ($employe) {
+                $request->session()->regenerate();
+                return response()->json(['data' => [
+                    'name' => $employe->name,
+                    'store' => $employe->stores->firstWhere('slug', $storeSlug)->name,
+
+                ]], 200);
+            }
+
+            return back()->withErrors([
+                'error' => 'The provided credentials do not match our records.',
+            ]);
+
+        } catch (\Exception$e) {
+            return response()->json(['error' => 'user not found!', 'message' => $e->getMessage()], 404);
+        }
+
+    }
+
 }
