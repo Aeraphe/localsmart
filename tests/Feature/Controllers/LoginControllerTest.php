@@ -147,7 +147,7 @@ class LoginControllerTest extends TestCase
 
     }
 
-     /**
+    /**
      * @test
      *
      */
@@ -186,6 +186,47 @@ class LoginControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJsonStructure($responseStructure);
+
+    }
+
+    /**
+     * @test
+     *
+     */
+    public function should_employe_user_authenticate_with_web_fail()
+    {
+
+        //arrange
+
+        $store = Store::factory()->create();
+        $account = $store->account;
+
+        $password = 'password';
+        $empployeData = [
+            'login_name' => 'alberto',
+            'password' => Hash::make($password),
+            'account_id' => $account->id,
+        ];
+
+        $employ = Staff::factory()->create($empployeData);
+
+        //Set the employe to the store
+        $employ->stores()->attach($store->id);
+
+        $route = '/login/' . $account->slug . '/' . $store->slug;
+
+        $responseStructure = [
+            'data' => [
+                'store',
+                'name',
+            ],
+        ];
+
+        //act
+        $response = $this->post($route, ['login_name' => $employ->login_name, 'password' => '']);
+
+        //assert
+        $response->assertStatus(302);
 
     }
 
