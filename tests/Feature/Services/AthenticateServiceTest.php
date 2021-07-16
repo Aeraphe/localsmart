@@ -26,4 +26,23 @@ class AthenticateServiceTest extends TestCase
         $this->assertInstanceOf(User::class, $resutl);
 
     }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function should_account_user_authenticate_fail()
+    {
+
+        //arrange
+        $user = User::factory()->create();
+
+        //act
+        $resutl = AuthenticateService::athenticateAccountUser(['email' => $user->email, 'password' => '']);
+
+        //assert
+        $this->assertFalse($resutl);
+
+    }
 }
