@@ -66,6 +66,27 @@ class LoginControllerTest extends TestCase
     /**
      * @test
      *
+     * @return void
+     */
+    public function should_account_user_authenticate_with_web()
+    {
+        //arrange
+        $password = '123';
+        $data = ['email' => 'alberto.aeraph@gmail.com', 'password' => Hash::make($password)];
+        User::factory()->create($data);
+
+        //act
+        $response = $this->post('/account/login',
+            ['email' => 'alberto.aeraph@gmail.com', 'password' => $password]);
+
+        //assert
+        $response->assertStatus(200);
+
+    }
+
+    /**
+     * @test
+     *
      */
     public function should_employe_user_authenticate_with_api()
     {
