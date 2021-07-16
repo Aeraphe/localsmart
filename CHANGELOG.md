@@ -1,4 +1,81 @@
-#### 2021-07-14
+#### 2021-07-15
+
+##### Chores
+
+* **packages:**
+  *  remove laravel ui (24c20c06)
+  *  install laravel ui (93da2039)
+* **docs:**  create changelog (a0ec64d1)
+
+##### New Features
+
+* **factories:**
+  *  create factory for RepairInvoiceStatus model (8bb5667e)
+  *  create factory for InvoiceEquipamentCondition model (73058256)
+  *  create a factory for RepairInvoice model (16f14068)
+* **database:**
+  *  create migration for RepairInvoiceStatus model (06e5af78)
+  *  create migration for InvoiceEquipamentCondition model (06d5d762)
+  *  create a migration for RepairInvoice model (93ba9dd6)
+* **models:**
+  *  create RepairInvoiceStatus model (8f78330f)
+  *  create InvoiceEquipamentCondition model (a810b7c8)
+  *  create RepairInvoice model (6035cb3a)
+* **controllers:**  change login controller authentication from web session to api token (45c3b9eb)
+* **routes:**
+  *  create api login route with access token (7b95c44b)
+  *  delete web login routes (bee53bc3)
+* **gadget-factory:**
+  *  create factory for Gadget model (1ad8fe9d)
+  *  add new prop gadget_id on repair factory (631f13cc)
+  *  create factory for GadgetCheckItem model (abb36d36)
+  *  create factory for RepaiRisk model (8e06f1c7)
+  *  create factory for Repair model (8eee42a5)
+  *  create factory for GadgetType model (8125d9c1)
+  *  create factory for manufacturer (0fd6a58e)
+* **gadget-database:**
+  *  create migration for Gadget model (12e8f19e)
+  *  add new prop gadget_id on repair migation (9a820107)
+  *  create migration for GadgetCheckItem model (e53c49ab)
+  *  create migration for RepaiRisk model (163535d0)
+  *  create migration for Repair model (8f30d80f)
+  *  create migration for GadgetType model (74343ea1)
+  *  create migration for manufacturer (ea2d2df7)
+* **gadget-models:**
+  *  create gadget model (cdbd312c)
+  *  create GadgetCheckItem model (ee955456)
+  *  create RepaiRick model (717f318f)
+  *  create Repair model (6770450f)
+  *  create GadgetType model (f97bef91)
+  *  create manufacturer model (6dc1640d)
+* **gadget-seeders:**  create a seeder for GadgetType model (32e33311)
+
+##### Bug Fixes
+
+* **factorie:**  add faker randon value for account slug propertie (7e9821c9)
+* **gadget-test:**  add test prefix on class manufacturer (68e30723)
+* **gadget-models:**  add missing prop gadget_id on Gadget model (3ac269e0)
+* **gadget-database:**  fix database table name from gagets to gadgets in migration (388eee5c)
+* **gadget-factory:**   fix model GadgetFactory name (bac107f8)
+
+##### Other Changes
+
+* **gadget-models:**  change file name gaget to gadget' (a3f72286)
+* **gadget-factory:**  change file name gagetfactory to gadgetfactory' (39207e60)
+
+##### Tests
+
+*  create test for check if can create a RepairInvoiceStatus model (449930d3)
+*  make test for check if can create InvoiceEquipamentCondition model (8668e25c)
+*  create test for check if can create a RepairInvoice (69bf75e3)
+*  change login test from web to api form (3d617c4f)
+* **gadget:**
+  *  make test for check if should create Gadget model (8e70c624)
+  *  make test for check if can create a GadgetCheckItem (45a03108)
+  *  make test for check if can create a RepaiRisk model (32c36f12)
+  *  make test for check if should create a Repair model (9ad38ac2)
+  *  make test for check should create GadgetType model (d4dfac4b)
+  *  make test for check should create manufacturer (f479545e)
 
 #### 2021-07-14
 
