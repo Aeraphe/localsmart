@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Account;
+use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,6 +27,27 @@ class AuthenticateService
         };
 
         return false;
+    }
+
+    public static function authenticateEmployeUser($credentials, $accountSlug, $storeSlug)
+    {
+
+        $account = Account::where('slug', $accountSlug)->firstOrFail();
+
+        $employeQuery = [['login_name', '=', $credentials['login_name']], ['account_id', '=', $account->id]];
+        $employe = Staff::where($employeQuery)->firstOrFail();
+
+        $stores = $employe->stores;
+
+        $store = $stores->firstWhere('slug', $storeSlug);
+
+        if (Hash::check($credentials['password'], $employe->password) && $store->status) {
+
+            return $employe;
+        };
+
+        return false;
+
     }
 
 }
