@@ -47,7 +47,7 @@ class LoginControllerTest extends TestCase
      *
      * @return void
      */
-    public function should_account_user_authenticate_with_api_fail()
+    public function should_account_user_authenticate_with_api_fail_with_wrong_credentials()
     {
         //arrange
         $password = '123';
@@ -90,7 +90,7 @@ class LoginControllerTest extends TestCase
      *
      * @return void
      */
-    public function should_account_user_authenticate_with_web_fail()
+    public function should_account_user_authenticate_with_web_fail_with_wrong_credentials()
     {
         //arrange
         $password = '123';
@@ -104,6 +104,7 @@ class LoginControllerTest extends TestCase
         //assert
         $response->assertStatus(302);
         $this->assertGuest();
+        $response->assertSessionHasErrors(['password']);
 
     }
 
@@ -153,7 +154,7 @@ class LoginControllerTest extends TestCase
      * @test
      *
      */
-    public function should_employe_user_authenticate_with_api_fail()
+    public function should_employe_user_authenticate_with_api_fail_with_wrong_credentials()
     {
 
         //arrange
@@ -175,12 +176,6 @@ class LoginControllerTest extends TestCase
 
         $route = '/api/v1/login/' . $account->slug . '/' . $store->slug;
 
-        $responseStructure = [
-            'data' => [
-                'store',
-                'name',
-            ],
-        ];
 
         //act
         $response = $this->post($route, ['login_name' => $employ->login_name, 'password' => '']);
@@ -238,7 +233,7 @@ class LoginControllerTest extends TestCase
      * @test
      *
      */
-    public function should_employe_user_authenticate_with_web_fail()
+    public function should_employe_user_authenticate_with_web_fail_with_wrong_credentials()
     {
 
         //arrange
@@ -260,19 +255,13 @@ class LoginControllerTest extends TestCase
 
         $route = '/login/' . $account->slug . '/' . $store->slug;
 
-        $responseStructure = [
-            'data' => [
-                'store',
-                'name',
-            ],
-        ];
-
         //act
         $response = $this->post($route, ['login_name' => $employ->login_name, 'password' => '']);
 
         //assert
         $response->assertStatus(302);
         $this->assertGuest();
+        $response->assertSessionHasErrors(['password']);
 
     }
 
