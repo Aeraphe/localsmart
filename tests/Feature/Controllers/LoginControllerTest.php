@@ -27,7 +27,7 @@ class LoginControllerTest extends TestCase
      *
      * @return void
      */
-    public function should_account_user_authenticate()
+    public function should_account_user_authenticate_with_api()
     {
         //arrange
         $password = '123';
@@ -47,7 +47,7 @@ class LoginControllerTest extends TestCase
      * @test
      *
      */
-    public function should_staff_user_authenticate()
+    public function should_employe_user_authenticate_with_api()
     {
 
         //arrange
