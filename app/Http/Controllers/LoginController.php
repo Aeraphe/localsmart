@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminAuthRequest;
-use App\Models\Account;
-use App\Models\Staff;
+use App\Http\Requests\EmployeAuthRequest;
 use App\Services\AuthenticateService as AuthService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -38,33 +35,28 @@ class LoginController extends Controller
 
     }
 
-    public function authenticateEmploye(Request $request)
+    /**
+     * Authenticate Store employes
+     *
+     * @param EmployeAuthRequest $request
+     * @return Response
+     */
+    public function authenticateEmploye(EmployeAuthRequest $request)
     {
         try {
-            $credentials = $request->validate([
-                'login_name' => ['required'],
-                'password' => ['required'],
-            ]);
 
+            $credentials = $request->validated();
             $accountSlug = $request->route('account');
             $storeSlug = $request->route('store');
 
-            $account = Account::where('slug', $accountSlug)->firstOrFail();
+            $employe = AuthService::authenticateEmployeUser($credentials, $accountSlug, $storeSlug);
 
-            $employeQuery = [['login_name', '=', $credentials['login_name']], ['account_id', '=', $account->id]];
-            $employe = Staff::where($employeQuery)->firstOrFail();
-
-            $stores = $employe->stores;
-
-            $store = $stores->firstWhere('slug', $storeSlug);
-
-            if (Hash::check($credentials['password'], $employe->password) && $store->status) {
-
+            if ($employe) {
                 $token = $employe->createToken('maria dalva de castro oliveira')->accessToken;
                 return response()->json(['data' => [
                     'name' => $employe->name,
-                    'store' => $store->name,
                     'access_token' => $token,
+                    'store' => $employe->stores->firstWhere('slug', $storeSlug)->name,
 
                 ]], 200);
             }
