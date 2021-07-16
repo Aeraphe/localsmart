@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Controllers;
 
-
 use App\Models\Staff;
 use App\Models\Store;
 use App\Models\User;
@@ -19,7 +18,7 @@ class LoginControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Artisan::call('passport:install'); 
+        Artisan::call('passport:install');
     }
 
     /**
@@ -40,6 +39,27 @@ class LoginControllerTest extends TestCase
 
         //assert
         $response->assertStatus(200);
+
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function should_account_user_authenticate_with_api_fail()
+    {
+        //arrange
+        $password = '123';
+        $data = ['email' => 'alberto.aeraph@gmail.com', 'password' => Hash::make($password)];
+        User::factory()->create($data);
+
+        //act
+        $response = $this->post('/api/v1/account/login',
+            ['email' => 'alberto.aeraph@gmail.com', 'password' => '']);
+
+        //assert
+        $response->assertStatus(302);
 
     }
 
@@ -85,5 +105,4 @@ class LoginControllerTest extends TestCase
 
     }
 
-    
 }
