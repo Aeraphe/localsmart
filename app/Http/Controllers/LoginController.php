@@ -36,6 +36,32 @@ class LoginController extends Controller
     }
 
     /**
+     * Handle an authentication attempt for web routes, with session
+     */
+    public function authenticateAccountUserWeb(AdminAuthRequest $request)
+    {
+
+        try {
+
+            $credentials = $request->validated();
+            $authenticateUser = AuthService::athenticateAccountUser($credentials);
+
+            if ($authenticateUser) {
+                $request->session()->regenerate();
+                return response()->json(['data' => ['name' => $authenticateUser->name]], 200);
+            }
+
+            return back()->withErrors([
+                'error' => 'The provided credentials do not match our records.',
+            ]);
+
+        } catch (\Exception$e) {
+            return response()->json(['error' => 'user not found!', 'message' => $e->getMessage()], 404);
+        }
+
+    }
+
+    /**
      * Authenticate Store employes
      *
      * @param EmployeAuthRequest $request
