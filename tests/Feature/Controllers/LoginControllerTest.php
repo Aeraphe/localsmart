@@ -27,7 +27,7 @@ class LoginControllerTest extends TestCase
      *
      * @return void
      */
-    public function should_admin_user_authenticate()
+    public function should_account_user_authenticate()
     {
         //arrange
         $password = '123';
@@ -35,7 +35,7 @@ class LoginControllerTest extends TestCase
         User::factory()->create($data);
 
         //act
-        $response = $this->post('/api/v1/admin/login',
+        $response = $this->post('/api/v1/account/login',
             ['email' => 'alberto.aeraph@gmail.com', 'password' => $password]);
 
         //assert
