@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\CutomException;
 use App\Http\Requests\AdminAuthRequest;
 use App\Http\Requests\EmployeAuthRequest;
+use App\Services\ApiResponse\ApiResponseErrorService as ErrorResponse;
+use App\Services\ApiResponse\ApiResponseService as ApiResponse;
 use App\Services\AuthenticateService as AuthService;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,18 +23,13 @@ class LoginController extends Controller
 
             $credentials = $request->validated();
             $authenticateUser = AuthService::athenticateAccountUser($credentials);
+            $token = $authenticateUser->createToken('maria dalva de castro oliveira')->accessToken;
+            $data = ['name' => $authenticateUser->name, 'access_token' => $token];
+            return ApiResponse::make('Login realizado com sucesso', 200, $data);
 
-            if ($authenticateUser) {
-                $token = $authenticateUser->createToken('maria dalva de castro oliveira')->accessToken;
-                return response()->json(['data' => ['name' => $authenticateUser->name, 'access_token' => $token]], 200);
-            }
+        } catch (CutomException $e) {
 
-            return back()->withErrors([
-                'error' => 'The provided credentials do not match our records.',
-            ]);
-
-        } catch (\Exception$e) {
-            return response()->json(['error' => 'user not found!', 'message' => $e->getMessage()], 404);
+            return ErrorResponse::make($e, $e->getData());
         }
 
     }
