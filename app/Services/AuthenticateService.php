@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Models\Account;
 use App\Models\Staff;
 use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
+use \App\Exceptions\CutomException;
 
 class AuthenticateService
 {
@@ -18,15 +20,32 @@ class AuthenticateService
      */
     public static function athenticateAccountUser($credentials)
     {
-        $user = User::where('email', $credentials['email'])->firstOrFail();
 
-        if (Hash::check($credentials['password'], $user->password)) {
+        try {
+            $user = User::where('email', $credentials['email'])->firstOrFail();
 
-            return $user;
+            if (Hash::check($credentials['password'], $user->password)) {
 
-        };
+                return $user;
+            };
 
-        return false;
+            $customException = new CutomException(
+                'Não foi possivel localizar o usuário com o email fornecido',
+                403,
+                ['password' => 'credential not valid']
+            );
+
+            throw $customException;
+
+        } catch (ModelNotFoundException) {
+            $customException = new CutomException(
+                'Não foi possivel localizar o usuário com o email fornecido',
+                404,
+                ['email' => 'email not found']
+            );
+            throw $customException;
+        }
+
     }
 
     public static function authenticateEmployeUser($credentials, $accountSlug, $storeSlug)
