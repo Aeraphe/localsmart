@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuthRequest;
 use App\Http\Requests\EmployeAuthRequest;
 use App\Services\ApiResponse\ApiResponseErrorService as ErrorResponse;
