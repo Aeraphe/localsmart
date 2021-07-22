@@ -2,12 +2,13 @@
 
 namespace App\Services;
 
+use App\Exceptions\AuthenticateAccountUser\AuthenticateEmailException;
+use App\Exceptions\AuthenticateAccountUser\AuthenticatePasswordException;
 use App\Models\Account;
 use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
-use \App\Exceptions\CutomException;
 
 class AuthenticateService
 {
@@ -22,28 +23,24 @@ class AuthenticateService
     {
 
         try {
+            //Check if the user exists for the given e-mail or fail if not
             $user = User::where('email', $credentials['email'])->firstOrFail();
 
+            //If the user exists check the password else throw an exception
             if (Hash::check($credentials['password'], $user->password)) {
+                //Create new access token and set it to the current user
+                $user->withAccessToken($user->createToken('maria dalva de castro oliveira')->accessToken);
 
                 return $user;
-            };
+            } else {
 
-            $customException = new CutomException(
-                'Não foi possivel localizar o usuário com o email fornecido',
-                403,
-                ['password' => 'credential not valid']
-            );
+                throw new AuthenticatePasswordException('Não foi possivel localizar o usuário com a senha fornecida', 403);
 
-            throw $customException;
-
+            }
         } catch (ModelNotFoundException) {
-            $customException = new CutomException(
-                'Não foi possivel localizar o usuário com o email fornecido',
-                404,
-                ['email' => 'email not found']
-            );
-            throw $customException;
+
+            throw new AuthenticateEmailException('Não foi possivel localizar o usuário com o email fornecido', 404);
+
         }
 
     }
