@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\CutomException;
 use App\Http\Requests\AdminAuthRequest;
 use App\Http\Requests\EmployeAuthRequest;
 use App\Services\ApiResponse\ApiResponseErrorService as ErrorResponse;
 use App\Services\ApiResponse\ApiResponseService as ApiResponse;
 use App\Services\AuthenticateService as AuthService;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -23,13 +23,14 @@ class LoginController extends Controller
 
             $credentials = $request->validated();
             $authenticateUser = AuthService::athenticateAccountUser($credentials);
-            $token = $authenticateUser->createToken('maria dalva de castro oliveira')->accessToken;
-            $data = ['name' => $authenticateUser->name, 'access_token' => $token];
+            $data = ['name' => $authenticateUser->name, 'access_token' => $authenticateUser->token()];
+            
             return ApiResponse::make('Login realizado com sucesso', 200, $data);
 
-        } catch (CutomException $e) {
+        } catch (Exception $e) {
 
-            return ErrorResponse::make($e, $e->getData());
+            return ErrorResponse::make($e);
+
         }
 
     }
