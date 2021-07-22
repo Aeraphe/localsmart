@@ -51,4 +51,39 @@ class AccountRegisterTest extends TestCase
         $response->assertJsonStructure($responseStructure, $response->getContent());
 
     }
+
+    /**
+     * @test
+     */
+    public function it_fail_if_email_already_exists_on_database()
+    {
+        
+        
+        //arrange
+        $postData = [
+            'name' => 'Alberto ',
+            'email' => "test@test.com",
+            'password' => 'password',
+            'password_confirmation' => "password",
+
+        ];
+
+        $responseStructure = [
+            'data',
+            '_message',
+            '_status',
+            '_url',
+            '_method',
+        ];
+        
+        $this->post('api/v1/account/register', $postData);
+      
+
+        //act
+        $response = $this->post('api/v1/account/register', $postData);
+
+        //assert
+        $response->assertStatus(302);
+  
+    }
 }
