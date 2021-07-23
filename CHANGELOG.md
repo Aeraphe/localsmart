@@ -1,3 +1,147 @@
+#### 2021-07-23
+
+##### Chores
+
+*  change loginController to auth subfolder (422139db)
+* **packges:**  install livewire package (e379ea7b)
+* **packages:**
+  *  remove laravel ui (24c20c06)
+  *  install laravel ui (93da2039)
+* **docs:**  create changelog (a0ec64d1)
+
+##### Documentation Changes
+
+*  update changelog (24ed50a0)
+
+##### New Features
+
+* **routes:**
+  *  create post customer route (8d2f3803)
+  *  create accout register api route (7578004b)
+  *  create web route for employe login with session (d0bca640)
+  *  create web route for account login with session (163750cf)
+  *  change method authenticateEmploye to authenticateEmployeApi (e2fd301a)
+  *  change the prefix admin from login api route to account (fe2d9f96)
+  *  create api login route with access token (7b95c44b)
+  *  delete web login routes (bee53bc3)
+* **services:**
+  *  change error response format for ApiResponseErrorService (13201174)
+  *  create RegisterAccountService (181167b9)
+  *  update for ApiResponseErrorService for receive custom exception and php default exception (b35b34bf)
+  *  create a api default  success responese (ac06d05b)
+  *  create a api default response for errors (7875791d)
+  *  create authenticate employe service (6c5aa38d)
+  *  create authenticate account user service (733563bd)
+* **request:**  create request for validate register new accounts (b2cde15c)
+* **controllers:**
+  *  create a controller for register new accounts (2376138b)
+  *  move create token from authenticateAccountUserApi to AuthenticateService (30b16931)
+  *  add auth:login facade method for register user on session (7da30a85)
+  *  create a login with session for employes (b9338158)
+  *  make method for account user authenticate by session fail (da850f8f)
+  *  make method for account user authenticate by session (f82c8b67)
+  *  change method name authenticateEmploye to authenticateEmployeApi on LoginController (10d7d6d8)
+  *  change login controller authentication from web session to api token (45c3b9eb)
+* **exceptions:**
+  *  create custom AuthenticatePasswordException for Account Users Login (d1d26a87)
+  *  create custom AuthenticateEmailException for Account Users Login (cc0340cf)
+  *  create a base exception class for create custom exceptions (e88b5c23)
+  *  create a custom exception (35d6a454)
+* **resources:**  create a user resourcer (e9c85bd5)
+* **seeders:**  create a seeder for account user' (f2950a44)
+* **core:**  config cors for api (d14e7611)
+* **factories:**
+  *  create factory for RepairInvoiceStatus model (8bb5667e)
+  *  create factory for InvoiceEquipamentCondition model (73058256)
+  *  create a factory for RepairInvoice model (16f14068)
+* **database:**
+  *  create migration for RepairInvoiceStatus model (06e5af78)
+  *  create migration for InvoiceEquipamentCondition model (06d5d762)
+  *  create a migration for RepairInvoice model (93ba9dd6)
+* **models:**
+  *  create RepairInvoiceStatus model (8f78330f)
+  *  create InvoiceEquipamentCondition model (a810b7c8)
+  *  create RepairInvoice model (6035cb3a)
+* **gadget-factory:**
+  *  create factory for Gadget model (1ad8fe9d)
+  *  add new prop gadget_id on repair factory (631f13cc)
+  *  create factory for GadgetCheckItem model (abb36d36)
+  *  create factory for RepaiRisk model (8e06f1c7)
+  *  create factory for Repair model (8eee42a5)
+  *  create factory for GadgetType model (8125d9c1)
+  *  create factory for manufacturer (0fd6a58e)
+* **gadget-database:**
+  *  create migration for Gadget model (12e8f19e)
+  *  add new prop gadget_id on repair migation (9a820107)
+  *   create migration for GadgetCheckItem model (e53c49ab)
+  *  create migration for RepaiRisk model (163535d0)
+  *  create migration for Repair model (8f30d80f)
+  *  create migration for GadgetType model (74343ea1)
+  *  create migration for manufacturer (ea2d2df7)
+* **gadget-models:**
+  *  create gadget model (cdbd312c)
+  *  create GadgetCheckItem model (ee955456)
+  *  create RepaiRick model (717f318f)
+  *  create Repair model (6770450f)
+  *  create GadgetType model (f97bef91)
+  *  create manufacturer model (6dc1640d)
+* **gadget-seeders:**  create a seeder for GadgetType model (32e33311)
+
+##### Bug Fixes
+
+* **controllers:**  fix create account exceptin catch from AccountRegisterController (32ca421a)
+* **factorie:**  add faker randon value for account slug propertie (7e9821c9)
+* **gadget-test:**  add test prefix on class manufacturer (68e30723)
+* **gadget-models:**  add missing prop gadget_id on Gadget model (3ac269e0)
+* **gadget-database:**  fix database table name from gagets to gadgets in migration (388eee5c)
+* **gadget-factory:**   fix model GadgetFactory name (bac107f8)
+
+##### Other Changes
+
+* **gadget-models:**  change file name gaget to gadget' (a3f72286)
+* **gadget-factory:**  change file name gagetfactory to gadgetfactory' (39207e60)
+
+##### Refactors
+
+* **tests:**
+  *  split should_account_user_authenticate_fail in two separete tests for wrong email and wrong password (2141f6ef)
+  *  change LoginControllerTest tests names (cef51cfc)
+* **services:**
+  *  add custom exceptions on authenticateAccountUser (7bcc6299)
+  *  add custom exception on athenticateAccountUser (5e660af3)
+* **database:**  change email value for user seeder (c3060d78)
+* **models:**  inprove  authenticateAccountUserApi (623c7bcb)
+* **controllers:**
+  *  move authenticate employ code to authenticateService (a0af1e83)
+  *  refactor api login for account users (12c6664f)
+
+##### Tests
+
+*  make test for check that attemp to create account with exist  email will fail (3aae4377)
+*   make test for check that should register new account (16804d67)
+*  add assertSessionHasErrors on login fail tests (25c4f4c3)
+*  add assertGuest on web tests fail to login (d2f16645)
+*  add assertAuthenticade on login web tests (c383ec89)
+*  make test for check login with api for employes fail (61d69cc0)
+*  meke test for check login with session for employes fail (cef657b4)
+*  meke test for check login with session for employes (8966abf9)
+*  make test for should account user authenticate with web session (4129b00a)
+*  make test for should account user authenticate with api fail (6acca1d4)
+*  make test for check should account user authenticate fail (8e0f3ef4)
+*  make test for check if account user can authenticate (5fa5e324)
+*  change route prefix for test login account api (9fa19d3d)
+*  create test for check if can create a RepairInvoiceStatus model (449930d3)
+*  make test for check if can create InvoiceEquipamentCondition model (8668e25c)
+*  create test for check if can create a RepairInvoice (69bf75e3)
+*  change login test from web to api form (3d617c4f)
+* **gadget:**
+  *  make test for check if should create Gadget model (8e70c624)
+  *  make test for check if can create a GadgetCheckItem (45a03108)
+  *  make test for check if can create a RepaiRisk model (32c36f12)
+  *  make test for check if should create a Repair model (9ad38ac2)
+  *  make test for check should create GadgetType model (d4dfac4b)
+  *  make test for check should create manufacturer (f479545e)
+
 #### 2021-07-15
 
 ##### Chores
