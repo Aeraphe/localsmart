@@ -27,11 +27,13 @@ class CustomerFactory extends Factory
             'name' => $this->faker->name,
             'address' => $this->faker->address,
             'cpf' => $this->faker->randomLetter,
+            'rg' => $this->faker->randomLetter,
             'account_id' => Account::factory(),
             'phone' => $this->faker->phoneNumber,
             'city' => $this->faker->city,
             'state' => $this->faker->country,
             'obs' => $this->faker->text,
+            'district' => $this->faker->text,
         ];
     }
 }
