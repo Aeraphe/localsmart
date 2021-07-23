@@ -2,7 +2,6 @@
 
 namespace App\Services\ApiResponse;
 
-
 use Illuminate\Http\Response;
 
 class ApiResponseErrorService
@@ -12,23 +11,23 @@ class ApiResponseErrorService
     {
 
         if (!method_exists($exception, 'getData')) {
-            $error = ['error' => $exception->getMessage()];
+            $error =  ['internal' => $exception->getMessage()];
             $message = 'Erro inesperado. Favor entrar em contato com o responsável pelo aplicativo';
             $status = 500;
         } else {
-            $error = ['error' => $exception->getData()];
+            $error = $exception->getData();
             $message = $exception->getMessage();
-            $status = $exception->getCode();
+            $status = $exception->getCode() == 0 ? 500 : $exception->getCode();
         }
 
         $responseData = [
-            'error' => $error,
+            'errors' => $error,
             '_message' => $message,
             '_status' => $status,
             '_url' => request()->url(),
             '_method' => request()->method(),
         ];
 
-        return new Response($responseData, $exception->getCode());
+        return new Response($responseData, 200);
     }
 }
