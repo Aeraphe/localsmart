@@ -35,12 +35,12 @@ class Store extends Model
     }
 
     /**
-     * Get staff that are loaded in store
+     * Get employee that are loaded in store
      *
-     * @return Colection<App\Models\Staff>
+     * @return Colection<App\Models\Employee>
      */
-    public function staff()
+    public function employee()
     {
-        return $this->belongsToMany(Staff::class);
+        return $this->belongsToMany(Employee::class);
     }
 }

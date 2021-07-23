@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
-class Staff extends Authenticatable
+class Employee extends Authenticatable
 {
     use HasFactory, HasApiTokens;
 
@@ -42,7 +42,7 @@ class Staff extends Authenticatable
     ];
 
     /**
-     * Return the stores that staff can access
+     * Return the stores that employee can access
      *
      * @return Coleciton<App\Models\Store>
      */

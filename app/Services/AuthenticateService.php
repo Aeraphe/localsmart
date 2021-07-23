@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Exceptions\AuthenticateAccountUser\AuthenticateEmailException;
 use App\Exceptions\AuthenticateAccountUser\AuthenticatePasswordException;
 use App\Models\Account;
-use App\Models\Staff;
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
@@ -51,7 +51,7 @@ class AuthenticateService
         $account = Account::where('slug', $accountSlug)->firstOrFail();
 
         $employeQuery = [['login_name', '=', $credentials['login_name']], ['account_id', '=', $account->id]];
-        $employe = Staff::where($employeQuery)->firstOrFail();
+        $employe = Employee::where($employeQuery)->firstOrFail();
 
         $stores = $employe->stores;
 

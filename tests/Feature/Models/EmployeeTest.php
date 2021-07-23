@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Models;
 
-use App\Models\Staff;
+use App\Models\Employee;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class StaffTest extends TestCase
+class EmployeeTest extends TestCase
 {
 
     use WithFaker, RefreshDatabase;
@@ -16,10 +16,10 @@ class StaffTest extends TestCase
      *
      * @return void
      */
-    public function can_create_staff()
+    public function can_create_employee()
     {
         //arrange
-        $staffData = [
+        $data = [
 
             'name' => 'Ricardo',
             'phone' => $this->faker->name,
@@ -29,10 +29,10 @@ class StaffTest extends TestCase
         ];
 
         //act
-        $staff = Staff::factory()->create($staffData);
+        $employee = Employee::factory()->create($data);
 
         //assert
-        $this->assertInstanceOf(Staff::class, $staff);
-        $this->assertDatabaseHas('staff', $staffData);
+        $this->assertInstanceOf(Employee::class, $employee);
+        $this->assertDatabaseHas('employees', $data);
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Tests\Feature\Controllers;
 
-use App\Models\Staff;
+
+use App\Models\Employee;
 use App\Models\Store;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -127,7 +128,7 @@ class LoginControllerTest extends TestCase
             'account_id' => $account->id,
         ];
 
-        $employ = Staff::factory()->create($empployeData);
+        $employ = Employee::factory()->create($empployeData);
 
         //Set the employe to the store
         $employ->stores()->attach($store->id);
@@ -169,7 +170,7 @@ class LoginControllerTest extends TestCase
             'account_id' => $account->id,
         ];
 
-        $employ = Staff::factory()->create($empployeData);
+        $employ = Employee::factory()->create($empployeData);
 
         //Set the employe to the store
         $employ->stores()->attach($store->id);
@@ -204,7 +205,7 @@ class LoginControllerTest extends TestCase
             'account_id' => $account->id,
         ];
 
-        $employ = Staff::factory()->create($empployeData);
+        $employ = Employee::factory()->create($empployeData);
 
         //Set the employe to the store
         $employ->stores()->attach($store->id);
@@ -248,7 +249,7 @@ class LoginControllerTest extends TestCase
             'account_id' => $account->id,
         ];
 
-        $employ = Staff::factory()->create($empployeData);
+        $employ = Employee::factory()->create($empployeData);
 
         //Set the employe to the store
         $employ->stores()->attach($store->id);
