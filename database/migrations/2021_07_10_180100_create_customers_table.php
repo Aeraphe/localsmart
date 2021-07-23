@@ -18,13 +18,15 @@ class CreateCustomersTable extends Migration
             $table->unsignedBigInteger('account_id');
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('name');
-            $table->string('cpf');
+            $table->string('cpf')->nullable();
+            $table->string('rg')->nullable();
             $table->string('phone')->nullable();
             $table->string('msg_app_number')->nullable();
             $table->string('email')->nullable();
             $table->string('city');
             $table->string('state');
             $table->string('address');
+            $table->string('district')->nullable();
             $table->string('obs')->nullable();
             $table->timestamps();
         });
