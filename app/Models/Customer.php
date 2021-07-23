@@ -19,6 +19,8 @@ class Customer extends Model
         'account_id',
         'email',
         'cpf',
+        'rg',
+        'district',
         'phone',
         'msg_app_number',
         'city',
