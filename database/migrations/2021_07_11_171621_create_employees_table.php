@@ -19,10 +19,10 @@ class CreateEmployeesTable extends Migration
             $table->foreign('account_id')->references('id')->on('accounts');
             $table->string('name');
             $table->string('phone');
-            $table->string('address');
+            $table->string('address')->nullable();
             $table->string('login_name');
             $table->string('password');
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('email')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
