@@ -31,9 +31,8 @@ class AccountRegisterController extends Controller
             return ApiResponseService::make('Conta criada com sucesso', 200, $responseData);
 
         } catch (Exception $e) {
-            $exception = new BaseException('Não foi possível criar a conta', $e->getCode());
-            $exception->setData(['error' => $e->getMessage()]);
-            return ApiResponseErrorService::make($exception);
+
+            return ApiResponseErrorService::make($e);
 
         }
 
