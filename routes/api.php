@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccountRegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,7 +28,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/login', [LoginController::class, 'authenticateAccountUserApi'])->name('api-auth-admin');
         Route::post('/register', [AccountRegisterController::class, 'create'])->name('api-register-account');
         Route::middleware('auth:api')->post('/customer', [CustomerController::class, 'create'])->name('create-customer');
-        Route::middleware('auth:api')->post('/employee', [CustomerController::class, 'create'])->name('create-employee');
+        Route::middleware('auth:api')->post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
     });
 
     Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmployeApi'])->name('api-auth-employe');
