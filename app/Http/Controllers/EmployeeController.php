@@ -23,6 +23,8 @@ class EmployeeController extends Controller
 
         try {
 
+            $this->authorize('create_employee');
+
             $data = $request->validated();
 
             $employee = RegisterEmployeeService::create($data);
