@@ -16,10 +16,7 @@ class Equipament extends Model
     protected $fillable = [
         'customer_id',
         'name',
-        'model',
-        'equipament_type_id',
-        'company',
-        'description',
+        'gadget_id',
     ];
 
     /**
