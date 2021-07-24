@@ -5,12 +5,26 @@ namespace Tests\Feature\Controllers;
 use App\Models\Account;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Laravel\Passport\Passport;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class EmployeeControllerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
+
+
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Artisan::call('passport:install');
+        $this->seed();
+        // now re-register all the roles and permissions (clears cache and reloads relations)
+        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
+    }
+
     /**
      * @test
      *
@@ -20,7 +34,12 @@ class EmployeeControllerTest extends TestCase
     {
         //arrange
         $account = Account::factory()->create();
+
+
         $user = $account->user;
+        $user->givePermissionTo('create_employee');
+        Passport::actingAs($user);
+
         $postData = [
 
             'name' => 'Ricardo',
@@ -31,7 +50,7 @@ class EmployeeControllerTest extends TestCase
             'password' => hash('sha256', 'password'),
         ];
 
-        Passport::actingAs($user);
+        
 
         //act
         $response = $this->post('api/v1/account/employee', $postData);
