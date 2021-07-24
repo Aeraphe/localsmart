@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Customer;
 use App\Models\Equipament;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Modules\Gadget\Entities\Gadget;
 
 class EquipamentFactory extends Factory
 {
@@ -25,10 +26,8 @@ class EquipamentFactory extends Factory
         return [
             'customer_id' => Customer::factory(),
             'name' => $this->faker->name,
-            'model' => '5G',
-            'equipament_type_id' => $this->faker->randomNumber(),
-            'company' => $this->faker->company,
-            'description' => $this->faker->text(),
+            'gadget_id' => Gadget::factory(),
+
         ];
     }
 }
