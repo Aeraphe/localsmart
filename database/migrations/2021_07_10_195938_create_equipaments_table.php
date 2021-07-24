@@ -15,13 +15,9 @@ class CreateEquipamentsTable extends Migration
     {
         Schema::create('equipaments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customers');
+            $table->foreignId('customer_id')->unsigned();
             $table->string('name');
-            $table->string('model')->nullable();
-            $table->unsignedBigInteger('equipament_type_id');
-            $table->string('company');
-            $table->string('description')->nullable();
+            $table->bigInteger('gadget_id')->nullable();
             $table->timestamps();
         });
     }
