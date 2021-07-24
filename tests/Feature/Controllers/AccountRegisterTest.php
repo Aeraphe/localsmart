@@ -15,6 +15,9 @@ class AccountRegisterTest extends TestCase
     {
         parent::setUp();
         Artisan::call('passport:install');
+        $this->seed();
+        // now re-register all the roles and permissions (clears cache and reloads relations)
+        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
     }
 
     /**
@@ -44,7 +47,7 @@ class AccountRegisterTest extends TestCase
 
         //act
         $response = $this->post('api/v1/account/register', $postData);
-
+  
         //assert
         $response->assertStatus(200);
         $response->assertJsonFragment(["_message" => "Conta criada com sucesso"], $response->getContent());
@@ -57,8 +60,7 @@ class AccountRegisterTest extends TestCase
      */
     public function it_fail_if_email_already_exists_on_database()
     {
-        
-        
+
         //arrange
         $postData = [
             'name' => 'Alberto ',
@@ -75,15 +77,14 @@ class AccountRegisterTest extends TestCase
             '_url',
             '_method',
         ];
-        
+
         $this->post('api/v1/account/register', $postData);
-      
 
         //act
         $response = $this->post('api/v1/account/register', $postData);
 
         //assert
         $response->assertStatus(302);
-  
+
     }
 }
