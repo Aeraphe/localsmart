@@ -83,15 +83,41 @@ class CustomerControllerTest extends TestCase
         //arrange
         $employee = $this->getLoggedEmployeeFormStore();
         $customer = Customer::factory()->create(['account_id' => $employee->account->id]);
-        $store =  $employee->stores->first();
-
+        $store = $employee->stores->first();
 
         //act
-        $sut = $this->delete('/api/v1/account/customer', ['id' => $customer->id,'store_id' => $store->id]);
+        $sut = $this->delete('/api/v1/account/customer', ['id' => $customer->id, 'store_id' => $store->id]);
 
         //assert
         $sut->assertStatus(202);
         $this->assertSoftDeleted('customers', ['id' => $customer->id]);
+
+    }
+
+    /**
+     * @test
+     *
+     * @return boolean
+     */
+    public function should_update_customer_data()
+    {
+
+        //arrange
+        $employee = $this->getLoggedEmployeeFormStore();
+        $employee->givePermissionTo('update_customer');
+        $customer = Customer::factory()->create(['account_id' => $employee->account->id]);
+        $putData = [
+
+            'id' => $customer->id,
+            'name' => "Alberto",
+        ];
+
+        //act
+        $response = $this->put('/api/v1/account/customer', $putData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('customers', $putData);
 
     }
 
