@@ -6,7 +6,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\RepairInvoiceController;
-use App\Models\Customer;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
  */
-
 
 Route::prefix('v1')->group(function () {
 
@@ -36,7 +34,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('account')->group(function () {
             Route::post('/customer', [CustomerController::class, 'create'])->name('create-customer');
-            Route::delete('/customer',[CustomerController::class,'delete'])->name('delete-customer');
+            Route::delete('/customer', [CustomerController::class, 'delete'])->name('delete-customer');
+            Route::put('/customer', [CustomerController::class, 'update'])->name('update-customer');
             Route::post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
         });
