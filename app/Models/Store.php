@@ -39,7 +39,7 @@ class Store extends Model
      *
      * @return Colection<App\Models\Employee>
      */
-    public function employee()
+    public function employees()
     {
         return $this->belongsToMany(Employee::class);
     }
