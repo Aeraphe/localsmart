@@ -17,7 +17,7 @@ class RepairInvoice extends Model
     ];
 
     /**
-     * Add All Equipament conditions
+     * Add Equipament conditions from given array
      *
      * @param array $conditions
      * @return void
@@ -29,4 +29,19 @@ class RepairInvoice extends Model
 
         }
     }
+
+    /**
+     * Add Equipament Inspetions from given array
+     *
+     * @param array $inpections
+     * @return void
+     */
+    public function addEquipamentInspections(array $inpections)
+    {
+
+        foreach ($inpections as $inpection) {
+            InvoiceEquipamemtInspection::create(['name' => $inpection, 'repair_invoice_id' => $this->id]);
+        }
+    }
+
 }
