@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $actions = ['create', 'edit', 'delete', 'show'];
+        $actions = ['create', 'edit', 'delete', 'show', 'update'];
         $scopes = ['employee', 'repair_invoice', 'equipament', 'store', 'account', 'gadget','customer'];
         $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
 
