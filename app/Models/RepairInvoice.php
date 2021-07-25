@@ -44,4 +44,15 @@ class RepairInvoice extends Model
         }
     }
 
+    /**
+     * Get all Repair Status for the RepairInvoice
+     *
+     * @return App\Models\RepaisInvoice\Status
+     */
+    public function status()
+    {
+
+        return $this->hasMany(RepairInvoiceStatus::class);
+    }
+
 }
