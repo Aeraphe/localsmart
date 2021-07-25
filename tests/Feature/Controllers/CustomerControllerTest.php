@@ -3,6 +3,9 @@
 namespace Tests\Feature\Controllers;
 
 use App\Models\Account;
+use App\Models\Customer;
+use App\Models\Employee;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -14,7 +17,6 @@ class CustomerControllerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-
     public function setUp(): void
     {
         parent::setUp();
@@ -22,6 +24,17 @@ class CustomerControllerTest extends TestCase
         $this->seed();
         // now re-register all the roles and permissions (clears cache and reloads relations)
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
+    }
+
+    private function getLoggedEmployeeFormStore()
+    {
+        $employee = Employee::factory()->create();
+        Passport::actingAs($employee);
+        $employee->givePermissionTo('delete_customer');
+        $accountId = $employee->account->id;
+        $store = Store::factory()->create(['account_id' => $accountId]);
+        $employee->stores()->attach($store->id);
+        return $employee;
     }
 
     /**
@@ -60,5 +73,26 @@ class CustomerControllerTest extends TestCase
 
     }
 
- 
+    /**
+     * @test
+     *
+     * @return boolean
+     */
+    public function should_soft_delete_a_customer()
+    {
+        //arrange
+        $employee = $this->getLoggedEmployeeFormStore();
+        $customer = Customer::factory()->create(['account_id' => $employee->account->id]);
+        $store =  $employee->stores->first();
+
+
+        //act
+        $sut = $this->delete('/api/v1/account/customer', ['id' => $customer->id,'store_id' => $store->id]);
+
+        //assert
+        $sut->assertStatus(202);
+        $this->assertSoftDeleted('customers', ['id' => $customer->id]);
+
+    }
+
 }
