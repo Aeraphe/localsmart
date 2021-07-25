@@ -43,7 +43,6 @@ class RepairInvoiceRequest extends FormRequest
     {
         return [
             'store_id' => 'required',
-            'customer_id' => 'required',
             'equipament_id' => 'required',
             'budget' => 'nullable',
             'conditions' => 'required',
