@@ -81,4 +81,16 @@ class CustomerController extends Controller
         }
     }
 
+    public function show(Customer $customer)
+    {
+
+        try {
+
+            $responseData = $customer->toArray();
+            return ApiResponseService::make('Consulta realizada com sucesso', 200, $responseData);
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
 }
