@@ -14,4 +14,16 @@ class RepairInvoiceStatus extends Model
         'description',
         'status',
     ];
+
+
+
+    /**
+     * Get invoice owner of RepairInvoiceStatus
+     *
+     * @return App\Models\RepairInvoice
+     */
+    public function repairInvoice(){
+
+        return $this->belongsTo(RepairInvoice::class);
+    }
 }
