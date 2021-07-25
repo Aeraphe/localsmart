@@ -15,7 +15,7 @@ class CreateInvoiceEquipamentConditionsTable extends Migration
     {
         Schema::create('invoice_equipament_conditions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('repair_invoice_id')->unsigned();
+            $table->foreignId('repair_invoice_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });
