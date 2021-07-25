@@ -64,14 +64,14 @@ class Account extends Model
         return $this->hasMany(Store::class);
     }
 
-  /**
+    /**
      * Check is user can create sotre
      *
      * @return boolean
      */
     public function canCreateStore()
     {
-       
+
         $stores = $this->stores;
 
         if ($this->plan_status) {
@@ -87,5 +87,15 @@ class Account extends Model
         }
         return false;
     }
-    
+
+    /**
+     * Get employees from account
+     *
+     * @return Collection<Employee>
+     */
+    public function employees()
+    {
+        return $this->hasMany(Employee::class);
+    }
+
 }
