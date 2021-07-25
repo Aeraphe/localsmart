@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+
 class Employee extends Authenticatable
 {
-    use HasFactory, HasApiTokens,HasRoles;
+    use HasFactory, HasApiTokens, HasRoles;
 
     /**
      * Attribute mass assignable
@@ -50,6 +51,17 @@ class Employee extends Authenticatable
     public function stores()
     {
         return $this->belongsToMany(Store::class);
+    }
+
+
+    /**
+     * Get account that employee is part
+     *
+     * @return App\Models\Account
+     */
+    public function account()
+    {
+       return $this->belongsTo(Account::class);
     }
 
 }
