@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteCustomerRequest;
 use App\Http\Requests\RegisterCustomerRequest;
+use App\Http\Requests\UpdateCustomerRequest;
 use App\Models\Customer;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -39,7 +40,7 @@ class CustomerController extends Controller
      * Delete Customer
      *
      * @param DeleteCustomerRequest $request
-     * 
+     *
      * @return ApiResponseService
      */
     public function delete(DeleteCustomerRequest $request)
@@ -57,4 +58,27 @@ class CustomerController extends Controller
             return ApiResponseErrorService::make($e);
         }
     }
+
+    /**
+     * Update Customer data
+     *
+     * @param UpdateCustomerRequest $request
+     * @return ApiResponseService
+     */
+    public function update(UpdateCustomerRequest $request)
+    {
+
+        try {
+            $this->authorize('update_customer');
+            $validated = $request->validated();
+
+            Customer::where('id', $validated['id'])->update($validated);
+
+            return ApiResponseService::make('Dados atualizados do cliente com sucesso', 200, ['customer' => $validated['id']]);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
 }
