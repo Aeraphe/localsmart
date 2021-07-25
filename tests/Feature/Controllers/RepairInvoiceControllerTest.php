@@ -45,7 +45,6 @@ class RepairInvoiceControllerTest extends TestCase
 
         $postData = [
             'store_id' => $store->id,
-            'customer_id' => $customer->id,
             'equipament_id' => $equipaments[0]->id,
             'budget' => 50,
             'conditions' => ['Without test condition', 'Wifi is not turning on', 'Some scratches on screen'],
