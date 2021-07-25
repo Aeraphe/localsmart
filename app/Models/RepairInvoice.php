@@ -14,6 +14,19 @@ class RepairInvoice extends Model
         'equipament_id',
         'budget',
         'fail_description',
-        'status',
     ];
+
+    /**
+     * Add All Equipament conditions
+     *
+     * @param array $conditions
+     * @return void
+     */
+    public function addEquipamentConditions(array $conditions)
+    {
+        foreach ($conditions as $condition) {
+            InvoiceEquipamentCondition::create(['name' => $condition, 'repair_invoice_id' => $this->id]);
+
+        }
+    }
 }
