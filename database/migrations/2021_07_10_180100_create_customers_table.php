@@ -28,7 +28,7 @@ class CreateCustomersTable extends Migration
             $table->string('address');
             $table->string('district')->nullable();
             $table->string('obs')->nullable();
-            $table->date('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
