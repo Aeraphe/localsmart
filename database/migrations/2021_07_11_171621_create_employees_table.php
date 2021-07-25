@@ -15,8 +15,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('account_id');
-            $table->foreign('account_id')->references('id')->on('accounts');
+            $table->foreignId('account_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->string('phone');
             $table->string('address')->nullable();
