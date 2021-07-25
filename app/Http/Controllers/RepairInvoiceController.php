@@ -13,7 +13,7 @@ class RepairInvoiceController extends Controller
     public function create(RepairInvoiceRequest $request)
     {
         try {
-            $this->authorize('create_invoice');
+            $this->authorize('create_repair_invoice');
 
             $validated = $request->validated();
 
