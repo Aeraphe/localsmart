@@ -39,7 +39,7 @@ class RepairInvoiceControllerTest extends TestCase
         $employee = Employee::factory()->create(['account_id' => $account_id]);
         $employee->stores()->attach($store->id);
         Passport::actingAs($employee);
-        $employee->givePermissionTo('create_invoice');
+        $employee->givePermissionTo('create_repair_invoice');
         $customer = Customer::factory()->has(Equipament::factory()->count(1))->create(['account_id' => $account_id]);
         $equipaments = $customer->equipaments;
 
