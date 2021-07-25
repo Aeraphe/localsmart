@@ -121,4 +121,34 @@ class CustomerControllerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     *
+     * @return boolean
+     */
+    public function should_get_a_customer()
+    {
+
+        //arrange
+        $employee = $this->getLoggedEmployeeFormStore();
+        $employee->givePermissionTo('show_customer');
+        $customer = Customer::factory()->create(['account_id' => $employee->account->id]);
+        $route = '/api/v1/account/customer/' . $customer->id;
+
+        $responseData = [
+            'data' => $customer->toArray(),
+            '_message' => "Consulta realizada com sucesso",
+            '_status' => 200,
+            '_url' => "http://localsmart-app.test" . $route,
+            '_method' => "GET",
+        ];
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+    }
+
 }
