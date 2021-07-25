@@ -15,9 +15,9 @@ class CreateRepairInvoicesTable extends Migration
     {
         Schema::create('repair_invoices', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('store_id')->unsigned();
-            $table->foreignId('equipament_id')->unsigned();
-            $table->float('budget');
+            $table->foreignId('store_id')->constrained()->onDelete('cascate');
+            $table->foreignId('equipament_id')->constrained()->onDelete('cascate');
+            $table->float('budget')->nullable();
             $table->string('fail_description');
             $table->timestamps();
         });
