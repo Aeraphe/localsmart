@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -13,7 +14,16 @@ class CustomerControllerTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
-    
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        Artisan::call('passport:install');
+        $this->seed();
+        // now re-register all the roles and permissions (clears cache and reloads relations)
+        $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
+    }
+
     /**
      * @test
      *
@@ -49,4 +59,6 @@ class CustomerControllerTest extends TestCase
         ]);
 
     }
+
+ 
 }
