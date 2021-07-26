@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRegisterRequest;
+use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterEmployeeService;
@@ -15,7 +17,7 @@ class EmployeeController extends Controller
      * Register new employee in the User Account
      *
      * @param EmployeeRegisterRequest $request
-     * 
+     *
      * @return ApiResponseService | ApiResponseErrorService
      */
     public function create(EmployeeRegisterRequest $request)
@@ -35,6 +37,24 @@ class EmployeeController extends Controller
 
         } catch (Exception $e) {
 
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Delete Employee
+     *
+     * @param DeleteEmployeeRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function delete(DeleteEmployeeRequest $request)
+    {
+        try {
+            $this->authorize('delete_employee');
+            $validated = $request->validated();
+            Employee::where('id', $validated['id'])->delete();
+            return ApiResponseService::make("Funcionário excluido com sucesso!!!", 200, ['id' => $validated['id']]);
+        } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
         }
     }
