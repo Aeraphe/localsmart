@@ -42,6 +42,7 @@ Route::prefix('v1')->group(function () {
         
 
             Route::post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
+            Route::delete('/employee',[EmployeeController::class,'delete'])->name('delete-employee');
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
         });
 
