@@ -6,7 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class AccountRegisterControllerTest extends TestCase
+class AccountControllerTest extends TestCase
 {
 
     use RefreshDatabase;
