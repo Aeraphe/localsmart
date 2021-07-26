@@ -49,6 +49,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
             Route::get('/customer/equipament/{equipament}', [EquipamentController::class, 'show'])->name('show-customer-equipament');
             Route::get('/customer/equipament/all/{customer}', [EquipamentController::class, 'showAll'])->name('show--all-customer-equipament');
+            Route::put('/customer/equipament', [EquipamentController::class, 'update'])->name('update-customer-equipament');
         });
 
         Route::prefix('store')->group(function () {
