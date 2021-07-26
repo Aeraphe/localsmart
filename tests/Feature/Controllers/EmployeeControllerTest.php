@@ -185,4 +185,34 @@ class EmployeeControllerTest extends TestCase
         $response->assertJson($responseData);
     }
 
+
+     /**
+     * @test
+     * @group employee
+     *
+     * @return boolean
+     */
+    public function should_get__all_employees()
+    {
+        //arrange
+        $user = $this->getUserLoggedWithAccount();
+        $user->givePermissionTo('show_all_employee');
+        $user->assignRole('admin');
+        Employee::factory()->count(10)->create(['account_id' => $user->account->id]);
+        $route = '/api/v1/account/employee' ;
+
+        $responseData = [
+         
+            '_message' => 'Consulta realizada com sucesso!!!',
+            '_status' => 200,
+            '_url' => Config::get('app.url') . $route,
+            '_method' => "GET",
+        ];
+        //act
+        $response = $this->get($route);
+        //assert
+        $response->assertStatus(200);
+        $response->assertJsonFragment($responseData);
+    }
+
 }
