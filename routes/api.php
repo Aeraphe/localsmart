@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AccountRegisterController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
