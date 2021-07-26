@@ -20,6 +20,14 @@ class Equipament extends Model
     ];
 
     /**
+     * The attributes that should be mutated to dates.
+     * soft deleted
+     *
+     * @var array
+     */
+    protected $dates = ['deleted_at'];
+
+    /**
      * Get equipament customer owner
      *
      * @return Customer

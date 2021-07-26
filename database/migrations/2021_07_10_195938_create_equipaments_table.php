@@ -18,6 +18,7 @@ class CreateEquipamentsTable extends Migration
             $table->foreignId('customer_id')->unsigned();
             $table->string('name');
             $table->bigInteger('gadget_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
