@@ -12,6 +12,7 @@ use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterEmployeeService;
 use Exception;
 use Facade\FlareClient\Api;
+use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
 {
@@ -95,6 +96,26 @@ class EmployeeController extends Controller
     {
         try {
             $this->authorize('show_employee');
+            return ApiResponseService::make('Consulta realizada com sucesso!!!', 200, $employee->toArray());
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Get employee by id
+     *
+     * @param Employee $employee
+     * @param ShowEmployeeRequest $request
+     * @return ApiResponseService || ApiResponseErrorService
+     */
+    public function showAll()
+    {
+        try {
+            $this->authorize('show_all_employee');
+
+            $employee = Employee::where('account_id', Auth::user()->account->id)->get();
+
             return ApiResponseService::make('Consulta realizada com sucesso!!!', 200, $employee->toArray());
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
