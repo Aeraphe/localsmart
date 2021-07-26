@@ -15,7 +15,7 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $actions = ['create', 'edit', 'delete', 'show', 'update'];
+        $actions = ['create', 'edit', 'delete', 'show','show_all', 'update'];
         $scopes = ['employee', 'repair_invoice', 'equipament', 'store', 'account', 'gadget','customer'];
         $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
 
@@ -27,6 +27,7 @@ class RoleSeeder extends Seeder
         //Default Module
         $this->signPermissionsToRoles($scopes, $actions, ['admin']);
         $this->signPermissionsToRoles(['repair_invoice', 'equipament'], $actions, ['repair', 'seller']);
+        $this->signPermissionsToRoles(['employee'], ['edit', 'show', 'update'], ['repair', 'seller']);
         //Gadget Module
         $this->signPermissionsToRoles(['gadget'], $actions, ['gadget-admin']);
 
