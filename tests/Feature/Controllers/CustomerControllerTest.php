@@ -40,6 +40,7 @@ class CustomerControllerTest extends TestCase
 
     /**
      * @test
+     * @group customer
      *
      * @return void
      */
@@ -76,6 +77,7 @@ class CustomerControllerTest extends TestCase
 
     /**
      * @test
+     * @group customer
      *
      * @return boolean
      */
@@ -98,6 +100,8 @@ class CustomerControllerTest extends TestCase
     /**
      * @test
      *
+     * @group customer
+     * 
      * @return boolean
      */
     public function should_update_customer_data()
@@ -124,7 +128,8 @@ class CustomerControllerTest extends TestCase
 
     /**
      * @test
-     *
+     * @group customer
+     * 
      * @return boolean
      */
     public function should_get_a_customer()
@@ -135,12 +140,42 @@ class CustomerControllerTest extends TestCase
         $employee->givePermissionTo('show_customer');
         $customer = Customer::factory()->create(['account_id' => $employee->account->id]);
         $route = '/api/v1/account/customer/' . $customer->id;
-        
+
         $responseData = [
             'data' => $customer->toArray(),
             '_message' => "Consulta realizada com sucesso",
             '_status' => 200,
-            '_url' =>  Config::get('app.url'). $route,
+            '_url' => Config::get('app.url') . $route,
+            '_method' => "GET",
+        ];
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+    }
+
+    /**
+     * @test
+     * @group customer
+     *
+     * @return void
+     */
+    public function shuld_get_all_customers()
+    {
+        //arrange
+        $employee = $this->getLoggedEmployeeFormStore();
+        $employee->givePermissionTo('show_customer');
+        $customers = Customer::factory()->count(10)->create(['account_id' => $employee->account->id]);
+        $route = '/api/v1/account/customer';
+
+        $responseData = [
+            'data' => $customers->toArray(),
+            '_message' => 'Consulta Realizada com Sucesso!!!',
+            '_status' => 200,
+            '_url' => Config::get('app.url') . $route,
             '_method' => "GET",
         ];
 
