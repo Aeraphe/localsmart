@@ -105,10 +105,29 @@ class CustomerController extends Controller
         try {
             $this->authorize('show_customer');
             $accountId = Auth::user()->account->id;
-            $customers =  Customer::where('account_id',$accountId)->get();
+            $customers = Customer::where('account_id', $accountId)->get();
 
+            return ApiResponseService::make('Consulta Realizada com Sucesso!!!', 200, $customers->toArray());
 
-            return ApiResponseService::make('Consulta Realizada com Sucesso!!!',200,$customers->toArray());
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * List all customers per paginate
+     *
+     * @return void
+     */
+    public function showPerPaginate()
+    {
+        try {
+            $this->authorize('show_customer');
+            $accountId = Auth::user()->account->id;
+
+            $customers = Customer::where('account_id', $accountId)->paginate(5);
+   
+            return ApiResponseService::make('Consulta Realizada com Sucesso!!!', 200, $customers->toArray());
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
