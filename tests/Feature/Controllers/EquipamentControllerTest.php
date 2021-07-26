@@ -111,4 +111,35 @@ class EquipamentControllerTest extends TestCase
         $result->assertJson($responseDataFormat);
     }
 
+    /**
+     * @test
+     * @group equipament
+     *
+     * @return boolean
+     */
+    public function should_edit_customer_equipament()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('edit_equipament');
+        $customer = Customer::factory()->create(['account_id' => $user->account->id]);
+        $equipament = Equipament::factory()->create(['customer_id' => $customer->id]);
+        $postData = ['id' => $equipament->id, 'name' => 'Samsung'];
+        $route = '/api/v1/account/customer/equipament';
+        $responseDataFormat = Helpers::makeResponseApiMock(
+            'Atualização realizada com sucesso!!!',
+            200,
+            ['id' => $equipament->id]
+            , $route,
+            'PUT'
+        );
+        //act
+        $result = $this->put($route, $postData);
+
+        //assert
+        $result->assertStatus(200);
+        $result->assertJson($responseDataFormat);
+        $this->assertDatabaseHas('equipaments', $postData);
+
+    }
+
 }
