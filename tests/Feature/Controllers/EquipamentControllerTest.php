@@ -142,4 +142,35 @@ class EquipamentControllerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @group equipament
+     *
+     * @return boolean
+     */
+    public function should_delete_customer_equipament()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('delete_equipament');
+        $customer = Customer::factory()->create(['account_id' => $user->account->id]);
+        $equipament = Equipament::factory()->create(['customer_id' => $customer->id]);
+        $postData = ['id' => $equipament->id];
+        $route = '/api/v1/account/customer/equipament';
+        $responseDataFormat = Helpers::makeResponseApiMock(
+            'Equipamento apagado com sucesso!!!',
+            200,
+            ['id' => $equipament->id]
+            , $route,
+            'DELETE'
+        );
+        //act
+        $result = $this->delete($route, $postData);
+
+        //assert
+        $result->assertStatus(200);
+        $result->assertJson($responseDataFormat);
+        $this->assertDatabaseMissing('equipaments', $postData);
+
+    }
+
 }
