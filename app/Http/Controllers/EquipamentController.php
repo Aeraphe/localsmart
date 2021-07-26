@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditCustomerEquipamentRequest;
 use App\Http\Requests\GetCustomerEquipamentRequest;
 use App\Models\Customer;
 use App\Models\Equipament;
@@ -70,6 +71,36 @@ class EquipamentController extends Controller
             $equipaments = $customer->equipaments;
 
             return ApiResponseService::make('Consulta Realizada com sucesso!!', 200, $equipaments->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
+    /**
+     * Edit customer equipament
+     *
+     * @param EditCustomerEquipamentRequest $request
+     * s
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function update(EditCustomerEquipamentRequest $request)
+    {
+        try {
+
+            $this->authorize('edit_equipament');
+
+            $validated = $request->validated();
+
+            Equipament::where('id', $validated['id'])->update($validated);
+
+            return ApiResponseService::make(
+                'Atualização realizada com sucesso!!!',
+                200,
+                ['id' => $validated['id']]
+            );
 
         } catch (Exception $e) {
 
