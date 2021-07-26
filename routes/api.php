@@ -37,6 +37,8 @@ Route::prefix('v1')->group(function () {
             Route::delete('/customer', [CustomerController::class, 'delete'])->name('delete-customer');
             Route::put('/customer', [CustomerController::class, 'update'])->name('update-customer');
             Route::get('/customer/{customer}',[CustomerController::class ,'show'])->name('show-customer');
+            Route::get('/customer',[CustomerController::class ,'showAll'])->name('show-customer');
+
             Route::post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
         });
