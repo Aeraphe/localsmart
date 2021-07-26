@@ -48,6 +48,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/employee/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
             Route::get('/employee', [EmployeeController::class, 'showAll'])->name('show-employee');
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
+            Route::get('/customer/equipament/{id}', [EquipamentController::class, 'show'])->name('show-customer-equipament');
         });
 
         Route::prefix('store')->group(function () {
