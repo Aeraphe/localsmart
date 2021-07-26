@@ -79,4 +79,36 @@ class EquipamentControllerTest extends TestCase
         $result->assertJson($responseDataFormat);
     }
 
+    /**
+     * @test
+     * @group equipament
+     *
+     * @return boolean
+     */
+    public function should_get_all_customer_equipaments()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('show_all_equipament');
+
+        $customer = Customer::factory()->create(['account_id' => $user->account->id]);
+
+        $equipaments = Equipament::factory()->count(5)->create(['customer_id' => $customer->id, 'name' => 'iPhone 10']);
+
+        $route = '/api/v1/account/customer/equipament/all/' . $customer->id;
+
+        $responseDataFormat = Helpers::makeResponseApiMock(
+            'Consulta Realizada com sucesso!!',
+            200, $equipaments->toArray(),
+            $route,
+            'GET'
+        );
+
+        //act
+        $result = $this->get($route);
+
+        //assert
+        $result->assertStatus(200);
+        $result->assertJson($responseDataFormat);
+    }
+
 }
