@@ -34,6 +34,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('account')->group(function () {
 
+            //Customer
             Route::post('/customer', [CustomerController::class, 'create'])->name('create-customer');
             Route::delete('/customer', [CustomerController::class, 'delete'])->name('delete-customer');
             Route::put('/customer', [CustomerController::class, 'update'])->name('update-customer');
@@ -41,15 +42,19 @@ Route::prefix('v1')->group(function () {
             Route::get('/customer/{customer}', [CustomerController::class, 'show'])->name('show-customer');
             Route::get('/customer', [CustomerController::class, 'showAll'])->name('show-all-customer');
 
+            //Employee
             Route::post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
             Route::delete('/employee', [EmployeeController::class, 'delete'])->name('delete-employee');
             Route::put('/employee', [EmployeeController::class, 'update'])->name('update-employee');
             Route::get('/employee/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
             Route::get('/employee', [EmployeeController::class, 'showAll'])->name('show-employee');
+            
+            //Equipament
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
             Route::get('/customer/equipament/{equipament}', [EquipamentController::class, 'show'])->name('show-customer-equipament');
             Route::get('/customer/equipament/all/{customer}', [EquipamentController::class, 'showAll'])->name('show--all-customer-equipament');
             Route::put('/customer/equipament', [EquipamentController::class, 'update'])->name('update-customer-equipament');
+            Route::delete('/customer/equipament', [EquipamentController::class, 'delete'])->name('delete-customer-equipament');
         });
 
         Route::prefix('store')->group(function () {
