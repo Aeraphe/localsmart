@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteCustomerEquipamentRequest;
 use App\Http\Requests\EditCustomerEquipamentRequest;
 use App\Http\Requests\GetCustomerEquipamentRequest;
 use App\Models\Customer;
@@ -98,6 +99,36 @@ class EquipamentController extends Controller
 
             return ApiResponseService::make(
                 'Atualização realizada com sucesso!!!',
+                200,
+                ['id' => $validated['id']]
+            );
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
+    /**
+     * Delete customer equipament
+     *
+     * @param DeleteCustomerEquipamentRequest $request
+     * s
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function delete(DeleteCustomerEquipamentRequest $request)
+    {
+        try {
+
+            $this->authorize('delete_equipament');
+
+            $validated = $request->validated();
+
+            Equipament::where('id', $validated['id'])->delete();
+
+            return ApiResponseService::make(
+                'Equipamento apagado com sucesso!!!',
                 200,
                 ['id' => $validated['id']]
             );
