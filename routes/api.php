@@ -24,7 +24,7 @@ Route::prefix('v1')->group(function () {
     //Unprotected Routes
     Route::prefix('account')->group(function () {
         Route::post('/login', [LoginController::class, 'authenticateAccountUserApi'])->name('api-auth-admin');
-        Route::post('/register', [AccountRegisterController::class, 'create'])->name('api-register-account');
+        Route::post('/register', [AccountController::class, 'create'])->name('api-register-account');
     });
 
     Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmployeApi'])->name('api-auth-employe');
@@ -33,6 +33,8 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::prefix('account')->group(function () {
+
+
             Route::post('/customer', [CustomerController::class, 'create'])->name('create-customer');
             Route::delete('/customer', [CustomerController::class, 'delete'])->name('delete-customer');
             Route::put('/customer', [CustomerController::class, 'update'])->name('update-customer');

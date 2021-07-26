@@ -10,7 +10,7 @@ use App\Services\AuthenticateService;
 use App\Services\RegisterAccountService;
 use Exception;
 
-class AccountRegisterController extends Controller
+class AccountController extends Controller
 {
     public function create(RegisterRequest $request)
     {
