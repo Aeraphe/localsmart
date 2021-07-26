@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -113,7 +114,46 @@ class EmployeeControllerTest extends TestCase
 
         //assert
         $response->assertStatus(200);
-        $this->assertDatabaseMissing('employees',['id' => $employee->id]);
+        $this->assertDatabaseMissing('employees', ['id' => $employee->id]);
+
+    }
+
+    /**
+     * @test
+     * @group employee
+     *
+     * @return boolean
+     */
+    public function should_update_employee()
+    {
+        //arrange
+        $user = $this->getUserLoggedWithAccount();
+        $user->givePermissionTo('update_employee');
+        $user->assignRole('admin');
+        $employee = Employee::factory()->create(['account_id' => $user->account->id]);
+        $route = '/api/v1/account/employee';
+
+        $postData = [
+            'id' => $employee->id,
+            'name' => $this->faker->name,
+        ];
+
+        $responseData = [
+            'data' => ['id' => $employee->id],
+            '_message' => 'Dados atualizados com sucesso!!!',
+            '_status' => 200,
+            '_url' => Config::get('app.url') . $route,
+            '_method' => "PUT",
+        ];
+
+        //act
+        $response = $this->put($route, $postData);
+
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseHas('employees', $postData);
 
     }
 
