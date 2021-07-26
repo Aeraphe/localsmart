@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRegisterRequest;
+use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -55,6 +56,28 @@ class EmployeeController extends Controller
             Employee::where('id', $validated['id'])->delete();
             return ApiResponseService::make("Funcionário excluido com sucesso!!!", 200, ['id' => $validated['id']]);
         } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Update Employee
+     *
+     * @param UpdateEmployeeRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function update(UpdateEmployeeRequest $request)
+    {
+        try {
+
+            $this->authorize('update_employee');
+            $validated = $request->validated();
+            Employee::where('id', $validated['id'])->update($validated);
+
+            return ApiResponseService::make('Dados atualizados com sucesso!!!', 200, ['id' => $validated['id']]);
+
+        } catch (Exception $e) {
+
             return ApiResponseErrorService::make($e);
         }
     }
