@@ -9,6 +9,7 @@ use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EquipamentController extends Controller
 {
@@ -50,6 +51,30 @@ class EquipamentController extends Controller
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Get customer equipament
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function showAll(Request $request)
+    {
+        try {
+            $this->authorize('show_all_equipament');
+
+            $accountId = Auth::user()->account->id;
+            $customer = Customer::where('id', $request->route('customer'))->where('account_id', $accountId)->first();
+            $equipaments = $customer->equipaments;
+
+            return ApiResponseService::make('Consulta Realizada com sucesso!!', 200, $equipaments->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
         }
     }
 }
