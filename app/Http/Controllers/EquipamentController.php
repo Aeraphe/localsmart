@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetCustomerEquipamentRequest;
 use App\Models\Customer;
 use App\Models\Equipament;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class EquipamentController extends Controller
 {
@@ -40,21 +40,13 @@ class EquipamentController extends Controller
      * @param Request $request
      * @return void
      */
-    public function show(Request $request)
+    public function show(GetCustomerEquipamentRequest $request)
     {
         try {
             $this->authorize('show_equipament');
 
-            $equipamentId = $request->route('id');
-            $accountId = Auth::user()->account->id;
-
-            $equipament = Customer::where('account_id', $accountId)
-                ->with('equipaments')
-                ->where('id', $equipamentId)
-                ->firstOrFail()->equipaments
-                ->first();
-
-            return ApiResponseService::make('Consulta Realizada com sucesso!!', 200, $equipament->toArray());
+            $equipament = $request->route('equipament')->toArray();
+            return ApiResponseService::make('Consulta Realizada com sucesso!!', 200, $equipament);
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
