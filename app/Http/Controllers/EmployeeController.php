@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteEmployeeRequest;
 use App\Http\Requests\EmployeeRegisterRequest;
+use App\Http\Requests\ShowEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterEmployeeService;
 use Exception;
+use Facade\FlareClient\Api;
 
 class EmployeeController extends Controller
 {
@@ -78,6 +80,23 @@ class EmployeeController extends Controller
 
         } catch (Exception $e) {
 
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Get employee by id
+     *
+     * @param Employee $employee
+     * @param ShowEmployeeRequest $request
+     * @return ApiResponseService || ApiResponseErrorService
+     */
+    public function show(Employee $employee, ShowEmployeeRequest $request)
+    {
+        try {
+            $this->authorize('show_employee');
+            return ApiResponseService::make('Consulta realizada com sucesso!!!', 200, $employee->toArray());
+        } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
         }
     }
