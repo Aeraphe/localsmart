@@ -101,7 +101,7 @@ class CustomerControllerTest extends TestCase
      * @test
      *
      * @group customer
-     * 
+     *
      * @return boolean
      */
     public function should_update_customer_data()
@@ -129,7 +129,7 @@ class CustomerControllerTest extends TestCase
     /**
      * @test
      * @group customer
-     * 
+     *
      * @return boolean
      */
     public function should_get_a_customer()
@@ -185,6 +185,28 @@ class CustomerControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJson($responseData);
+    }
+
+    /**
+     * @test
+     * @group customer
+     *
+     * @return boolean
+     */
+    public function should_get_customers_by_page()
+    {
+        //arrange
+        $employee = $this->getLoggedEmployeeFormStore();
+        $employee->givePermissionTo('show_customer');
+        Customer::factory()->count(10)->create(['account_id' => $employee->account->id]);
+        $route = '/api/v1/account/customer/paginate';
+
+        //act
+        $response = $this->get($route);
+     
+        //assert
+        $response->assertStatus(200);
+        $response->assertJsonFragment(['_message' => 'Consulta Realizada com Sucesso!!!']);
     }
 
 }
