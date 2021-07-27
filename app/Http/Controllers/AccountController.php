@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Exceptions\BaseException;
 use App\Http\Requests\AccountRegisterRequest as RegisterRequest;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\AuthenticateService;
 use App\Services\RegisterAccountService;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
@@ -36,5 +37,33 @@ class AccountController extends Controller
 
         }
 
+    }
+
+    /**
+     * Update account
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function update(Request $request)
+    {
+        try {
+
+            $this->authorize('edit_account');
+
+            $validated = $request->validate(
+                ['slug' => ['nullable', 'string']]
+            );
+
+            $account = Auth::user()->account;
+
+            $account->update($validated);
+
+            return ApiResponseService::make('Dados alterados com sucesso!!!', 200, $validated);
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
     }
 }
