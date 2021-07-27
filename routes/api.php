@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\RepairInvoiceController;
+use App\Models\RepairInvoice;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,8 +58,9 @@ Route::prefix('v1')->group(function () {
             Route::delete('/customer/equipament', [EquipamentController::class, 'delete'])->name('delete-customer-equipament');
         });
 
-        Route::prefix('store')->group(function () {
-            Route::post('/repair-invoice', [RepairInvoiceController::class, 'create'])->name('store-create-invoice');
+        Route::prefix('store/repair-invoice')->group(function () {
+            Route::post('/', [RepairInvoiceController::class, 'create'])->name('store-create-repair-invoice');
+            Route::put('/',[RepairInvoiceController::class,'update'])->name('store-update-repair-invoice');
         });
 
     });
