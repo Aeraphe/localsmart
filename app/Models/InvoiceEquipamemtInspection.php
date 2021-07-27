@@ -9,5 +9,9 @@ class InvoiceEquipamemtInspection extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['repair_invoice_id', 'name'];
+    protected $fillable = [
+        'repair_invoice_id',
+        'equipament_id',
+        'name',
+    ];
 }

@@ -11,6 +11,7 @@ class InvoiceEquipamentCondition extends Model
 
     protected $fillable = [
         'name',
+        'equipament_id',
         'repair_invoice_id',
     ];
 }
