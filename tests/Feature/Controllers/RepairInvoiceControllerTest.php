@@ -72,12 +72,12 @@ class RepairInvoiceControllerTest extends TestCase
      *
      * @return void
      */
-    public function shoul_edit_rapir_invoice()
+    public function should_edit_rapir_invoice()
     {
         //arrange
         $user = Helpers::getEmployeeLoggedWithAccount('edit_repair_invoice');
         $store = $user->stores()->first();
-        $invoice = RepairInvoice::factory()->create(['store_id'=>$store->id]);
+        $invoice = RepairInvoice::factory()->create(['store_id' => $store->id]);
 
         $postData = ['id' => $invoice->id, 'fail_description' => 'Charge connectos is broke'];
         $route = '/api/v1/store/repair-invoice';
@@ -92,5 +92,30 @@ class RepairInvoiceControllerTest extends TestCase
         $response->assertJson($responseData);
         $this->assertDatabaseHas('repair_invoices', $postData);
 
+    }
+
+    /**
+     * @test
+     * @group invoice
+     */
+    public function should_delete_repair_invoice()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('delete_repair_invoice');
+        $store = $user->stores()->first();
+        $invoice = RepairInvoice::factory()->create(['store_id' => $store->id]);
+
+        $postData = ['id' => $invoice->id];
+        $route = '/api/v1/store/repair-invoice';
+
+        $responseData = Helpers::makeResponseApiMock('Ordem de serviço apagada com sucesso', 200, ['id' => $invoice->id], $route, "DELETE");
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseMissing('repair_invoices', $postData);
     }
 }
