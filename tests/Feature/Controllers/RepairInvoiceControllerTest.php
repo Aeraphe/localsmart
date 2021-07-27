@@ -166,9 +166,7 @@ class RepairInvoiceControllerTest extends TestCase
 
         $route = '/api/v1/store/repair-invoice/' . $invoice->id;
 
-        $respInvoideWithEquipament = $invoice->with('status', 'equipament')->first();
-        $respInvoideWithEquipament->equipament->conditions;
-        $respInvoideWithEquipament->equipament->inspetions;
+        $respInvoideWithEquipament = $invoice->with('status', 'conditions.equipament', 'inspections.equipament')->first();
 
         $reponseInvoiceData = $respInvoideWithEquipament->toArray();
 
@@ -200,7 +198,6 @@ class RepairInvoiceControllerTest extends TestCase
 
         //act
         $response = $this->get($route);
-
 
         //assert
         $response->assertStatus(200);
