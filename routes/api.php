@@ -62,7 +62,9 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [RepairInvoiceController::class, 'create'])->name('store-create-repair-invoice');
             Route::put('/',[RepairInvoiceController::class,'update'])->name('store-update-repair-invoice');
             Route::delete('/',[RepairInvoiceController::class,'delete'])->name('store-delete-repair-invoice');
+            Route::get('/all/{id}',[RepairInvoiceController::class,'showAll'])->name('store-show--all-repair-invoice');
             Route::get('/{id}',[RepairInvoiceController::class,'show'])->name('store-show-repair-invoice');
+           
         });
 
     });
