@@ -16,6 +16,7 @@ class CreateInvoiceEquipamemtInspections extends Migration
         Schema::create('invoice_equipamemt_inspections', function (Blueprint $table) {
             $table->id();
             $table->foreignId('repair_invoice_id')->constrained()->onDelete('cascade');
+            $table->foreignId('equipament_id')->constrained()->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });
