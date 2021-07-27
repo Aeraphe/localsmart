@@ -61,6 +61,7 @@ Route::prefix('v1')->group(function () {
         Route::prefix('store/repair-invoice')->group(function () {
             Route::post('/', [RepairInvoiceController::class, 'create'])->name('store-create-repair-invoice');
             Route::put('/',[RepairInvoiceController::class,'update'])->name('store-update-repair-invoice');
+            Route::delete('/',[RepairInvoiceController::class,'delete'])->name('store-delete-repair-invoice');
         });
 
     });
