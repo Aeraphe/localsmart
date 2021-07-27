@@ -47,15 +47,25 @@ class Equipament extends Model
         return $this->hasMany(RepairInvoice::class);
     }
 
-
     /**
-     * Get all conditions that equipament reveived from invoice
+     * Get all conditions that equipament reveived from invoices
      *
-     * @return void
+     * @return Collection<App\Models\InvoiceEquipamentCondition>
      */
     public function conditions()
     {
         return $this->hasMany(InvoiceEquipamentCondition::class);
+    }
+
+    /**
+     * Get all equipament inspetions from invoices
+     *
+     * @return Collection<App\Models\InvoiceEquipamemtInspection>
+     */
+    public function inspetions()
+    {
+
+        return $this->hasMany(InvoiceEquipamemtInspection::class);
     }
 
 }

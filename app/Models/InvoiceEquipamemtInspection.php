@@ -14,4 +14,14 @@ class InvoiceEquipamemtInspection extends Model
         'equipament_id',
         'name',
     ];
+
+    /**
+     * Get que equipament that inspetion belongs
+     *
+     * @return App\Models\Equipament
+     */
+    public function equipament()
+    {
+        return $this->belongsTo(Equipament::class);
+    }
 }
