@@ -5,11 +5,13 @@ namespace Tests\Feature\Controllers;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Equipament;
+use App\Models\RepairInvoice;
 use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Laravel\Passport\Passport;
+use Tests\Feature\Helpers;
 use Tests\TestCase;
 
 class RepairInvoiceControllerTest extends TestCase
@@ -26,7 +28,8 @@ class RepairInvoiceControllerTest extends TestCase
     }
 
     /**
-     *@test
+     * @test
+     * @group invoice
      *
      * @return void
      */
@@ -61,5 +64,33 @@ class RepairInvoiceControllerTest extends TestCase
         $this->assertDatabaseHas('invoice_equipament_conditions', ['name' => $postData['conditions']]);
         $this->assertDatabaseHas('invoice_equipamemt_inspections', ['name' => $postData['inspections']]);
         $this->assertDatabaseHas('repair_invoice_statuses', ['description' => 'Primeiro status', 'status' => 1]);
+    }
+
+    /**
+     * @test
+     * @group invoice
+     *
+     * @return void
+     */
+    public function shoul_edit_rapir_invoice()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('edit_repair_invoice');
+        $store = $user->stores()->first();
+        $invoice = RepairInvoice::factory()->create(['store_id'=>$store->id]);
+
+        $postData = ['id' => $invoice->id, 'fail_description' => 'Charge connectos is broke'];
+        $route = '/api/v1/store/repair-invoice';
+
+        $responseData = Helpers::makeResponseApiMock('Dados atualizados com sucesso', 200, ['id' => $invoice->id], $route, "PUT");
+
+        //act
+        $response = $this->put($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseHas('repair_invoices', $postData);
+
     }
 }
