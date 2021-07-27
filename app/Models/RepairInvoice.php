@@ -55,4 +55,14 @@ class RepairInvoice extends Model
         return $this->hasMany(RepairInvoiceStatus::class);
     }
 
+    /**
+     * Get store that Repair Invoice belongs
+     *
+     * @return void
+     */
+    public function store()
+    {
+        return $this->belongsTo(Store::class);
+    }
+
 }
