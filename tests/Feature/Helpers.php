@@ -28,8 +28,8 @@ class Helpers
     public static function getAccountUserLoggedWithAccount(string $permission = '')
     {
 
-        $account = Account::factory()->create();
-        $user = User::factory()->create(['account_id' => $account->id]);
+        $user = User::factory()->create();
+        $account = Account::factory()->create(['user_id' => $user->id]);
         Store::factory()->create(['account_id' => $account->id]);
         Passport::actingAs($user);
         $user->givePermissionTo($permission);
