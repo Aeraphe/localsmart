@@ -74,13 +74,23 @@ class RepairInvoice extends Model
     }
 
     /**
-     * Get
+     * Get Equipament that belongs to the RepairInvoice
      *
      * @return void
      */
     public function equipament()
     {
         return $this->belongsTo(Equipament::class);
+    }
+
+    /**
+     * Get Equipament Conditions that belongs to the RepairInvoice
+     *
+     * @return void
+     */
+    public function conditions()
+    {
+        return $this->hasMany(InvoiceEquipamentCondition::class);
     }
 
 }

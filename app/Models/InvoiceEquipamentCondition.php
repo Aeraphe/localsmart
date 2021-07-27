@@ -24,4 +24,14 @@ class InvoiceEquipamentCondition extends Model
     {
         return $this->belongsTo(Equipament::class);
     }
+
+    /**
+     * Get RepairInvoice from Equipament Condition belongs
+     *
+     * @return App\Models\RepairInvoice
+     */
+    public function repairInvoice()
+    {
+        return $this->belongsTo(RepairInvoice::class);
+    }
 }
