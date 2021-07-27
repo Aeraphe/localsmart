@@ -42,7 +42,7 @@ class RepairInvoiceControllerTest extends TestCase
         $store = $user->stores()->first();
         $customer = Customer::factory()->has(Equipament::factory()->count(1))->create(['account_id' => $user->account->id]);
 
-        $invoice = RepairInvoice::factory()->create(['store_id' => $store->id, 'equipament_id' => $customer->equipaments[0]->id]);
+        $invoice = RepairInvoice::factory()->count(5)->create(['store_id' => $store->id, 'equipament_id' => $customer->equipaments[0]->id])[0];
 
         InvoiceEquipamemtInspection::create([
             'name' => 'Wifi checked',
