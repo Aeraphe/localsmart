@@ -5,7 +5,10 @@ namespace Tests\Feature\Controllers;
 use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Equipament;
+use App\Models\InvoiceEquipamemtInspection;
+use App\Models\InvoiceEquipamentCondition;
 use App\Models\RepairInvoice;
+use App\Models\RepairInvoiceStatus;
 use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,6 +28,39 @@ class RepairInvoiceControllerTest extends TestCase
         $this->seed();
         // now re-register all the roles and permissions (clears cache and reloads relations)
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
+    }
+
+    /**
+     * Get invoice with user logged
+     *
+     * @param [type] $permission
+     * @return void
+     */
+    private function getInvoiceWithUserLogged(string $permission): RepairInvoice
+    {
+        $user = Helpers::getEmployeeLoggedWithAccount($permission);
+        $store = $user->stores()->first();
+        $customer = Customer::factory()->has(Equipament::factory()->count(1))->create(['account_id' => $user->account->id]);
+
+        $invoice = RepairInvoice::factory()->create(['store_id' => $store->id, 'equipament_id' => $customer->equipaments[0]->id]);
+
+        InvoiceEquipamemtInspection::create([
+            'name' => 'Wifi checked',
+            'equipament_id' => $customer->equipaments[0]->id,
+            'repair_invoice_id' => $invoice->id,
+
+        ]);
+
+        InvoiceEquipamentCondition::create([
+            'name' => 'Broked display',
+            'equipament_id' => $customer->equipaments[0]->id,
+            'repair_invoice_id' => $invoice->id,
+
+        ]);
+
+        RepairInvoiceStatus::factory()->create(['repair_invoice_id' => $invoice->id]);
+
+        return $invoice;
     }
 
     /**
