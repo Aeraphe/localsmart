@@ -14,4 +14,14 @@ class InvoiceEquipamentCondition extends Model
         'equipament_id',
         'repair_invoice_id',
     ];
+
+    /**
+     * Get Equipament that the condition belongs
+     *
+     * @return App\Models\Equipament
+     */
+    public function equipament()
+    {
+        return $this->belongsTo(Equipament::class);
+    }
 }
