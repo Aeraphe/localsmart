@@ -65,4 +65,13 @@ class RepairInvoice extends Model
         return $this->belongsTo(Store::class);
     }
 
+    /**
+     * Get 
+     *
+     * @return void
+     */
+    public function equipament(){
+        return $this->belongsTo(Equipament::class);
+    }
+
 }
