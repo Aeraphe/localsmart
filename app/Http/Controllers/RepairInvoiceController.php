@@ -10,6 +10,8 @@ use App\Models\RepairInvoice;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RepairInvoiceController extends Controller
 {
@@ -97,9 +99,32 @@ class RepairInvoiceController extends Controller
 
             $this->authorize('show_repair_invoice');
             $invoice = $request->route('invoice')->with('status', 'equipament')->first();
-            $invoice->equipament->conditions;  
-            $invoice->equipament->inspetions;  
+            $invoice->equipament->conditions;
+            $invoice->equipament->inspetions;
             return ApiResponseService::make('Operação realizada com sucesso!!!', 200, $invoice->toArray());
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+
+    }
+
+    /**
+     * Show Repair Invoice
+     *
+     * @param Request $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function showAll(Request $request)
+    {
+        try {
+
+            $this->authorize('show_all_repair_invoice');
+            $store = Auth::user()->account->stores()->where('id', $request->route('id'))->first();
+
+            $invoices = $store->repairInvoice()->with('status', 'conditions.equipament','inspections.equipament')->get();
+
+            return ApiResponseService::make('Operação realizada com sucesso!!!', 200, $invoices->toArray());
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
