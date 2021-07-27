@@ -43,4 +43,14 @@ class Store extends Model
     {
         return $this->belongsToMany(Employee::class);
     }
+
+    /**
+     * Get Repair Invoices from store
+     *
+     * @return void
+     */
+    public function repairInvoice()
+    {
+        return $this->hasMany(RepairInvoice::class);
+    }
 }
