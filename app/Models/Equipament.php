@@ -37,4 +37,14 @@ class Equipament extends Model
         return $this->belongsTo(Customer::class);
     }
 
+    /**
+     * Get Equipament Repair Invoices
+     *
+     * @return void
+     */
+    public function repairInvoices()
+    {
+        return $this->hasMany(RepairInvoice::class);
+    }
+
 }
