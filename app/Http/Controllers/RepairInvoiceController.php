@@ -98,9 +98,8 @@ class RepairInvoiceController extends Controller
         try {
 
             $this->authorize('show_repair_invoice');
-            $invoice = $request->route('invoice')->with('status', 'equipament')->first();
-            $invoice->equipament->conditions;
-            $invoice->equipament->inspetions;
+            $invoice = $request->route('invoice')->with('status', 'conditions.equipament', 'inspections.equipament')->first();
+
             return ApiResponseService::make('Operação realizada com sucesso!!!', 200, $invoice->toArray());
 
         } catch (Exception $e) {
@@ -122,7 +121,7 @@ class RepairInvoiceController extends Controller
             $this->authorize('show_all_repair_invoice');
             $store = Auth::user()->account->stores()->where('id', $request->route('id'))->first();
 
-            $invoices = $store->repairInvoice()->with('status', 'conditions.equipament','inspections.equipament')->get();
+            $invoices = $store->repairInvoice()->with('status', 'conditions.equipament', 'inspections.equipament')->get();
 
             return ApiResponseService::make('Operação realizada com sucesso!!!', 200, $invoices->toArray());
 
