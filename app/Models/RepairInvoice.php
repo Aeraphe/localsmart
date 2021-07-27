@@ -25,7 +25,11 @@ class RepairInvoice extends Model
     public function addEquipamentConditions(array $conditions)
     {
         foreach ($conditions as $condition) {
-            InvoiceEquipamentCondition::create(['name' => $condition, 'repair_invoice_id' => $this->id]);
+            InvoiceEquipamentCondition::create([
+                'name' => $condition,
+                'repair_invoice_id' => $this->id,
+                'equipament_id' => $this->equipament->id,
+            ]);
 
         }
     }
@@ -40,7 +44,11 @@ class RepairInvoice extends Model
     {
 
         foreach ($inpections as $inpection) {
-            InvoiceEquipamemtInspection::create(['name' => $inpection, 'repair_invoice_id' => $this->id]);
+            InvoiceEquipamemtInspection::create([
+                'name' => $inpection,
+                'equipament_id' => $this->equipament->id,
+                'repair_invoice_id' => $this->id,
+            ]);
         }
     }
 
@@ -66,11 +74,12 @@ class RepairInvoice extends Model
     }
 
     /**
-     * Get 
+     * Get
      *
      * @return void
      */
-    public function equipament(){
+    public function equipament()
+    {
         return $this->belongsTo(Equipament::class);
     }
 
