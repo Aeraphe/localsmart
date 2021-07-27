@@ -154,4 +154,28 @@ class RepairInvoiceControllerTest extends TestCase
         $response->assertJson($responseData);
         $this->assertDatabaseMissing('repair_invoices', $postData);
     }
+
+    /**
+     * @test
+     * @group invoice
+     */
+    public function should_show_repair_invoice()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('show_repair_invoice');
+
+        $route = '/api/v1/store/repair-invoice/' . $invoice->id;
+
+        $reponseInvoiceData = $invoice->with('status', 'equipament')->first()->toArray();
+
+        $responseData = Helpers::makeResponseApiMock('Operação realizada com sucesso!!!', 200, $reponseInvoiceData, $route, "GET");
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
+    }
 }
