@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteRepairInvoiceRequest;
 use App\Http\Requests\RepairInvoiceRequest;
 use App\Http\Requests\UpdateRepairInvoiceRequest;
 use App\Models\RepairInvoice;
@@ -46,13 +47,36 @@ class RepairInvoiceController extends Controller
     public function update(UpdateRepairInvoiceRequest $request)
     {
         try {
-            
+
             $this->authorize('edit_repair_invoice');
-            
-            $validated= $request->validated();
+
+            $validated = $request->validated();
             $request->route('invoice')->update($validated);
 
             return ApiResponseService::make('Dados atualizados com sucesso', 200, ['id' => $validated['id']]);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+
+    }
+
+    /**
+     * Delete Repair Invoice
+     *
+     * @param DeleteRepairInvoiceRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function delete(DeleteRepairInvoiceRequest $request)
+    {
+        try {
+
+            $this->authorize('delete_repair_invoice');
+
+            $validated = $request->validated();
+            $request->route('invoice')->delete();
+
+            return ApiResponseService::make('Ordem de serviço apagada com sucesso', 200, ['id' => $validated['id']]);
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
