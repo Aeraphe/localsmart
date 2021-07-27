@@ -93,4 +93,14 @@ class RepairInvoice extends Model
         return $this->hasMany(InvoiceEquipamentCondition::class);
     }
 
+    /**
+     * Get Equipament Inspetions that belongs to the RepairInvoice
+     *
+     * @return void
+     */
+    public function inspections()
+    {
+        return $this->hasMany(InvoiceEquipamemtInspection::class);
+    }
+
 }

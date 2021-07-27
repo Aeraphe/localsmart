@@ -16,12 +16,22 @@ class InvoiceEquipamemtInspection extends Model
     ];
 
     /**
-     * Get que equipament that inspetion belongs
+     * Get the equipament that inspetion belongs
      *
      * @return App\Models\Equipament
      */
     public function equipament()
     {
         return $this->belongsTo(Equipament::class);
+    }
+
+    /**
+     * Get Invoice That equipament that inspetion belongs
+     *
+     * @return App\Models\Equipament
+     */
+    public function repairInvoice()
+    {
+        return $this->belongsTo(RepairInvoice::class);
     }
 }
