@@ -4,6 +4,7 @@ namespace Tests\Feature\Controllers;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
+use Tests\Feature\Helpers;
 use Tests\TestCase;
 
 class AccountControllerTest extends TestCase
@@ -22,6 +23,7 @@ class AccountControllerTest extends TestCase
 
     /**
      * @test
+     * @group account
      *
      * @return void
      */
@@ -47,7 +49,7 @@ class AccountControllerTest extends TestCase
 
         //act
         $response = $this->post('api/v1/account/register', $postData);
-  
+
         //assert
         $response->assertStatus(200);
         $response->assertJsonFragment(["_message" => "Conta criada com sucesso"], $response->getContent());
@@ -57,6 +59,7 @@ class AccountControllerTest extends TestCase
 
     /**
      * @test
+     * @group account
      */
     public function it_fail_if_email_already_exists_on_database()
     {
@@ -86,5 +89,25 @@ class AccountControllerTest extends TestCase
         //assert
         $response->assertStatus(302);
 
+    }
+
+    /**
+     * @test
+     * @group account
+     */
+    public function should_edit_account()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('edit_account');
+        $postData = ['slug' => 'LocalSmart'];
+        $route = '/api/v1/account';
+        $dataResponse = Helpers::makeResponseApiMock('Dados alterados com sucesso!!!', 200, $postData, $route, 'PUT');
+        //act
+        $response = $this->put($route, $postData);
+   
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('accounts', ['id' => $user->account->id, 'slug' => 'LocalSmart']);
+        $response->assertJson($dataResponse);
     }
 }
