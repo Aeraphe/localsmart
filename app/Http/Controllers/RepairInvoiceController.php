@@ -97,6 +97,8 @@ class RepairInvoiceController extends Controller
 
             $this->authorize('show_repair_invoice');
             $invoice = $request->route('invoice')->with('status', 'equipament')->first();
+            $invoice->equipament->conditions;  
+            $invoice->equipament->inspetions;  
             return ApiResponseService::make('Operação realizada com sucesso!!!', 200, $invoice->toArray());
 
         } catch (Exception $e) {
