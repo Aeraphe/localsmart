@@ -166,7 +166,11 @@ class RepairInvoiceControllerTest extends TestCase
 
         $route = '/api/v1/store/repair-invoice/' . $invoice->id;
 
-        $reponseInvoiceData = $invoice->with('status', 'equipament')->first()->toArray();
+        $respInvoideWithEquipament = $invoice->with('status', 'equipament')->first();
+        $respInvoideWithEquipament->equipament->conditions;
+        $respInvoideWithEquipament->equipament->inspetions;
+
+        $reponseInvoiceData = $respInvoideWithEquipament->toArray();
 
         $responseData = Helpers::makeResponseApiMock('Operação realizada com sucesso!!!', 200, $reponseInvoiceData, $route, "GET");
 
