@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RepairInvoiceRequest;
+use App\Http\Requests\UpdateRepairInvoiceRequest;
 use App\Models\RepairInvoice;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -35,6 +36,28 @@ class RepairInvoiceController extends Controller
             if ($invoice) {$invoice->delete();};
             return ApiResponseErrorService::make($e);
         }
+    }
+    /**
+     * Update Repair Invoice
+     *
+     * @param UpdateRepairInvoiceRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function update(UpdateRepairInvoiceRequest $request)
+    {
+        try {
+            
+            $this->authorize('edit_repair_invoice');
+            
+            $validated= $request->validated();
+            $request->route('invoice')->update($validated);
+
+            return ApiResponseService::make('Dados atualizados com sucesso', 200, ['id' => $validated['id']]);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+
     }
 
 }
