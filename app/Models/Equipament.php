@@ -62,7 +62,7 @@ class Equipament extends Model
      *
      * @return Collection<App\Models\InvoiceEquipamemtInspection>
      */
-    public function inspetions()
+    public function inspections()
     {
 
         return $this->hasMany(InvoiceEquipamemtInspection::class);
