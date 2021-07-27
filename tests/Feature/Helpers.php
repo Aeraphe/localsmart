@@ -17,7 +17,8 @@ class Helpers
 
         $account = Account::factory()->create();
         $user = Employee::factory()->create(['account_id' => $account->id]);
-        Store::factory()->create(['account_id' => $account->id]);
+        $store = Store::factory()->create(['account_id' => $account->id]);
+        $user->stores()->attach($store->id);
         Passport::actingAs($user);
         $user->givePermissionTo($permission);
 
