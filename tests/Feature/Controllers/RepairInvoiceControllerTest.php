@@ -351,4 +351,36 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
+
+        /**
+     * @test
+     * @group invoice-equipament-inspection
+     *
+     * @return boolean
+     */
+    public function should_update_equipament_inspection()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('update_equipament_inspection');
+        $inspections = $invoice->inspections;
+        $route = '/api/v1/store/repair-invoice/equipament/inspection';
+
+        $postData = [
+            'id' => $inspections[0]->id,
+            'name' => 'Wifi checked',
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Inspeção Atualizada com sucesso!!!', 200, $postData, $route, "PUT");
+
+        //act
+        $response = $this->put($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('invoice_equipamemt_inspections', $postData);
+        $response->assertJson($responseData);
+
+    }
+    
+
 }
