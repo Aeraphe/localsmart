@@ -6,7 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\RepairInvoiceController;
-use App\Models\RepairInvoice;
+use App\Http\Controllers\StoreController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/register', [AccountController::class, 'create'])->name('api-register-account');
     });
 
+    //Employee Loggin
     Route::post('/login/{account}/{store}', [LoginController::class, 'authenticateEmployeApi'])->name('api-auth-employe');
 
     //Protected Routes
@@ -53,7 +54,7 @@ Route::prefix('v1')->group(function () {
             Route::put('/employee', [EmployeeController::class, 'update'])->name('update-employee');
             Route::get('/employee/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
             Route::get('/employee', [EmployeeController::class, 'showAll'])->name('show-employee');
-            
+
             //Equipament
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
             Route::get('/customer/equipament/{equipament}', [EquipamentController::class, 'show'])->name('show-customer-equipament');
@@ -62,13 +63,20 @@ Route::prefix('v1')->group(function () {
             Route::delete('/customer/equipament', [EquipamentController::class, 'delete'])->name('delete-customer-equipament');
         });
 
-        Route::prefix('store/repair-invoice')->group(function () {
-            Route::post('/', [RepairInvoiceController::class, 'create'])->name('store-create-repair-invoice');
-            Route::put('/',[RepairInvoiceController::class,'update'])->name('store-update-repair-invoice');
-            Route::delete('/',[RepairInvoiceController::class,'delete'])->name('store-delete-repair-invoice');
-            Route::get('/all/{id}',[RepairInvoiceController::class,'showAll'])->name('store-show--all-repair-invoice');
-            Route::get('/{id}',[RepairInvoiceController::class,'show'])->name('store-show-repair-invoice');
-           
+        //Store
+        Route::prefix('store')->group(function () {
+
+            Route::get('/', [StoreController::class, 'show'])->name('store-show');
+
+            //RepairInvoice
+            Route::prefix('repair-invoice')->group(function () {
+                Route::post('/', [RepairInvoiceController::class, 'create'])->name('store-create-repair-invoice');
+                Route::put('/', [RepairInvoiceController::class, 'update'])->name('store-update-repair-invoice');
+                Route::delete('/', [RepairInvoiceController::class, 'delete'])->name('store-delete-repair-invoice');
+                Route::get('/all/{id}', [RepairInvoiceController::class, 'showAll'])->name('store-show--all-repair-invoice');
+                Route::get('/{id}', [RepairInvoiceController::class, 'show'])->name('store-show-repair-invoice');
+            });
+
         });
 
     });
