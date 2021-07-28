@@ -263,7 +263,6 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
-
     /**
      * @test
      * @group invoice-equipament-conditions
@@ -294,8 +293,7 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
-
-     /**
+    /**
      * @test
      * @group invoice-equipament-inspection
      *
@@ -320,6 +318,35 @@ class RepairInvoiceControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $this->assertDatabaseHas('invoice_equipamemt_inspections', $postData);
+        $response->assertJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group invoice-equipament-inspection
+     *
+     * @return boolean
+     */
+    public function should_delete_equipament_inspection()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('delete_equipament_inspection');
+        $inspections = $invoice->inspections;
+        $route = '/api/v1/store/repair-invoice/equipament/inspection';
+
+        $postData = [
+            'id' => $inspections[0]->id,
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Inspeção Apagada com sucesso!!!', 200, $postData, $route, "DELETE");
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('invoice_equipamemt_inspections', $postData);
         $response->assertJson($responseData);
 
     }
