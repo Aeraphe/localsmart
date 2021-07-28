@@ -100,7 +100,6 @@ Route::prefix('v1')->group(function () {
                 Route::delete('/equipament/inspection', [EquipamentInspectionController::class, 'delete'])->name('delete-equipament-inspection');
                 Route::put('/equipament/inspection', [EquipamentInspectionController::class, 'update'])->name('updade-equipament-inspection');
                 //Status
-                Route::get('/status/all/{id}', [RepairStatusController::class, 'show'])->name('show-all-repair-invoice-status');
                 Route::get('/status/{id}', [RepairStatusController::class, 'show'])->name('show-repair-invoice-status');
                 Route::post('/status', [RepairStatusController::class, 'create'])->name('create-repair-invoice-status');
               
