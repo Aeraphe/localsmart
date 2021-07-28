@@ -6,6 +6,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\InvoiceEquipamentConditionController;
+use App\Http\Controllers\Invoice\EquipamentInspectionController;
 use App\Http\Controllers\RepairInvoiceController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
@@ -91,6 +92,10 @@ Route::prefix('v1')->group(function () {
                 Route::post('/equipament/condition', [InvoiceEquipamentConditionController::class, 'create'])->name('create-equipament-condition');
                 Route::delete('/equipament/condition', [InvoiceEquipamentConditionController::class, 'delete'])->name('delete-equipament-condition');
                 Route::put('/equipament/condition', [InvoiceEquipamentConditionController::class, 'update'])->name('updade-equipament-condition');
+                //Equipament Inspection
+                Route::post('/equipament/inspection', [EquipamentInspectionController::class, 'create'])->name('create-equipament-inspection');
+                Route::delete('/equipament/inspection', [EquipamentInspectionController::class, 'delete'])->name('delete-equipament-inspection');
+                Route::put('/equipament/inspection', [EquipamentInspectionController::class, 'update'])->name('updade-equipament-inspection');
             });
 
         });
