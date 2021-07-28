@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\RepairInvoiceController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +36,10 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
 
         Route::prefix('account')->group(function () {
+
+
+            //User Account
+            Route::get('/user/{id}',[UserController::class,'show'])->name('show-account-user');
 
             //Account
             Route::put('/', [AccountController::class, 'update'])->name('update-account');
@@ -66,6 +71,7 @@ Route::prefix('v1')->group(function () {
         //Store
         Route::prefix('store')->group(function () {
 
+            //Store
             Route::post('/', [StoreController::class, 'create'])->name('create-store');
             Route::delete('/', [StoreController::class, 'delete'])->name('delete-store');
             Route::put('/', [StoreController::class, 'update'])->name('update-store');
