@@ -28,7 +28,7 @@ class StoreControllerTest extends TestCase
      *
      * @return void
      */
-    public function should_show_store()
+    public function should_show_all_store()
     {
         //arrange
         $user = Helpers::getAccountUserLoggedWithAccount('show_all_store');
@@ -43,4 +43,27 @@ class StoreControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson($responseData);
     }
+
+    /**
+     * @test
+     * @group store
+     *
+     * @return void
+     */
+    public function should_employee_show_store()
+    {
+        //arrange
+        $user = Helpers::getEmployeeLoggedWithAccount('show_store');
+        $route = '/api/v1/store/' . $user->account->stores[0]->id;
+        $storeResponseData = $user->account->stores[0]->toArray();
+        $responseData = Helpers::makeResponseApiMock('Consulta realizada com sucesso', 200, $storeResponseData, $route, "GET");
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+    }
+
 }
