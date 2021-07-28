@@ -104,10 +104,31 @@ class AccountControllerTest extends TestCase
         $dataResponse = Helpers::makeResponseApiMock('Dados alterados com sucesso!!!', 200, $postData, $route, 'PUT');
         //act
         $response = $this->put($route, $postData);
-   
+
         //assert
         $response->assertStatus(200);
         $this->assertDatabaseHas('accounts', ['id' => $user->account->id, 'slug' => 'LocalSmart']);
         $response->assertJson($dataResponse);
     }
+
+    /**
+     * @test
+     * @group account
+     */
+    public function should_show_account()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('show_account');
+        $account = $user->account->with('stores', 'employees')->first();
+        $route = '/api/v1/account';
+        $dataResponse = Helpers::makeResponseApiMock('Consulta Realizada co  sucesso!!!', 200, $account->toArray(), $route, 'GET');
+        //act
+ 
+        $response = $this->get($route);
+ 
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($dataResponse);
+    }
+
 }
