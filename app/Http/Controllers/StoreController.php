@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
 {
-    public function show()
+    public function showAll()
     {
         try {
             $this->authorize('show_all_store');
