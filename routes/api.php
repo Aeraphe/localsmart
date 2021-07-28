@@ -66,6 +66,7 @@ Route::prefix('v1')->group(function () {
         //Store
         Route::prefix('store')->group(function () {
 
+            Route::post('/', [StoreController::class, 'create'])->name('create-store');
             Route::get('/', [StoreController::class, 'showAll'])->name('show-all-store');
             Route::get('/{id}', [StoreController::class, 'show'])->name('show-store');
 
