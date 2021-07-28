@@ -66,4 +66,28 @@ class AccountController extends Controller
 
         }
     }
+
+    /**
+     * Update account
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function show()
+    {
+        try {
+
+            $this->authorize('show_account');
+
+            $account = Auth::user()->account->with('stores', 'employees')->first();
+
+            return ApiResponseService::make('Consulta Realizada co  sucesso!!!', 200, $account->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
 }
