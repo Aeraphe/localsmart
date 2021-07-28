@@ -15,8 +15,8 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $actions = ['create', 'edit', 'delete', 'show','show_all', 'update'];
-        $scopes = ['employee', 'repair_invoice', 'equipament', 'store', 'account', 'gadget','customer' ,'user'];
+        $actions = ['create', 'edit', 'delete', 'show', 'show_all', 'update'];
+        $scopes = ['employee', 'repair_invoice', 'equipament', 'equipament_condition', 'equipament_inspection', 'store', 'account', 'gadget', 'customer', 'user'];
         $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
 
         //Create all app Roles
@@ -37,9 +37,9 @@ class RoleSeeder extends Seeder
     {
 
         foreach ($roles as $role) {
-            Role::create(['guard_name' => 'api','name' => $role]);
-            Role::create(['guard_name' => 'web','name' => $role]);
-            Role::create(['guard_name' => 'employee','name' => $role]);
+            Role::create(['guard_name' => 'api', 'name' => $role]);
+            Role::create(['guard_name' => 'web', 'name' => $role]);
+            Role::create(['guard_name' => 'employee', 'name' => $role]);
         }
         ;
     }
@@ -58,9 +58,9 @@ class RoleSeeder extends Seeder
         foreach ($actions as $action) {
             foreach ($scopes as $scope) {
                 $permissionName = $action . '_' . $scope;
-                $permission = Permission::create(['guard_name' => 'api','name' => $permissionName]);
-                $permission = Permission::create(['guard_name' => 'employee','name' => $permissionName]);
-                $permission = Permission::create(['guard_name' => 'web','name' => $permissionName]);
+                $permission = Permission::create(['guard_name' => 'api', 'name' => $permissionName]);
+                $permission = Permission::create(['guard_name' => 'employee', 'name' => $permissionName]);
+                $permission = Permission::create(['guard_name' => 'web', 'name' => $permissionName]);
                 $appPermissions[$permissionName] = $permission;
             }
         }
