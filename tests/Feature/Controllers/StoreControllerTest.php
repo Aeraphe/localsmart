@@ -185,7 +185,7 @@ class StoreControllerTest extends TestCase
 
     /**
      * @test
-     * @group store1
+     * @group store
      *
      * @return void
      */
