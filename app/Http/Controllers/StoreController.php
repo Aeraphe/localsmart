@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateStoreRequest;
 use App\Http\Requests\Store\ShowStoreRequest;
+use App\Http\Requests\UpdateStoreRequest;
 use App\Models\Store;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -66,6 +67,30 @@ class StoreController extends Controller
             $storeResponseData = Store::create($validated);
 
             return ApiResponseService::make('Consulta realizada com sucesso', 200, $storeResponseData->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
+    /**
+     * Update Store
+     *
+     * @param UpdateStoreRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function update(UpdateStoreRequest $request)
+    {
+        try {
+            $this->authorize('update_store');
+
+            $validated = $request->validated();
+
+            Store::where('id', $validated['id'])->update($validated);
+
+            return ApiResponseService::make('Atualizada com sucesso', 200, ['id' => $validated['id']]);
 
         } catch (Exception $e) {
 
