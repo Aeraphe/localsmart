@@ -66,4 +66,32 @@ class StoreControllerTest extends TestCase
         $response->assertJson($responseData);
     }
 
+    /**
+     * @test
+     * @group store
+     *
+     * @return void
+     */
+    public function should_create_store()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('create_store');
+        $user->account->store_qt = 3;
+        $postData = [
+            'name' => $this->faker->company,
+            'slug' => $this->faker->slug,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+        ];
+        $route = '/api/v1/store';
+
+        //act
+        $response = $this->post($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('stores', $postData);
+
+    }
+
 }
