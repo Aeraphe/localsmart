@@ -227,11 +227,38 @@ class RepairInvoiceControllerTest extends TestCase
 
         //act
         $response = $this->post($route, $postData);
-   
-
         //assert
         $response->assertStatus(200);
         $this->assertDatabaseHas('invoice_equipament_conditions', $postData);
+        $response->assertJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group invoice-equipament-conditions
+     *
+     * @return boolean
+     */
+    public function should_delete_equipament_condition()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('delete_equipament_condition');
+        $conditions = $invoice->conditions;
+        $route = '/api/v1/store/repair-invoice/equipament/condition';
+
+        $postData = [
+            'id' => $conditions[0]->id,
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Apagada com sucesso!!!', 200, $postData, $route, "DELETE");
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseMissing('invoice_equipament_conditions', $postData);
         $response->assertJson($responseData);
 
     }
