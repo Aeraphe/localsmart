@@ -263,4 +263,35 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
+
+    /**
+     * @test
+     * @group invoice-equipament-conditions
+     *
+     * @return boolean
+     */
+    public function should_update_equipament_condition()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('update_equipament_condition');
+        $conditions = $invoice->conditions;
+        $route = '/api/v1/store/repair-invoice/equipament/condition';
+
+        $postData = [
+            'id' => $conditions[0]->id,
+            'name' => 'Wifi checked',
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Condição Atualizada com sucesso!!!', 200, $postData, $route, "PUT");
+
+        //act
+        $response = $this->put($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('invoice_equipament_conditions', $postData);
+        $response->assertJson($responseData);
+
+    }
+
 }
