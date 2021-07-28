@@ -88,7 +88,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('/all/{id}', [RepairInvoiceController::class, 'showAll'])->name('store-show--all-repair-invoice');
                 Route::get('/{id}', [RepairInvoiceController::class, 'show'])->name('store-show-repair-invoice');
                 //Equipament Conditions
-                Route::post('/equipament/condition', [InvoiceEquipamentConditionController::class, 'update'])->name('updade-equipament-condition');
+                Route::post('/equipament/condition', [InvoiceEquipamentConditionController::class, 'create'])->name('updade-equipament-condition');
             });
 
         });
