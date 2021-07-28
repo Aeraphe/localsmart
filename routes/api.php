@@ -37,6 +37,7 @@ Route::prefix('v1')->group(function () {
 
             //Account
             Route::put('/', [AccountController::class, 'update'])->name('update-account');
+            Route::get('/', [AccountController::class, 'show'])->name('get-account');
 
             //Customer
             Route::post('/customer', [CustomerController::class, 'create'])->name('create-customer');
