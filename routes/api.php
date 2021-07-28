@@ -40,6 +40,7 @@ Route::prefix('v1')->group(function () {
 
             //User Account
             Route::get('/user/{id}',[UserController::class,'show'])->name('show-account-user');
+            Route::put('/user',[UserController::class,'update'])->name('update-account-user');
 
             //Account
             Route::put('/', [AccountController::class, 'update'])->name('update-account');
