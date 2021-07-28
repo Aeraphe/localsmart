@@ -218,7 +218,7 @@ class RepairInvoiceControllerTest extends TestCase
 
         $route = '/api/v1/store/repair-invoice/equipament/condition/' . $invoice->equipament->id;
 
-        $responseData = Equipament::with('conditions', 'inspections')->where('id',$invoice->equipament->id)->get();
+        $responseData = Equipament::with('conditions', 'inspections')->where('id', $invoice->equipament->id)->get();
 
         $responseData = Helpers::makeResponseApiMock('Consulta realizada com sucesso!!!', 200, $responseData->toArray(), $route, "GET");
 
@@ -403,6 +403,32 @@ class RepairInvoiceControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $this->assertDatabaseHas('invoice_equipamemt_inspections', $postData);
+        $response->assertJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group invoice-status
+     *
+     * @return boolean
+     */
+    public function should_show_invoice_status()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('show_repair_invoice_status');
+
+        $route = '/api/v1/store/repair-invoice/status/' . $invoice->id;
+
+        $responseData = $invoice->status;
+
+        $responseData = Helpers::makeResponseApiMock('Consulta realizada com sucesso!!!', 200, $responseData->toArray(), $route, "GET");
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
         $response->assertJson($responseData);
 
     }
