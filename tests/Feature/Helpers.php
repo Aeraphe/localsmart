@@ -30,6 +30,7 @@ class Helpers
 
         $user = User::factory()->create();
         $account = Account::factory()->create(['user_id' => $user->id]);
+        Employee::factory()->count(5)->create(['account_id'=>$account->id]);
         Store::factory()->create(['account_id' => $account->id]);
         Passport::actingAs($user);
         $user->givePermissionTo($permission);
