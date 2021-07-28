@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Exceptions\BaseException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +23,9 @@ class CreateStoreRequest extends FormRequest
         $slug = Request::get('slug');
         $store = $account->stores()->where('slug', $slug)->first();
         if ($store) {
-            
-            $ex = new BaseException("Login ($slug) da loja ja existe", 403);
-            $ex->setData(['slug' => 'data already exists for this account']);
-            throw $ex;
-          
+
+            throw new AuthorizationException("Login ($slug) da loja ja existe", 403);
+
         }
 
         //Check account store quantity not exceeds
@@ -37,10 +35,8 @@ class CreateStoreRequest extends FormRequest
 
         } else {
 
-            $ex = new BaseException("O total de lojas permitidas pelo plano foi excedido", 403);
-            $ex->setData(['store' => 'Store account quantity exceeds']);
-            throw $ex;
-          
+            throw new AuthorizationException('Total de Lojas atingiu o limite permitido pelo plano', 403);
+
         }
         return false;
     }
