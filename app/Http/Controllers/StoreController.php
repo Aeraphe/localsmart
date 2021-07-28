@@ -9,6 +9,7 @@ use App\Models\Store;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StoreController extends Controller
@@ -91,6 +92,32 @@ class StoreController extends Controller
             Store::where('id', $validated['id'])->update($validated);
 
             return ApiResponseService::make('Atualizada com sucesso', 200, ['id' => $validated['id']]);
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
+    /**
+     * Delete Store
+     *
+     * @param Request $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function delete(Request $request)
+    {
+        try {
+            $this->authorize('delete_store');
+
+            $validated = $request->validate(['id' => ['required', 'numeric']]);
+
+            $store = Auth::user()->account->stores()->where('id', $validated['id'])->first();
+
+            $store->delete();
+
+            return ApiResponseService::make('Loja apagada com sucesso', 200, ['id' => $validated['id']]);
 
         } catch (Exception $e) {
 
