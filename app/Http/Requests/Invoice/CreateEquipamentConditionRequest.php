@@ -17,9 +17,9 @@ class CreateEquipamentConditionRequest extends FormRequest
     {
         $user = Request::user();
         $invoiceId = Request::get('repair_invoice_id');
-        $store = RepairInvoice::find($invoiceId);
-   
-        if ($user->stores()->where('id', $store->id)->first()) {
+        $invoice = RepairInvoice::find($invoiceId);
+      
+        if ($user->stores()->where('id', $invoice->store->id)->first()) {
             return true;
         }
         return false;
