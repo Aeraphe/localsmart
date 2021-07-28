@@ -66,7 +66,8 @@ Route::prefix('v1')->group(function () {
         //Store
         Route::prefix('store')->group(function () {
 
-            Route::get('/', [StoreController::class, 'show'])->name('store-show');
+            Route::get('/', [StoreController::class, 'showAll'])->name('show-all-store');
+            Route::get('/{id}', [StoreController::class, 'show'])->name('show-store');
 
             //RepairInvoice
             Route::prefix('repair-invoice')->group(function () {
