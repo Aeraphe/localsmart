@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Store\ShowStoreRequest;
+use App\Models\Store;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use Exception;
@@ -18,6 +20,29 @@ class StoreController extends Controller
             return ApiResponseService::make('Consulta realizada com sucesso', 200, $storeResponseData);
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
+        }
+    }
+
+    /**
+     * Show Store
+     *
+     * @param ShowStoreRequest $request
+     * @return void
+     */
+    public function show(ShowStoreRequest $request)
+    {
+        try {
+            $this->authorize('show_store');
+
+            $storeId = $request->route('id');
+            $storeResponseData = Store::find($storeId)->toArray();
+
+            return ApiResponseService::make('Consulta realizada com sucesso', 200, $storeResponseData);
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
         }
     }
 }
