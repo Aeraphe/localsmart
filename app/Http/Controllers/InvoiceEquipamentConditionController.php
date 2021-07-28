@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Invoice\CreateEquipamentConditionRequest;
 use App\Http\Requests\Invoice\DeleteEquipamentConditionRequest;
+use App\Http\Requests\Invoice\UpdateEquipamentConditionRequest;
 use App\Models\InvoiceEquipamentCondition;
 use App\Models\RepairInvoice;
 use App\Services\ApiResponse\ApiResponseErrorService;
@@ -53,6 +54,30 @@ class InvoiceEquipamentConditionController extends Controller
             InvoiceEquipamentCondition::find($validated['id'])->delete();
 
             return ApiResponseService::make('Apagada com sucesso!!!', 200, $validated);
+
+        } catch (Exception $th) {
+
+            return ApiResponseErrorService::make($th);
+
+        }
+    }
+
+    /**
+     * Update equipament Condition
+     *
+     * @param UpdateEquipamentConditionRequest $request
+     * @return void
+     */
+    public function update(UpdateEquipamentConditionRequest $request)
+    {
+        try {
+
+            $this->authorize('update_equipament_condition');
+            $validated = $request->validated();
+
+            InvoiceEquipamentCondition::find($validated['id'])->update($validated);
+
+            return ApiResponseService::make('Condição Atualizada com sucesso!!!', 200, $validated);
 
         } catch (Exception $th) {
 
