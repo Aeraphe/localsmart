@@ -43,4 +43,32 @@ class UserControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson($responseData);
     }
+
+    /**
+     * @test
+     * @group user
+     *
+     * @return void
+     */
+    public function should_edit_user()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('update_user');
+        $route = '/api/v1/account/user';
+        $user->assignRole('super-admin');
+        $postData = [
+            'id' => $user->id,
+            'name' => $this->faker->name(),
+            'email' => $this->faker->unique()->safeEmail(),
+        ];
+        $responseData = Helpers::makeResponseApiMock('Dados Atualizados com sucesso!!!', '200', $postData, $route, 'PUT');
+        //act
+        $response = $this->put($route, $postData);
+    
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseHas('users', $postData);
+    }
+
 }
