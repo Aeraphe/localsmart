@@ -150,4 +150,35 @@ class StoreControllerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @group store1
+     *
+     * @return void
+     */
+    public function should_update_store()
+    {
+
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('update_store');
+        $store = $user->account->stores[0];
+
+        $postData = [
+            'id' => $store->id,
+            'name' => $this->faker->company,
+            'slug' => $this->faker->slug,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+        ];
+        $route = '/api/v1/store';
+
+        $responseData = Helpers::makeResponseApiMock('Atualizada com sucesso', 200, ['id' => $store->id], $route, 'PUT');
+
+        //act
+        $response = $this->put($route, $postData);
+        $response->assertStatus(200);
+        $response->assertSimilarJson($responseData);
+
+    }
+
 }
