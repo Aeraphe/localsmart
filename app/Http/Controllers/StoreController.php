@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateStoreRequest;
 use App\Http\Requests\Store\ShowStoreRequest;
 use App\Models\Store;
 use App\Services\ApiResponse\ApiResponseErrorService;
@@ -38,6 +39,33 @@ class StoreController extends Controller
             $storeResponseData = Store::find($storeId)->toArray();
 
             return ApiResponseService::make('Consulta realizada com sucesso', 200, $storeResponseData);
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+
+        }
+    }
+
+    /**
+     * Create Store
+     *
+     * @param CreateStoreRequest $request
+     * @return ApiResponseService | ApiResponseErrorService
+     */
+    public function create(CreateStoreRequest $request)
+    {
+        try {
+            $this->authorize('create_store');
+
+            $validated = $request->validated();
+
+            $account = Auth::user()->account;
+            $validated['account_id'] = $account->id;
+
+            $storeResponseData = Store::create($validated);
+
+            return ApiResponseService::make('Consulta realizada com sucesso', 200, $storeResponseData->toArray());
 
         } catch (Exception $e) {
 
