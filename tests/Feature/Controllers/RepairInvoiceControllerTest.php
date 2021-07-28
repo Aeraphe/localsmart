@@ -211,6 +211,32 @@ class RepairInvoiceControllerTest extends TestCase
      *
      * @return boolean
      */
+    public function should_show_equipament_condition()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('show_equipament_condition');
+
+        $route = '/api/v1/store/repair-invoice/equipament/condition/' . $invoice->equipament->id;
+
+        $responseData = Equipament::with('conditions', 'inspections')->where('id',$invoice->equipament->id)->get();
+
+        $responseData = Helpers::makeResponseApiMock('Consulta realizada com sucesso!!!', 200, $responseData->toArray(), $route, "GET");
+
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group invoice-equipament-conditions
+     *
+     * @return boolean
+     */
     public function should_add_equipament_condition()
     {
         //arrange
@@ -351,8 +377,7 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
-
-        /**
+    /**
      * @test
      * @group invoice-equipament-inspection
      *
@@ -381,6 +406,5 @@ class RepairInvoiceControllerTest extends TestCase
         $response->assertJson($responseData);
 
     }
-    
 
 }
