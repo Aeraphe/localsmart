@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
 use App\Http\Controllers\InvoiceEquipamentConditionController;
 use App\Http\Controllers\Invoice\EquipamentInspectionController;
+use App\Http\Controllers\Invoice\RepairStatusController;
 use App\Http\Controllers\RepairInvoiceController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
@@ -88,8 +89,9 @@ Route::prefix('v1')->group(function () {
                 Route::delete('/', [RepairInvoiceController::class, 'delete'])->name('store-delete-repair-invoice');
                 Route::get('/all/{id}', [RepairInvoiceController::class, 'showAll'])->name('store-show--all-repair-invoice');
                 Route::get('/{id}', [RepairInvoiceController::class, 'show'])->name('store-show-repair-invoice');
+                //Equipament Conditions & Inspections
+                Route::get('/equipament/condition/{id}', [InvoiceEquipamentConditionController::class, 'show'])->name('show-equipament-condition-inspection');
                 //Equipament Conditions
-                Route::get('/equipament/condition/{id}', [InvoiceEquipamentConditionController::class, 'show'])->name('show-equipament-condition');
                 Route::post('/equipament/condition', [InvoiceEquipamentConditionController::class, 'create'])->name('create-equipament-condition');
                 Route::delete('/equipament/condition', [InvoiceEquipamentConditionController::class, 'delete'])->name('delete-equipament-condition');
                 Route::put('/equipament/condition', [InvoiceEquipamentConditionController::class, 'update'])->name('updade-equipament-condition');
@@ -97,6 +99,12 @@ Route::prefix('v1')->group(function () {
                 Route::post('/equipament/inspection', [EquipamentInspectionController::class, 'create'])->name('create-equipament-inspection');
                 Route::delete('/equipament/inspection', [EquipamentInspectionController::class, 'delete'])->name('delete-equipament-inspection');
                 Route::put('/equipament/inspection', [EquipamentInspectionController::class, 'update'])->name('updade-equipament-inspection');
+                //Status
+                Route::get('/status/all/{id}', [RepairStatusController::class, 'show'])->name('show-all-repair-invoice-status');
+                Route::get('/status/{id}', [RepairStatusController::class, 'show'])->name('show-repair-invoice-status');
+                Route::post('/status', [RepairStatusController::class, 'create'])->name('create-repair-invoice-status');
+              
+                
             });
 
         });
