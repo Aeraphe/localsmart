@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $actions = ['create', 'edit', 'delete', 'show', 'show_all', 'update'];
-        $scopes = ['employee', 'repair_invoice', 'equipament', 'equipament_condition', 'equipament_inspection', 'store', 'account', 'gadget', 'customer', 'user'];
+        $scopes = ['employee', 'repair_invoice','repair_invoice_status', 'equipament', 'equipament_condition', 'equipament_inspection', 'store', 'account', 'gadget', 'customer', 'user'];
         $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
 
         //Create all app Roles
