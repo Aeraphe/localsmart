@@ -294,4 +294,34 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
+
+     /**
+     * @test
+     * @group invoice-equipament-inspection
+     *
+     * @return boolean
+     */
+    public function should_add_equipament_inspection()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('create_equipament_inspection');
+
+        $route = '/api/v1/store/repair-invoice/equipament/inspection';
+        $postData = [
+            'name' => 'Wifi checked',
+            'equipament_id' => $invoice->equipament->id,
+            'repair_invoice_id' => $invoice->id,
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Nova Inspeção Cadastrada com sucesso!!!', 200, $postData, $route, "POST");
+
+        //act
+        $response = $this->post($route, $postData);
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('invoice_equipamemt_inspections', $postData);
+        $response->assertJson($responseData);
+
+    }
+
 }
