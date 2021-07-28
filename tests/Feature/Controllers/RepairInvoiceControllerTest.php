@@ -205,4 +205,35 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @group invoice-equipament-conditions
+     *
+     * @return boolean
+     */
+    public function should_add_equipament_condition()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('create_equipament_condition');
+
+        $route = '/api/v1/store/repair-invoice/equipament/condition';
+        $postData = [
+            'name' => 'Wifi checked',
+            'equipament_id' => $invoice->equipament->id,
+            'repair_invoice_id' => $invoice->id,
+        ];
+
+        $responseData = Helpers::makeResponseApiMock('Nova Condição Cadastrada com sucesso!!!', 200, $postData, $route, "POST");
+
+        //act
+        $response = $this->post($route, $postData);
+   
+
+        //assert
+        $response->assertStatus(200);
+        $this->assertDatabaseHas('invoice_equipament_conditions', $postData);
+        $response->assertJson($responseData);
+
+    }
+
 }
