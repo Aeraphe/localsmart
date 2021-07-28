@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Models\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
@@ -109,6 +110,35 @@ class StoreControllerTest extends TestCase
         $postData = [
             'name' => $this->faker->company,
             'slug' => $this->faker->slug,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+        ];
+        $route = '/api/v1/store';
+
+        //act
+        $response = $this->post($route, $postData);
+        $response->assertStatus(403);
+
+    }
+
+    /**
+     * @test
+     * @group store
+     *
+     * @return void
+     */
+    public function should_fail_on_create_store_with_same_slug()
+    {
+
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('create_store');
+        $store = $user->account->stores[0];
+        Store::where('id', $store->id)->update(['slug' => "local-smart"]);
+
+        $user->account->store_qt = 2;
+        $postData = [
+            'name' => $this->faker->company,
+            'slug' => "local-smart",
             'address' => $this->faker->address,
             'phone' => $this->faker->phoneNumber,
         ];
