@@ -94,4 +94,30 @@ class StoreControllerTest extends TestCase
 
     }
 
+    /**
+     * @test
+     * @group store
+     *
+     * @return void
+     */
+    public function should_fail_on_create_store_for_account_store_quantity_exceeds()
+    {
+
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('create_store');
+        $user->account->store_qt = 1;
+        $postData = [
+            'name' => $this->faker->company,
+            'slug' => $this->faker->slug,
+            'address' => $this->faker->address,
+            'phone' => $this->faker->phoneNumber,
+        ];
+        $route = '/api/v1/store';
+
+        //act
+        $response = $this->post($route, $postData);
+        $response->assertStatus(403);
+
+    }
+
 }
