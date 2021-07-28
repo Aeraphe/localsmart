@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EquipamentController;
+use App\Http\Controllers\InvoiceEquipamentConditionController;
 use App\Http\Controllers\RepairInvoiceController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
@@ -37,10 +38,9 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('account')->group(function () {
 
-
             //User Account
-            Route::get('/user/{id}',[UserController::class,'show'])->name('show-account-user');
-            Route::put('/user',[UserController::class,'update'])->name('update-account-user');
+            Route::get('/user/{id}', [UserController::class, 'show'])->name('show-account-user');
+            Route::put('/user', [UserController::class, 'update'])->name('update-account-user');
 
             //Account
             Route::put('/', [AccountController::class, 'update'])->name('update-account');
@@ -67,6 +67,7 @@ Route::prefix('v1')->group(function () {
             Route::get('/customer/equipament/all/{customer}', [EquipamentController::class, 'showAll'])->name('show--all-customer-equipament');
             Route::put('/customer/equipament', [EquipamentController::class, 'update'])->name('update-customer-equipament');
             Route::delete('/customer/equipament', [EquipamentController::class, 'delete'])->name('delete-customer-equipament');
+
         });
 
         //Store
@@ -86,6 +87,8 @@ Route::prefix('v1')->group(function () {
                 Route::delete('/', [RepairInvoiceController::class, 'delete'])->name('store-delete-repair-invoice');
                 Route::get('/all/{id}', [RepairInvoiceController::class, 'showAll'])->name('store-show--all-repair-invoice');
                 Route::get('/{id}', [RepairInvoiceController::class, 'show'])->name('store-show-repair-invoice');
+                //Equipament Conditions
+                Route::post('/equipament/condition', [InvoiceEquipamentConditionController::class, 'update'])->name('updade-equipament-condition');
             });
 
         });
