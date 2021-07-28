@@ -152,7 +152,7 @@ class StoreControllerTest extends TestCase
 
     /**
      * @test
-     * @group store1
+     * @group store
      *
      * @return void
      */
@@ -176,8 +176,41 @@ class StoreControllerTest extends TestCase
 
         //act
         $response = $this->put($route, $postData);
+
+        //assert
         $response->assertStatus(200);
         $response->assertSimilarJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group store1
+     *
+     * @return void
+     */
+    public function should_delete_store()
+    {
+
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('delete_store');
+        $store = $user->account->stores[0];
+
+        $postData = [
+            'id' => $store->id,
+
+        ];
+        $route = '/api/v1/store';
+
+        $responseData = Helpers::makeResponseApiMock('Loja apagada com sucesso', 200, ['id' => $store->id], $route, 'DELETE');
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertSimilarJson($responseData);
+        $this->assertDatabaseMissing('stores', $postData);
 
     }
 
