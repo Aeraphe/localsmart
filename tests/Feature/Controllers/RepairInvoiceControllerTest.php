@@ -433,7 +433,7 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
-        /**
+    /**
      * @test
      * @group invoice-status
      *
@@ -452,12 +452,38 @@ class RepairInvoiceControllerTest extends TestCase
 
         $route = '/api/v1/store/repair-invoice/status';
 
-        
-
         $responseData = Helpers::makeResponseApiMock('Status criado com sucesso!!!', 200, $postData, $route, "POST");
 
         //act
-        $response = $this->post($route,$postData);
+        $response = $this->post($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
+    }
+
+    /**
+     * @test
+     * @group invoice-status
+     *
+     * @return boolean
+     */
+    public function should_delete_invoice_status()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('delete_repair_invoice_status');
+
+        $postData = [
+            'id' => $invoice->status[0]->id,
+        ];
+
+        $route = '/api/v1/store/repair-invoice/status';
+
+        $responseData = Helpers::makeResponseApiMock('Status apagado com sucesso!!!', 200, $postData, $route, "DELETE");
+
+        //act
+        $response = $this->delete($route, $postData);
 
         //assert
         $response->assertStatus(200);
