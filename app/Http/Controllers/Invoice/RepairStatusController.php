@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoice\CreateRepairStatus;
 use App\Http\Requests\Invoice\CreateRepairStatusRequest;
 use App\Http\Requests\Invoice\DeleteRepairStatusRequest;
-use App\Models\RepairInvoice;
+use App\Http\Requests\Invoice\UpdateRepairStatusRequest;
 use App\Models\RepairInvoiceStatus;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 class RepairStatusController extends Controller
 {
-    
+
     /**
      * Show Invoice Status
      *
@@ -28,9 +28,9 @@ class RepairStatusController extends Controller
 
             $this->authorize('show_repair_invoice_status');
             $id = $request->route('id');
- 
-            $status  =  RepairInvoiceStatus::where('repair_invoice_id',$id )->get();
-         
+
+            $status = RepairInvoiceStatus::where('repair_invoice_id', $id)->get();
+
             return ApiResponseService::make('Consulta realizada com sucesso!!!', 200, $status->toArray());
 
         } catch (Exception $th) {
@@ -40,8 +40,6 @@ class RepairStatusController extends Controller
         }
     }
 
-
-        
     /**
      * Create Invoice Status
      *
@@ -54,9 +52,9 @@ class RepairStatusController extends Controller
 
             $this->authorize('create_repair_invoice_status');
             $id = $request->get('repair_invoice_id');
- 
-            $status  =  RepairInvoiceStatus::where('repair_invoice_id',$id )->create($request->validated());
-         
+
+            $status = RepairInvoiceStatus::where('repair_invoice_id', $id)->create($request->validated());
+
             return ApiResponseService::make('Status criado com sucesso!!!', 200, $status->toArray());
 
         } catch (Exception $th) {
@@ -66,11 +64,10 @@ class RepairStatusController extends Controller
         }
     }
 
-
-        /**
-     * Create Invoice Status
+    /**
+     * Delete Invoice Status
      *
-     * @param CreateRepairStatus $request
+     * @param DeleteRepairStatusRequest $request
      * @return void
      */
     public function delete(DeleteRepairStatusRequest $request)
@@ -79,10 +76,34 @@ class RepairStatusController extends Controller
 
             $this->authorize('delete_repair_invoice_status');
             $id = $request->get('id');
- 
-           RepairInvoiceStatus::where('id',$id )->delete();
-         
+
+            RepairInvoiceStatus::where('id', $id)->delete();
+
             return ApiResponseService::make('Status apagado com sucesso!!!', 200, $request->validated());
+
+        } catch (Exception $th) {
+
+            return ApiResponseErrorService::make($th);
+
+        }
+    }
+
+    /**
+     * Update Invoice Status
+     *
+     * @param UpdateRepairStatusRequest $request
+     * @return void
+     */
+    public function update(UpdateRepairStatusRequest $request)
+    {
+        try {
+
+            $this->authorize('update_repair_invoice_status');
+            $id = $request->get('id');
+            $validated = $request->validated();
+            RepairInvoiceStatus::where('id', $id)->update($validated);
+
+            return ApiResponseService::make('Status atualizado com sucesso!!!', 200, $validated);
 
         } catch (Exception $th) {
 
