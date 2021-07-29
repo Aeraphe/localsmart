@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DeleteCustomerRequest;
-use App\Http\Requests\RegisterCustomerRequest;
-use App\Http\Requests\UpdateCustomerRequest;
+use App\Http\Requests\Customer\DeleteCustomerRequest;
+use App\Http\Requests\Customer\RegisterCustomerRequest;
+use App\Http\Requests\Customer\UpdateCustomerRequest;
 use App\Models\Customer;
-use App\Models\User;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterCustomerService;
@@ -126,7 +125,7 @@ class CustomerController extends Controller
             $accountId = Auth::user()->account->id;
 
             $customers = Customer::where('account_id', $accountId)->paginate(5);
-   
+
             return ApiResponseService::make('Consulta Realizada com Sucesso!!!', 200, $customers->toArray());
 
         } catch (Exception $e) {

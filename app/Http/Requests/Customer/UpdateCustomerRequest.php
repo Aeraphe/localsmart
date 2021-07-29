@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Customer;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class RegisterCustomerRequest extends FormRequest
+class UpdateCustomerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +15,19 @@ class RegisterCustomerRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+
+        $customerId = Request::get('id');
+        $employee = Auth::user();
+   
+
+        //Check customer from same account than employee
+        $customer = $employee->account->customers->where('id', '=', $customerId)->first();
+
+
+        if ($customer) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -24,8 +38,9 @@ class RegisterCustomerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'address' => ['required'],
+            'id' => ['required'],
+            'name' => ['nullable'],
+            'address' => ['nullable'],
             'cpf' => ['nullable'],
             'rg' => ['nullable'],
             'phone' => ['nullable'],
