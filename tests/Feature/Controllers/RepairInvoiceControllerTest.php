@@ -433,4 +433,36 @@ class RepairInvoiceControllerTest extends TestCase
 
     }
 
+        /**
+     * @test
+     * @group invoice-status
+     *
+     * @return boolean
+     */
+    public function should_add_invoice_status()
+    {
+        //arrange
+        $invoice = $this->getInvoiceWithUserLogged('create_repair_invoice_status');
+
+        $postData = [
+            'repair_invoice_id' => $invoice->id,
+            'description' => 'Open',
+            'status' => 1,
+        ];
+
+        $route = '/api/v1/store/repair-invoice/status';
+
+        
+
+        $responseData = Helpers::makeResponseApiMock('Status criado com sucesso!!!', 200, $postData, $route, "POST");
+
+        //act
+        $response = $this->post($route,$postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
+    }
+
 }
