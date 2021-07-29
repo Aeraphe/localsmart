@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeAuthRequest extends FormRequest
+class EmployeeRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,12 @@ class EmployeAuthRequest extends FormRequest
     public function rules()
     {
         return [
+            'name' => ['required'],
+            'phone' => ['required'],
             'login_name' => ['required'],
             'password' => ['required'],
+            'email' => ['email', 'nullable'],
+            'address' => ['nullable'],
         ];
     }
 }

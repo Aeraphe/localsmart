@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdminAuthRequest;
-use App\Http\Requests\EmployeAuthRequest;
+use App\Http\Requests\Employee\EmployeAuthRequest;
 use App\Services\ApiResponse\ApiResponseErrorService as ErrorResponse;
 use App\Services\ApiResponse\ApiResponseService as ApiResponse;
 use App\Services\AuthenticateService as AuthService;

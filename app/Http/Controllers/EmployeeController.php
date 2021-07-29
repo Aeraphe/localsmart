@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DeleteEmployeeRequest;
-use App\Http\Requests\EmployeeRegisterRequest;
-use App\Http\Requests\ShowEmployeeRequest;
-use App\Http\Requests\UpdateEmployeeRequest;
+use App\Http\Requests\Employee\DeleteEmployeeRequest;
+use App\Http\Requests\Employee\EmployeeRegisterRequest;
+use App\Http\Requests\Employee\ShowEmployeeRequest;
+use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterEmployeeService;
 use Exception;
-use Facade\FlareClient\Api;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
