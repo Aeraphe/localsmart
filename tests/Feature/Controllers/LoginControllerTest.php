@@ -6,6 +6,7 @@ namespace Tests\Feature\Controllers;
 use App\Models\Employee;
 use App\Models\Store;
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
@@ -20,6 +21,7 @@ class LoginControllerTest extends TestCase
     {
         parent::setUp();
         Artisan::call('passport:install');
+        $this->seed(RoleSeeder::class);
     }
 
     /**

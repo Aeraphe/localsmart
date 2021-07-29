@@ -5,6 +5,7 @@ namespace Tests\Feature\Controllers;
 use App\Models\Account;
 use App\Models\Employee;
 use App\Models\User;
+use Database\Seeders\RoleSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
@@ -20,7 +21,7 @@ class EmployeeControllerTest extends TestCase
     {
         parent::setUp();
         Artisan::call('passport:install');
-        $this->seed();
+        $this->seed(RoleSeeder::class);
         // now re-register all the roles and permissions (clears cache and reloads relations)
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
     }
