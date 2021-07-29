@@ -102,8 +102,9 @@ Route::prefix('v1')->group(function () {
                 //Status
                 Route::get('/status/{id}', [RepairStatusController::class, 'show'])->name('show-repair-invoice-status');
                 Route::post('/status', [RepairStatusController::class, 'create'])->name('create-repair-invoice-status');
-              
-                
+                Route::delete('/status', [RepairStatusController::class, 'delete'])->name('delete-repair-invoice-status');
+                Route::put('/status', [RepairStatusController::class, 'update'])->name('update-repair-invoice-status');
+
             });
 
         });
