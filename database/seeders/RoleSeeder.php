@@ -16,7 +16,7 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $actions = ['create', 'edit', 'delete', 'show', 'show_all', 'update'];
-        $scopes = ['employee', 'repair_invoice','repair_invoice_status', 'equipament', 'equipament_condition', 'equipament_inspection', 'store', 'account', 'gadget', 'customer', 'user'];
+        $scopes = ['employee', 'repair_invoice', 'repair_invoice_status', 'equipament', 'equipament_condition', 'equipament_inspection', 'store', 'account', 'gadget', 'customer', 'user'];
         $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
 
         //Create all app Roles
@@ -26,8 +26,7 @@ class RoleSeeder extends Seeder
 
         //Default Module
         $this->signPermissionsToRoles($scopes, $actions, ['admin']);
-        $this->signPermissionsToRoles(['repair_invoice', 'equipament'], $actions, ['repair', 'seller']);
-        $this->signPermissionsToRoles(['employee'], ['edit', 'show', 'update'], ['repair', 'seller']);
+
         //Gadget Module
         $this->signPermissionsToRoles(['gadget'], $actions, ['gadget-admin']);
 
@@ -78,13 +77,14 @@ class RoleSeeder extends Seeder
     private function signPermissionsToRoles(array $scopes, array $actions, array $roles)
     {
 
-        $appPermissions = Permission::all();
-
         foreach ($actions as $action) {
 
             foreach ($scopes as $scope) {
 
-                $appPermissions->firstWhere('name', $action . '_' . $scope)->syncRoles($roles);
+                $permissions = Permission::where('name', $action . '_' . $scope)->get();
+                foreach ($permissions as $perm) {
+                    $perm->syncRoles($roles);
+                }
 
             }
 
