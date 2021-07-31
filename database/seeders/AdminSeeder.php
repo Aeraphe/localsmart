@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Account;
+use App\Models\Employee;
+use App\Models\Store;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Tests\Feature\Helpers;
 
 class AdminSeeder extends Seeder
 {
@@ -15,7 +17,11 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-       $user =  User::factory()->create(['email'=>'test@test.com']);
-       $user->assignRole('admin');
+        $user = User::factory()->create(['email' => 'test@test.com']);
+        $account = Account::factory()->create(['user_id' => $user->id]);
+        Employee::factory()->count(10)->create(['account_id' => $account->id]);
+        Store::factory()->create(['account_id' => $account->id]);
+        $user->assignRole('admin',);
+
     }
 }
