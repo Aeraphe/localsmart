@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Laravel\Passport\Passport;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class EmployeeControllerTest extends TestCase
@@ -167,7 +168,6 @@ class EmployeeControllerTest extends TestCase
     {
         //arrange
         $user = $this->getUserLoggedWithAccount();
-        $user->givePermissionTo('show_employee');
         $user->assignRole('admin');
         $employee = Employee::factory()->create(['account_id' => $user->account->id]);
         $route = '/api/v1/account/employee/' . $employee->id;
@@ -197,7 +197,6 @@ class EmployeeControllerTest extends TestCase
     {
         //arrange
         $user = $this->getUserLoggedWithAccount();
-        $user->givePermissionTo('show_all_employee');
         $user->assignRole('admin');
         Employee::factory()->count(10)->create(['account_id' => $user->account->id]);
         $route = '/api/v1/account/employee' ;
