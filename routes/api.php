@@ -57,11 +57,17 @@ Route::prefix('v1')->group(function () {
             Route::get('/customer', [CustomerController::class, 'showAll'])->name('show-all-customer');
 
             //Employee
-            Route::post('/employee', [EmployeeController::class, 'create'])->name('create-employee');
-            Route::delete('/employee', [EmployeeController::class, 'delete'])->name('delete-employee');
-            Route::put('/employee', [EmployeeController::class, 'update'])->name('update-employee');
-            Route::get('/employee/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
-            Route::get('/employee', [EmployeeController::class, 'showAll'])->name('show-employee');
+            Route::prefix('/employee')->group(function () {
+                Route::post('/', [EmployeeController::class, 'create'])->name('create-employee');
+                Route::delete('/', [EmployeeController::class, 'delete'])->name('delete-employee');
+                Route::put('/', [EmployeeController::class, 'update'])->name('update-employee');
+                Route::get('/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
+                Route::get('/', [EmployeeController::class, 'showAll'])->name('show-employee');
+
+                //Employe Credential Search
+                Route::post('/credential/search', [EmployeeController::class, 'checkCredential'])->name('check-employee-credential');
+
+            });
 
             //Equipament
             Route::post('/customer/equipament', [EquipamentController::class, 'create'])->name('create-customer-equipament');
