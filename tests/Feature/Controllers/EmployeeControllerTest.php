@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Laravel\Passport\Passport;
-use Spatie\Permission\Models\Role;
+use Tests\Feature\Helpers;
 use Tests\TestCase;
 
 class EmployeeControllerTest extends TestCase
@@ -186,8 +186,7 @@ class EmployeeControllerTest extends TestCase
         $response->assertJson($responseData);
     }
 
-
-     /**
+    /**
      * @test
      * @group employee
      *
@@ -199,10 +198,10 @@ class EmployeeControllerTest extends TestCase
         $user = $this->getUserLoggedWithAccount();
         $user->assignRole('admin');
         Employee::factory()->count(10)->create(['account_id' => $user->account->id]);
-        $route = '/api/v1/account/employee' ;
+        $route = '/api/v1/account/employee';
 
         $responseData = [
-         
+
             '_message' => 'Consulta realizada com sucesso!!!',
             '_status' => 200,
             '_url' => Config::get('app.url') . $route,
@@ -213,6 +212,30 @@ class EmployeeControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJsonFragment($responseData);
+    }
+
+    /**
+     * @test
+     * @group employee
+     *
+     * @return boolean
+     */
+    public function should_new_emplyee_credential_be_valid()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('create_employee');
+
+        $route = '/api/v1/account/employee/credential/search';
+        $postData = ['login_name' => $this->faker->name, 'account_id' => $user->account->id];
+        $responseData = Helpers::makeResponseApiMock('Login valido', 200, ['credential' => true], $route, 'POST');
+
+        //act
+        $response = $this->post($route, $postData);
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseMissing('employees', $postData);
+
     }
 
 }
