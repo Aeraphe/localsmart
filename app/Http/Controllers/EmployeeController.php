@@ -11,6 +11,7 @@ use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
 use App\Services\RegisterEmployeeService;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EmployeeController extends Controller
@@ -116,6 +117,31 @@ class EmployeeController extends Controller
             $employee = Employee::where('account_id', Auth::user()->account->id)->get();
 
             return ApiResponseService::make('Consulta realizada com sucesso!!!', 200, $employee->toArray());
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    public function checkCredential(Request $request)
+    {
+        try {
+            $this->authorize('create_employee');
+
+            $validated = $request->validate(
+                [
+                    'login_name' => ['required', 'string'],
+                ]
+            );
+
+            $user = $request->user();
+            $employee = Employee::where('account_id', $user->account->id)->where('login_name', $validated['login_name'])->first();
+            if ($employee == null) {
+                return ApiResponseService::make('Login valido', 200, ['credential' => true]);
+            } else {
+
+                throw new Exception('Login já utilizado');
+            }
+
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
         }
