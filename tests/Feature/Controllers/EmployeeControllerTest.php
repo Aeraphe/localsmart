@@ -238,4 +238,27 @@ class EmployeeControllerTest extends TestCase
 
     }
 
+
+    /**
+     * @test
+     * @group employee
+     *
+     */
+    public function should_change_employee_status()
+    {
+        //arrange
+        $user= Helpers::getAccountUserLoggedWithAccount('create_employee');
+        $employee = $user->account->employees[0];
+        $postData = ['id'=> $employee->id,'status' =>'off'];
+        $route = '/api/v1/account/employee/status';
+        $responseData = Helpers::makeResponseApiMock('Status modificado com sucesso!!',200,$postData,$route,'PUT');
+        //act
+        $response =  $this->put($route,$postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertDatabaseHas('employees',$postData);
+    }
+
 }
