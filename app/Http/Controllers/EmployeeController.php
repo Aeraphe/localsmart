@@ -146,4 +146,27 @@ class EmployeeController extends Controller
             return ApiResponseErrorService::make($e);
         }
     }
+
+    public function changeStatus(Request $resquest)
+    {
+        try {
+            $this->authorize('create_employee');
+            $validated = $resquest->validate(
+                [
+                    'id' => ['required', 'numeric'],
+                    'status' => ['required', 'string'],
+                ]
+            );
+
+            $user = $resquest->user();
+
+            Employee::where('account_id', $user->account->id)->where('id', $validated['id'])->update($validated);
+
+            return ApiResponseService::make('Status modificado com sucesso!!', 200, $validated);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
 }
