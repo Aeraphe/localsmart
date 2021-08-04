@@ -63,6 +63,8 @@ Route::prefix('v1')->group(function () {
                 Route::put('/', [EmployeeController::class, 'update'])->name('update-employee');
                 Route::get('/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
                 Route::get('/', [EmployeeController::class, 'showAll'])->name('show-employee');
+                //Employee Status
+                Route::put('/status',[EmployeeController::class,'changeStatus']);
 
                 //Employe Credential Search
                 Route::post('/credential/search', [EmployeeController::class, 'checkCredential'])->name('check-employee-credential');
