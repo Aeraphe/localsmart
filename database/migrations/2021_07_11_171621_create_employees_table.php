@@ -21,6 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('address')->nullable();
             $table->string('login_name');
             $table->string('password');
+            $table->string('status',3)->default('on');
             $table->string('email')->nullable();
             $table->rememberToken();
             $table->timestamps();
