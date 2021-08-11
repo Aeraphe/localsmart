@@ -112,6 +112,7 @@ class EmployeeController extends Controller
     public function showAll()
     {
         try {
+           
             $this->authorize('show_all_employee');
 
             $employee = Employee::where('account_id', Auth::user()->account->id)->get();

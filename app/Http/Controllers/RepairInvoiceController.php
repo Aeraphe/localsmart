@@ -51,7 +51,7 @@ class RepairInvoiceController extends Controller
     {
         try {
 
-            $this->authorize('edit_repair_invoice');
+            $this->authorize('update_repair_invoice');
 
             $validated = $request->validated();
             $request->route('invoice')->update($validated);

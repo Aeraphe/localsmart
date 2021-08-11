@@ -91,7 +91,7 @@ class EquipamentController extends Controller
     {
         try {
 
-            $this->authorize('edit_equipament');
+            $this->authorize('update_equipament');
 
             $validated = $request->validated();
 

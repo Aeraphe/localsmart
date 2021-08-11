@@ -49,7 +49,9 @@ class AccountController extends Controller
     {
         try {
 
-            $this->authorize('edit_account');
+           
+           
+            $this->authorize('update_account');
 
             $validated = $request->validate(
                 ['slug' => ['nullable', 'string']]
