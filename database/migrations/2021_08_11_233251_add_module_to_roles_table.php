@@ -14,7 +14,7 @@ class AddModuleToRolesTable extends Migration
     public function up()
     {
         Schema::table('roles', function (Blueprint $table) {
-            $table->string('module');
+            $table->string('module')->default('');
         });
     }
 
