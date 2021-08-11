@@ -121,7 +121,7 @@ class EquipamentControllerTest extends TestCase
     public function should_edit_customer_equipament()
     {
         //arrange
-        $user = Helpers::getEmployeeLoggedWithAccount('edit_equipament');
+        $user = Helpers::getEmployeeLoggedWithAccount('update_equipament');
         $customer = Customer::factory()->create(['account_id' => $user->account->id]);
         $equipament = Equipament::factory()->create(['customer_id' => $customer->id]);
         $postData = ['id' => $equipament->id, 'name' => 'Samsung'];

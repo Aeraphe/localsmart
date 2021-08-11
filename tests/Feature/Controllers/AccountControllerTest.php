@@ -99,7 +99,7 @@ class AccountControllerTest extends TestCase
     public function should_edit_account()
     {
         //arrange
-        $user = Helpers::getAccountUserLoggedWithAccount('edit_account');
+        $user = Helpers::getAccountUserLoggedWithAccount('update_account');
         $postData = ['slug' => 'LocalSmart'];
         $route = '/api/v1/account';
         $dataResponse = Helpers::makeResponseApiMock('Dados alterados com sucesso!!!', 200, $postData, $route, 'PUT');

@@ -112,7 +112,7 @@ class RepairInvoiceControllerTest extends TestCase
     public function should_edit_rapir_invoice()
     {
         //arrange
-        $user = Helpers::getEmployeeLoggedWithAccount('edit_repair_invoice');
+        $user = Helpers::getEmployeeLoggedWithAccount('update_repair_invoice');
         $store = $user->stores()->first();
         $invoice = RepairInvoice::factory()->create(['store_id' => $store->id]);
 
