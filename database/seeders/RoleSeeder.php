@@ -26,7 +26,13 @@ class RoleSeeder extends Seeder
     public function run()
     {
 
-        $roles = ['super-admin', 'admin', 'repair', 'seller', 'gadget-admin'];
+        $roles = [
+            ['name' => 'super-admin', 'description' => 'Super Administrador', 'module' => 'super-admin'],
+            ['name' => 'admin', 'description' => 'Administrador', 'module' => 'admin'],
+            ['name' => 'repair', 'description' => 'Tećnico', 'module' => 'invoice'],
+            ['name' => 'seller', 'description' => 'Vendedor', 'module' => 'invoice'],
+            ['name' => 'gadget-admin', 'description' => 'Administrador do módulo de Gadgets', 'module' => 'gadget'],
+        ];
 
         //Create all app Roles
         $this->createAppRoles($roles);
@@ -49,9 +55,9 @@ class RoleSeeder extends Seeder
     {
 
         foreach ($roles as $role) {
-            Role::create(['guard_name' => 'api', 'name' => $role]);
-            Role::create(['guard_name' => 'web', 'name' => $role]);
-            Role::create(['guard_name' => 'employee', 'name' => $role]);
+            Role::create(['guard_name' => 'api', 'name' => $role['name'], 'description' => $role['description'], 'module' => $role['module']]);
+            Role::create(['guard_name' => 'web', 'name' => $role['name'], 'description' => $role['description'], 'module' => $role['module']]);
+            Role::create(['guard_name' => 'employee', 'name' => $role['name'], 'description' => $role['description'], 'module' => $role['module']]);
         }
         ;
     }
