@@ -42,9 +42,15 @@ Route::prefix('v1')->group(function () {
         Route::prefix('account')->group(function () {
 
             //Roles
-            Route::get('/role',[RoleController::class,'show']);
-            //Sign Role to Employee
-            Route::post('/role/sign',[RoleController::class,'sign']);
+            Route::prefix('/role')->group(function () {
+                Route::get('/', [RoleController::class, 'showAll']);
+                //Sign Role to Employee
+                Route::post('/sign', [RoleController::class, 'sign']);
+                //Employee Role
+                Route::get('/employee/{employee}', [RoleController::class, 'show']);
+
+            }
+            );
 
             //User Account
             Route::get('/user/{id}', [UserController::class, 'show'])->name('show-account-user');
@@ -70,7 +76,7 @@ Route::prefix('v1')->group(function () {
                 Route::get('/{employee}', [EmployeeController::class, 'show'])->name('show-employee');
                 Route::get('/', [EmployeeController::class, 'showAll'])->name('show-employee');
                 //Employee Status
-                Route::put('/status',[EmployeeController::class,'changeStatus']);
+                Route::put('/status', [EmployeeController::class, 'changeStatus']);
 
                 //Employe Credential Search
                 Route::post('/credential/search', [EmployeeController::class, 'checkCredential'])->name('check-employee-credential');
