@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Database\Seeders\Permissions\AccountPermissionFactory;
+use Database\Seeders\Permissions\Admin\RolePermissionFactory;
 use Database\Seeders\Permissions\CustomerPermissionFactory;
 use Database\Seeders\Permissions\EmployeePermissionFactory;
 use Database\Seeders\Permissions\EquipamentConditionPermissionFactory;
@@ -48,6 +49,7 @@ class RoleSeeder extends Seeder
         EquipamentConditionPermissionFactory::create();
         EquipamentInspectionPermissionFactory::create();
         GadgetPermissionFactory::create();
+        RolePermissionFactory::create();
 
     }
 
