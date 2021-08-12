@@ -26,7 +26,7 @@ class RoleControllerTest extends TestCase
 
     /**
      * @test
-     * @group roles
+     * @group
      *
      * @return void
      */
@@ -48,5 +48,30 @@ class RoleControllerTest extends TestCase
         //assert
         $response->assertStatus(200);
         $response->assertJson($responseData);
+    }
+
+    /**
+     * @test
+     * @group roles
+     *
+     */
+    public function should_sign_user_to_role()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('sign_role');
+        $employee = $user->account->employees[0];
+        $role = Role::where('module', 'invoice')->first();
+        $postData = ['employee_id' => $employee->id, 'role_id' => $role->id];
+        $route = '/api/v1/account/role/sign';
+        $responseData = Helpers::makeResponseApiMock('Permissão atribuida com Sucesso!!!',200,$postData,$route,'POST');
+
+        //act
+        $response =  $this->post($route,$postData);
+        
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+        $this->assertTrue($employee->hasRole($role->name)); 
+     
     }
 }
