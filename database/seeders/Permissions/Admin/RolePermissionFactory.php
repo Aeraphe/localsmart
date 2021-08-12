@@ -43,6 +43,11 @@ class RolePermissionFactory extends PermissionFactory{
             "description" => 'Atribuir tipo usuário ao Funcionário',
             'roles' => ['admin'],
         ],
+        [
+            "name" => 'unsign',
+            "description" => 'Desatribuir tipo acesso do Funcionário',
+            'roles' => ['admin'],
+        ],
 
     ];
 
