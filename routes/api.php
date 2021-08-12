@@ -9,6 +9,7 @@ use App\Http\Controllers\InvoiceEquipamentConditionController;
 use App\Http\Controllers\Invoice\EquipamentInspectionController;
 use App\Http\Controllers\Invoice\RepairStatusController;
 use App\Http\Controllers\RepairInvoiceController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('account')->group(function () {
 
+            //Roles
+            Route::get('/role',[RoleController::class,'show']);
             //User Account
             Route::get('/user/{id}', [UserController::class, 'show'])->name('show-account-user');
             Route::put('/user', [UserController::class, 'update'])->name('update-account-user');
