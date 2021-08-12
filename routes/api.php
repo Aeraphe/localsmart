@@ -43,6 +43,9 @@ Route::prefix('v1')->group(function () {
 
             //Roles
             Route::get('/role',[RoleController::class,'show']);
+            //Sign Role to Employee
+            Route::post('/role/sign',[RoleController::class,'sign']);
+
             //User Account
             Route::get('/user/{id}', [UserController::class, 'show'])->name('show-account-user');
             Route::put('/user', [UserController::class, 'update'])->name('update-account-user');
