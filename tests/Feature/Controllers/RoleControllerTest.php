@@ -77,7 +77,7 @@ class RoleControllerTest extends TestCase
 
     /**
      * @test
-     * @group roles
+     * @group
      */
     public function should_get_employe_roles()
     {
@@ -87,8 +87,8 @@ class RoleControllerTest extends TestCase
         $employee->assignRole('seller');
         $roles = $employee->roles;
         $route = '/api/v1/account/role/employee/' . $employee->id;
-        $responseData =  Helpers::makeResponseApiMock('Consulta Realizada Com Sucesso!!!',200,$roles->toArray(),$route,"GET");
-      
+        $responseData = Helpers::makeResponseApiMock('Consulta Realizada Com Sucesso!!!', 200, $roles->toArray(), $route, "GET");
+
         //act
         $response = $this->get($route);
 
@@ -97,4 +97,31 @@ class RoleControllerTest extends TestCase
         $response->assertJson($responseData);
 
     }
+
+    /**
+     * @test
+     * @group roles
+     *
+     */
+    public function should_unsign_role_from_employee()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('unsign_role');
+        $employee = $user->account->employees[0];
+        $employee->assignRole('seller');
+        $roles = $employee->roles;
+
+        $postData = ['employee_id' => $employee->id, 'role_id' => $roles[0]->id];
+        $route = '/api/v1/account/role/unsign';
+        $responseData = Helpers::makeResponseApiMock('Tipo de acesso removido com Sucesso!!!', 200, $postData, $route, "DELETE");
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
+    }
+
 }
