@@ -19,7 +19,7 @@ class RoleController extends Controller
      * @param Request $request
      * @return ApiResponseService<Role>
      */
-    public function show(Request $request)
+    public function showAll(Request $request)
     {
         try {
             $this->authorize('show_all_role');
@@ -49,12 +49,32 @@ class RoleController extends Controller
             $role = Role::findById($validated['role_id']);
             $employee->assignRole($role->name);
 
-            return ApiResponseService::make('Permissão atribuida com Sucesso!!!',200,$validated);
+            return ApiResponseService::make('Permissão atribuida com Sucesso!!!', 200, $validated);
 
         } catch (Exception $e) {
 
             return ApiResponseErrorService::make($e);
 
+        }
+    }
+
+    /**
+     * Show employee roles
+     *
+     * @param Employee $employee
+     * @return ApiResponseService<Role>
+     */
+    public function show(Employee $employee)
+    {
+        try {
+            $this->authorize('show_role');
+            $roles = $employee->roles;
+
+            return ApiResponseService::make('Consulta Realizada Com Sucesso!!!', 200, $roles->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
         }
     }
 }
