@@ -46,6 +46,8 @@ Route::prefix('v1')->group(function () {
                 Route::get('/', [RoleController::class, 'showAll']);
                 //Sign Role to Employee
                 Route::post('/sign', [RoleController::class, 'sign']);
+                //Unsign Role to Employee
+                Route::delete('/unsign', [RoleController::class, 'unsign']);
                 //Employee Role
                 Route::get('/employee/{employee}', [RoleController::class, 'show']);
 
