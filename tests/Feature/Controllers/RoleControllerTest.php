@@ -52,7 +52,7 @@ class RoleControllerTest extends TestCase
 
     /**
      * @test
-     * @group roles
+     * @group
      *
      */
     public function should_sign_user_to_role()
@@ -63,15 +63,38 @@ class RoleControllerTest extends TestCase
         $role = Role::where('module', 'invoice')->first();
         $postData = ['employee_id' => $employee->id, 'role_id' => $role->id];
         $route = '/api/v1/account/role/sign';
-        $responseData = Helpers::makeResponseApiMock('Permissão atribuida com Sucesso!!!',200,$postData,$route,'POST');
+        $responseData = Helpers::makeResponseApiMock('Permissão atribuida com Sucesso!!!', 200, $postData, $route, 'POST');
 
         //act
-        $response =  $this->post($route,$postData);
-        
+        $response = $this->post($route, $postData);
+
         //assert
         $response->assertStatus(200);
         $response->assertJson($responseData);
-        $this->assertTrue($employee->hasRole($role->name)); 
-     
+        $this->assertTrue($employee->hasRole($role->name));
+
+    }
+
+    /**
+     * @test
+     * @group roles
+     */
+    public function should_get_employe_roles()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('show_role');
+        $employee = $user->account->employees[0];
+        $employee->assignRole('seller');
+        $roles = $employee->roles;
+        $route = '/api/v1/account/role/employee/' . $employee->id;
+        $responseData =  Helpers::makeResponseApiMock('Consulta Realizada Com Sucesso!!!',200,$roles->toArray(),$route,"GET");
+      
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
+
     }
 }
