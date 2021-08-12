@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Role\SignRequest;
+use App\Http\Requests\Role\UnsignRequest;
 use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
 use App\Services\ApiResponse\ApiResponseService;
@@ -71,6 +72,24 @@ class RoleController extends Controller
             $roles = $employee->roles;
 
             return ApiResponseService::make('Consulta Realizada Com Sucesso!!!', 200, $roles->toArray());
+
+        } catch (Exception $e) {
+
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    public function unsign(UnsignRequest $request)
+    {
+        try {
+
+            $this->authorize('unsign_role');
+            $validated = $request->validated();
+            $employee = Employee::find($validated['employee_id']);
+            $role = Role::find($validated['role_id']);
+            $employee->removeRole($role->name);
+
+            return ApiResponseService::make('Tipo de acesso removido com Sucesso!!!', 200, $validated);
 
         } catch (Exception $e) {
 
