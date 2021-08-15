@@ -36,6 +36,16 @@ class StorePermissionFactory extends PermissionFactory
             "description" => 'Atualizar os dados da loja',
             'roles' => ['admin'],
         ],
+        [
+            "name" => 'sign',
+            "description" => 'Atribuir acesso a loja ao Funcionário',
+            'roles' => ['admin'],
+        ],
+        [
+            "name" => 'unsign',
+            "description" => 'Desatribuir acesso a loja ao Funcionário',
+            'roles' => ['admin'],
+        ],
 
     ];
 
