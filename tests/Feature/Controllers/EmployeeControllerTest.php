@@ -172,7 +172,6 @@ class EmployeeControllerTest extends TestCase
         $employee = Employee::factory()->create(['account_id' => $user->account->id]);
         $route = '/api/v1/account/employee/' . $employee->id;
 
-      
         $responseData = [
             'data' => $employee->toArray(),
             '_message' => 'Consulta realizada com sucesso!!!',
@@ -182,7 +181,7 @@ class EmployeeControllerTest extends TestCase
         ];
         //act
         $response = $this->get($route);
-      
+
         //assert
         $response->assertStatus(200);
         $response->assertJson($responseData);
@@ -201,7 +200,6 @@ class EmployeeControllerTest extends TestCase
         $user->assignRole('admin');
         Employee::factory()->count(10)->create(['account_id' => $user->account->id]);
         $route = '/api/v1/account/employee';
-
 
         $responseData = [
 
@@ -241,7 +239,6 @@ class EmployeeControllerTest extends TestCase
 
     }
 
-
     /**
      * @test
      * @group employee
@@ -250,18 +247,41 @@ class EmployeeControllerTest extends TestCase
     public function should_change_employee_status()
     {
         //arrange
-        $user= Helpers::getAccountUserLoggedWithAccount('create_employee');
+        $user = Helpers::getAccountUserLoggedWithAccount('create_employee');
         $employee = $user->account->employees[0];
-        $postData = ['id'=> $employee->id,'status' =>'off'];
+        $postData = ['id' => $employee->id, 'status' => 'off'];
         $route = '/api/v1/account/employee/status';
-        $responseData = Helpers::makeResponseApiMock('Status modificado com sucesso!!',200,$postData,$route,'PUT');
+        $responseData = Helpers::makeResponseApiMock('Status modificado com sucesso!!', 200, $postData, $route, 'PUT');
         //act
-        $response =  $this->put($route,$postData);
+        $response = $this->put($route, $postData);
 
         //assert
         $response->assertStatus(200);
         $response->assertJson($responseData);
-        $this->assertDatabaseHas('employees',$postData);
+        $this->assertDatabaseHas('employees', $postData);
+    }
+
+    /**
+     * @test
+     * @group employee
+     *
+     */
+    public function should_get_employee_sign_stores()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('show_store_employee');
+        $store = $user->account->stores[0];
+        $employee = $user->account->employees[0];
+        $store->employees()->attach($employee->id);
+        $route = '/api/v1/account/employee/store/' . $employee->id;
+        $employeeStores = $employee->stores->toArray();
+        $responseData = Helpers::makeResponseApiMock('Status modificado com sucesso!!', 200, $employeeStores, $route, 'GET');
+        //act
+        $response = $this->get($route);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertJson($responseData);
     }
 
 }
