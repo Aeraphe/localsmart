@@ -99,6 +99,7 @@ Route::prefix('v1')->group(function () {
 
             //Store
             Route::post('/', [StoreController::class, 'create'])->name('create-store');
+            Route::post('/sign/employee', [StoreController::class, 'sign'])->name('create-store');
             Route::delete('/', [StoreController::class, 'delete'])->name('delete-store');
             Route::put('/', [StoreController::class, 'update'])->name('update-store');
             Route::get('/', [StoreController::class, 'showAll'])->name('show-all-store');
