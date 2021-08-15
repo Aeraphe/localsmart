@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateStoreRequest;
 use App\Http\Requests\Store\ShowStoreRequest;
+use App\Http\Requests\Store\SignRequest;
 use App\Http\Requests\UpdateStoreRequest;
 use App\Models\Store;
 use App\Services\ApiResponse\ApiResponseErrorService;
@@ -123,6 +124,28 @@ class StoreController extends Controller
 
             return ApiResponseErrorService::make($e);
 
+        }
+    }
+
+    public function sign(SignRequest $request)
+    {
+        try {
+            $this->authorize('sign_store');
+            $validated = $request->validated();
+
+            $storeId = $validated['store_id'];
+            $employeeId = $validated['employee_id'];
+
+            $store = Store::find($storeId);
+            $store->employees()->attach($employeeId);
+            $response = [
+                'store_id' => $storeId,
+                'employee_id' => $employeeId,
+            ];
+            return ApiResponseService::make('Acesso Liberado a Loja', 200, $response);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
         }
     }
 }
