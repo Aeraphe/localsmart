@@ -27,6 +27,7 @@ class RoleController extends Controller
             $user = $request->user();
             $roles = Role::where([
                 ['module', '=', 'invoice'],
+                ['guard_name', '=', 'api'],
                 ['account_id', '=', null]])
                 ->orWhere('account_id', $user->account->id)
                 ->get();
