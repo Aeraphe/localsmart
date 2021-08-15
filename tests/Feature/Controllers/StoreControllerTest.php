@@ -215,36 +215,64 @@ class StoreControllerTest extends TestCase
 
     }
 
-
     /**
      * @test
      * @group store
-     * 
+     *
      */
-    public function should_sign_employee_to_store(){
+    public function should_sign_employee_to_store()
+    {
         //arrange
         $user = Helpers::getAccountUserLoggedWithAccount('sign_store');
         $store = $user->account->stores[0];
-        $employee =  $user->account->employees[0];
+        $employee = $user->account->employees[0];
 
         $postData = [
             'store_id' => $store->id,
-            'employee_id' => $employee->id
+            'employee_id' => $employee->id,
         ];
         $route = '/api/v1/store/sign/employee';
 
-        $responseData = Helpers::makeResponseApiMock('Acesso Liberado a Loja', 200,  $postData, $route, 'POST');
+        $responseData = Helpers::makeResponseApiMock('Acesso Liberado a Loja', 200, $postData, $route, 'POST');
 
-          //act
-          $response = $this->post($route, $postData);
+        //act
+        $response = $this->post($route, $postData);
 
-       
-          //assert
-          $response->assertStatus(200);
-          $response->assertSimilarJson($responseData);
-          $this->assertDatabaseHas('employee_store',$postData);
-         
-          
+        //assert
+        $response->assertStatus(200);
+        $response->assertSimilarJson($responseData);
+        $this->assertDatabaseHas('employee_store', $postData);
+
+    }
+
+    /**
+     * @test
+     * @group store-i
+     *
+     */
+    public function should_unsign_employee_to_store()
+    {
+        //arrange
+        $user = Helpers::getAccountUserLoggedWithAccount('unsign_store');
+        $store = $user->account->stores[0];
+        $employee = $user->account->employees[0];
+        $store->employees()->attach($employee->id);
+        $postData = [
+            'store_id' => $store->id,
+            'employee_id' => $employee->id,
+        ];
+        $route = '/api/v1/store/unsign/employee';
+
+        $responseData = Helpers::makeResponseApiMock('Acesso do Funcionárioa a Loja Cancelado', 200, $postData, $route, 'DELETE');
+
+        //act
+        $response = $this->delete($route, $postData);
+
+        //assert
+        $response->assertStatus(200);
+        $response->assertSimilarJson($responseData);
+        $this->assertDatabaseMissing('employee_store', $postData);
+
     }
 
 }
