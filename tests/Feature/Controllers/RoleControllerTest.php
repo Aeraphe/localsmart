@@ -37,6 +37,7 @@ class RoleControllerTest extends TestCase
         $route = '/api/v1/account/role';
         $roles = Role::where([
             ['module', '=', 'invoice'],
+            ['guard_name', '=', 'api'],
             ['account_id', '=', null]])
             ->orWhere('account_id', $user->account->id)
             ->get();
