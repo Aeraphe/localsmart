@@ -36,6 +36,11 @@ class EmployeePermissionFactory extends PermissionFactory
             "description" => 'Atualizar dados do Funcionário selecionado',
             'roles' => ['admin'],
         ],
+        [
+            "name" => 'show_store',
+            "description" => 'Listar as Lojas que o Funcionário tem Acesso',
+            'roles' => ['admin'],
+        ],
 
     ];
 
