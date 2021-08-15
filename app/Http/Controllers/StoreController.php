@@ -148,4 +148,26 @@ class StoreController extends Controller
             return ApiResponseErrorService::make($e);
         }
     }
+
+    public function unsign(SignRequest $request)
+    {
+        try {
+            $this->authorize('unsign_store');
+            $validated = $request->validated();
+
+            $storeId = $validated['store_id'];
+            $employeeId = $validated['employee_id'];
+
+            $store = Store::find($storeId);
+            $store->employees()->detach($employeeId);
+            $response = [
+                'store_id' => $storeId,
+                'employee_id' => $employeeId,
+            ];
+            return ApiResponseService::make('Acesso do Funcionárioa a Loja Cancelado', 200, $response);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
 }
