@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Employee\DeleteEmployeeRequest;
 use App\Http\Requests\Employee\EmployeeRegisterRequest;
 use App\Http\Requests\Employee\ShowEmployeeRequest;
+use App\Http\Requests\Employee\SignedStoreRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
 use App\Models\Employee;
 use App\Services\ApiResponse\ApiResponseErrorService;
@@ -112,7 +113,7 @@ class EmployeeController extends Controller
     public function showAll()
     {
         try {
-           
+
             $this->authorize('show_all_employee');
 
             $employee = Employee::where('account_id', Auth::user()->account->id)->get();
@@ -164,6 +165,20 @@ class EmployeeController extends Controller
             Employee::where('account_id', $user->account->id)->where('id', $validated['id'])->update($validated);
 
             return ApiResponseService::make('Status modificado com sucesso!!', 200, $validated);
+
+        } catch (Exception $e) {
+            return ApiResponseErrorService::make($e);
+        }
+    }
+
+    public function showEmployeeStore(SignedStoreRequest $request)
+    {
+        try {
+            $this->authorize('show_store_employee');
+            $employee = Employee::find($request->route('employee'));
+            $stores = $employee->stores->toArray();
+
+            return ApiResponseService::make('Status modificado com sucesso!!', 200, $stores);
 
         } catch (Exception $e) {
             return ApiResponseErrorService::make($e);
