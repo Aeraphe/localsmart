@@ -14,8 +14,9 @@ class CreateEmployeeStoreTable extends Migration
     public function up()
     {
         Schema::create('employee_store', function (Blueprint $table) {
-            $table->foreignId('employee_id')->constrained();
-            $table->foreignId('store_id')->constrained();
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade');
+            $table->primary(['employee_id', 'store_id'], 'employee_has_store_employee_id_store_id_primary');
             $table->timestamps();
         });
     }
